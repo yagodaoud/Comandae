@@ -1,2 +1,2 @@
-# Comandae
-Comandaê - Software para gerenciamento de restaurantes
+# Comandaê
+Software para gerenciamento de restaurantes
