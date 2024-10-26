@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS customer (
     deleted_at TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS `order` (
+CREATE TABLE IF NOT EXISTS orders (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     order_slip_id INT,
     customer_id BIGINT,
@@ -33,6 +33,6 @@ CREATE TABLE IF NOT EXISTS order_product (
     quantity INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
-    FOREIGN KEY (order_id) REFERENCES `order`(id) ON DELETE CASCADE,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES product(id)
 );
