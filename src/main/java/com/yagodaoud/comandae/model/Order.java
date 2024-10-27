@@ -1,10 +1,14 @@
 package com.yagodaoud.comandae.model;
+
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
+@SQLDelete(sql = "UPDATE product SET deleted_at = NOW() WHERE id=?")
 public class Order {
 
     @Id
@@ -16,7 +20,7 @@ public class Order {
     private Integer orderSlipId;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = true)
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

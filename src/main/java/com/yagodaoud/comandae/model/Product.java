@@ -1,10 +1,18 @@
 package com.yagodaoud.comandae.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+import org.hibernate.annotations.SQLDelete;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "product")
+@SQLDelete(sql = "UPDATE product SET deleted_at = NOW() WHERE id=?")
+@FilterDef(name = "deletedProductFilter", parameters = @ParamDef(name = "isDeleted", type = Boolean.class))
+@Filter(name = "deletedProductFilter", condition = "deleted_at IS NULL")
 public class Product {
 
     @Id

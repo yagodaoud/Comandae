@@ -1,10 +1,13 @@
 package com.yagodaoud.comandae.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "order_product")
+@SQLDelete(sql = "UPDATE product SET deleted_at = NOW() WHERE id=?")
 public class OrderProduct {
 
     @Id
