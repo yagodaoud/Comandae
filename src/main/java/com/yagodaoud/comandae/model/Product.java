@@ -6,6 +6,7 @@ import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.ParamDef;
 import org.hibernate.annotations.SQLDelete;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,7 +25,7 @@ public class Product {
     private String name;
 
     @Column(name = "price", nullable = false)
-    private double price;
+    private BigDecimal price = new BigDecimal(0);
 
     @Column(name = "category")
     private String category;
@@ -55,11 +56,11 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

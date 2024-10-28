@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS product (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL DEFAULT 0,
     category VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP
@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS orders (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     order_slip_id INT,
     customer_id BIGINT,
+    total DECIMAL(10, 2) DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
     FOREIGN KEY (customer_id) REFERENCES customer(id) ON DELETE SET NULL

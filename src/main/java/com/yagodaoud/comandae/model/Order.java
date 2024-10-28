@@ -1,14 +1,20 @@
 package com.yagodaoud.comandae.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
 import org.hibernate.annotations.SQLDelete;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@SQLDelete(sql = "UPDATE product SET deleted_at = NOW() WHERE id=?")
+@SQLDelete(sql = "UPDATE orders SET deleted_at = NOW() WHERE id=?")
+@FilterDef(name = "deletedOrderFilter", parameters = @ParamDef(name = "isDeleted", type = Boolean.class))
+@Filter(name = "deletedOrderFilter", condition = "deleted_at IS NULL")
 public class Order {
 
     @Id
@@ -23,8 +29,8 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderProduct> orderProducts;
+    @Column(name = "total")
+    private BigDecimal total = new BigDecimal(0);
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private final LocalDateTime createdAt;
@@ -60,12 +66,12 @@ public class Order {
         this.customer = customer;
     }
 
-    public List<OrderProduct> getOrderProducts() {
-        return orderProducts;
+    public BigDecimal getTotal() {
+        return total;
     }
 
-    public void setOrderProducts(List<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     public LocalDateTime getCreatedAt() {

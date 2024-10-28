@@ -2,10 +2,10 @@ package com.yagodaoud.comandae.service;
 
 import java.util.List;
 
-public interface ServiceInterface<T> {
+public interface ServiceInterface<T, R> {
     List<T> getAll(boolean isDeleted);
     T getById(Long id);
-    T create(T entity);
+    T create(R entity);
     T update(Long id, T entity);
     void delete(Long id);
 }

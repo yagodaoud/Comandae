@@ -1,5 +1,6 @@
 package com.yagodaoud.comandae.controller;
 
+import com.yagodaoud.comandae.dto.ProductDTO;
 import com.yagodaoud.comandae.model.Product;
 import com.yagodaoud.comandae.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +11,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
-public class ProductController implements ControllerInterface<Product>{
+public class ProductController implements ControllerInterface<Product, ProductDTO>{
 
     @Autowired
     private ProductService productService;
 
     @Override
     @GetMapping
-    public List<Product> getAll(@RequestParam String isDeleted) {
-        return productService.getAll(Boolean.getBoolean(isDeleted));
+    public List<Product> getAll(@RequestParam Boolean isDeleted) {
+        return productService.getAll(isDeleted);
     }
 
     @Override
@@ -29,8 +30,8 @@ public class ProductController implements ControllerInterface<Product>{
 
     @Override
     @PostMapping
-    public ResponseEntity<Product> create(@RequestBody Product entity) {
-        return ResponseEntity.ok(productService.create(entity));
+    public ResponseEntity<Product> create(@RequestBody ProductDTO productDTO) {
+        return ResponseEntity.ok(productService.create(productDTO));
     }
 
     @Override
