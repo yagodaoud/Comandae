@@ -31,7 +31,7 @@ public class ProductService implements ServiceInterface<Product, ProductDTO> {
 
     @Override
     public Product getById(Long id) {
-        return productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Produto não encontrado,"));
+                return productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Produto não encontrado,"));
     }
 
     @Override
@@ -46,14 +46,14 @@ public class ProductService implements ServiceInterface<Product, ProductDTO> {
     }
 
     @Override
-    public Product update(Long id, Product entity) {
-        return productRepository.findById(id)
-                .map(product -> {
-                    product.setName(entity.getName());
-                    product.setPrice(entity.getPrice());
-                    product.setCategory(entity.getCategory());
-                    return productRepository.save(product);
-                }).orElse(null);
+    public Product update(Long id, ProductDTO productDTO) {
+        Product product = getById(id);
+
+        product.setName(productDTO.getName());
+        product.setPrice(productDTO.getPrice());
+        product.setCategory(productDTO.getCategory());
+
+        return productRepository.save(product);
     }
 
     @Override

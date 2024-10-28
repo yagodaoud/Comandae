@@ -47,15 +47,15 @@ public class CustomerService implements ServiceInterface<Customer, CustomerDTO> 
     }
 
     @Override
-    public Customer update(Long id, Customer entity) {
-        return customerRepository.findById(id)
-                .map(customer -> {
-                    customer.setAddress(entity.getAddress());
-                    customer.setName(entity.getName());
-                    customer.setCpfCnpj(entity.getCpfCnpj());
-                    customer.setPhone(entity.getPhone());
-                    return customerRepository.save(customer);
-                }).orElse(null);
+    public Customer update(Long id, CustomerDTO customerDTO) {
+        Customer customer = getById(id);
+
+        customer.setAddress(customerDTO.getAddress());
+        customer.setName(customerDTO.getName());
+        customer.setCpfCnpj(customerDTO.getCpfCnpj());
+        customer.setPhone(customerDTO.getPhone());
+
+        return customerRepository.save(customer);
     }
 
     @Override

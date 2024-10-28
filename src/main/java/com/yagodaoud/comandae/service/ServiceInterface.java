@@ -6,6 +6,6 @@ public interface ServiceInterface<T, R> {
     List<T> getAll(boolean isDeleted);
     T getById(Long id);
     T create(R entity);
-    T update(Long id, T entity);
+    T update(Long id, R entity);
     void delete(Long id);
 }

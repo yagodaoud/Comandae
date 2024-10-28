@@ -36,8 +36,8 @@ public class CustomerController implements ControllerInterface<Customer, Custome
 
     @Override
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> update(@PathVariable Long id, @RequestBody Customer customerDetails) {
-        return ResponseEntity.ok(customerService.update(id, customerDetails));
+    public ResponseEntity<Customer> update(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
+        return ResponseEntity.ok(customerService.update(id, customerDTO));
     }
 
     @Override

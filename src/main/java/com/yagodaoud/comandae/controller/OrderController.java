@@ -37,8 +37,8 @@ public class OrderController implements ControllerInterface<Order, OrderDTO>{
 
     @Override
     @PutMapping("/{id}")
-    public ResponseEntity<Order> update(@PathVariable Long id, @RequestBody Order orderDetails) {
-        return ResponseEntity.ok(orderService.update(id, orderDetails));
+    public ResponseEntity<Order> update(@PathVariable Long id, @RequestBody OrderDTO orderDTO) {
+        return ResponseEntity.ok(orderService.update(id, orderDTO));
     }
 
     @Override

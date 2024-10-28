@@ -45,30 +45,21 @@ public class OrderProductService implements ServiceInterface<OrderProduct, Order
     public OrderProduct create(OrderProductDTO orderProductDTO) {
         OrderProduct orderProduct = new OrderProduct();
 
-//        orderProduct.setQuantity(orderProductDTO.getQuantity());
-//
-//        OrderDTO orderDTO = orderProductDTO.getOrderDTO();
-//        Order order = orderService.getById(orderDTO.getId());
-//
-//        orderProduct.setOrder(order);
-//
-//        ProductDTO productDTO = orderProductDTO.getProduct();
-//        Product product = productService.getById(productDTO.getId());
-//
-//        orderProduct.setProduct(product);
-
         return orderProductRepository.save(orderProduct);
     }
 
     @Override
-    public OrderProduct update(Long id, OrderProduct entity) {
-        return orderProductRepository.findById(id)
-                .map(orderProduct -> {
-                    orderProduct.setOrder(entity.getOrder());
-                    orderProduct.setProduct(entity.getProduct());
-                    orderProduct.setQuantity(entity.getQuantity());
-                    return orderProductRepository.save(orderProduct);
-                }).orElse(null);
+    public OrderProduct update(Long id, OrderProductDTO orderProductDTO) {
+        OrderProduct orderProduct = getById(id);
+
+        orderProduct.setQuantity(orderProductDTO.getQuantity());
+
+        if (orderProductDTO.getProduct().getId() != null) {
+            Product product = productService.getById(orderProductDTO.getProduct().getId());
+            orderProduct.setProduct(product);
+        }
+
+        return orderProductRepository.save(orderProduct);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.yagodaoud.comandae.service;
 
 import com.yagodaoud.comandae.dto.CustomerDTO;
 import com.yagodaoud.comandae.dto.OrderDTO;
-import com.yagodaoud.comandae.dto.OrderProductDTO;
 import com.yagodaoud.comandae.model.Customer;
 import com.yagodaoud.comandae.model.Order;
 import com.yagodaoud.comandae.model.OrderProduct;
@@ -83,14 +82,18 @@ public class OrderService implements ServiceInterface<Order, OrderDTO> {
     }
 
     @Override
-    public Order update(Long id, Order entity) {
-        return orderRepository.findById(id)
-                .map(order -> {
-                    order.setOrderSlipId(entity.getOrderSlipId());
-                    order.setCustomer(entity.getCustomer());
-                    order.setTotal(entity.getTotal());
-                    return orderRepository.save(order);
-                }).orElse(null);
+    public Order update(Long id, OrderDTO orderDTO) {
+        Order order = getById(id);
+
+        order.setOrderSlipId(orderDTO.getOrderSlipId());
+        order.setTotal(orderDTO.getTotal());
+
+        if (orderDTO.getCustomer() != null) {
+            Customer customer = customerService.getById(orderDTO.getCustomer().getId());
+            order.setCustomer(customer);
+        }
+
+        return orderRepository.save(order);
     }
 
     @Override

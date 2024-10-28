@@ -36,8 +36,8 @@ public class ProductController implements ControllerInterface<Product, ProductDT
 
     @Override
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product productDetails) {
-        return ResponseEntity.ok(productService.update(id, productDetails));
+    public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+        return ResponseEntity.ok(productService.update(id, productDTO));
     }
 
     @Override
