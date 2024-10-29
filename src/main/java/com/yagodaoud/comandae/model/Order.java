@@ -31,6 +31,9 @@ public class Order {
     @Column(name = "total")
     private BigDecimal total = new BigDecimal(0);
 
+    @Column(name = "active")
+    private Boolean active = true;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private final LocalDateTime createdAt;
 

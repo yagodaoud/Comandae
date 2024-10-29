@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS orders (
     order_slip_id INT,
     customer_id BIGINT,
     total DECIMAL(10, 2) DEFAULT 0,
+    active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
     FOREIGN KEY (customer_id) REFERENCES customer(id) ON DELETE SET NULL

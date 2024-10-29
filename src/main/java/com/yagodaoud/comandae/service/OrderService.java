@@ -2,6 +2,7 @@ package com.yagodaoud.comandae.service;
 
 import com.yagodaoud.comandae.dto.CustomerDTO;
 import com.yagodaoud.comandae.dto.OrderDTO;
+import com.yagodaoud.comandae.exception.OrderSlipInUseException;
 import com.yagodaoud.comandae.model.Customer;
 import com.yagodaoud.comandae.model.Order;
 import com.yagodaoud.comandae.model.OrderProduct;
@@ -50,6 +51,10 @@ public class OrderService implements ServiceInterface<Order, OrderDTO> {
 
     @Override
     public Order create(OrderDTO orderDTO) {
+        if (orderRepository.existsByOrderSlipIdAndActiveIsTrue(orderDTO.getOrderSlipId())) {
+            throw new OrderSlipInUseException(orderDTO.getOrderSlipId());
+        }
+
         Order order = new Order();
 
         order.setOrderSlipId(orderDTO.getOrderSlipId());
@@ -84,6 +89,10 @@ public class OrderService implements ServiceInterface<Order, OrderDTO> {
     @Override
     public Order update(Long id, OrderDTO orderDTO) {
         Order order = getById(id);
+
+        if (orderRepository.existsByOrderSlipIdAndActiveIsTrue(orderDTO.getOrderSlipId())) {
+            throw new OrderSlipInUseException(orderDTO.getOrderSlipId());
+        }
 
         order.setOrderSlipId(orderDTO.getOrderSlipId());
         order.setTotal(orderDTO.getTotal());
