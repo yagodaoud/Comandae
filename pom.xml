@@ -48,26 +48,32 @@
             <artifactId>javafx-fxml</artifactId>
             <version>21</version>
         </dependency>
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.2.3</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <compilerArgs>
-                        <arg>-parameters</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+        <!-- Twilio/WhatsApp -->
+        <!--<dependency>
+           <groupId>com.twilio.sdk</groupId>
+           <artifactId>twilio</artifactId>
+           <version>10.5.2</version>
+       </dependency> -->
+   </dependencies>
+   <build>
+       <plugins>
+           <plugin>
+               <groupId>org.springframework.boot</groupId>
+               <artifactId>spring-boot-maven-plugin</artifactId>
+               <version>3.2.3</version>
+           </plugin>
+           <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-compiler-plugin</artifactId>
+               <version>3.10.1</version>
+               <configuration>
+                   <source>${java.version}</source>
+                   <target>${java.version}</target>
+                   <compilerArgs>
+                       <arg>-parameters</arg>
+                   </compilerArgs>
+               </configuration>
+           </plugin>
+       </plugins>
+   </build>
 </project>
