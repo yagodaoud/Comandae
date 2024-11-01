@@ -1,4 +1,4 @@
-package com.yagodaoud.comandae.model;
+package com.yagodaoud.comandae.model.menu;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.Filter;
@@ -9,11 +9,11 @@ import org.hibernate.annotations.SQLDelete;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "menu_item")
-@SQLDelete(sql = "UPDATE menu_item SET deleted_at = NOW() WHERE id=?")
-@FilterDef(name = "deletedMenuItemFilter", parameters = @ParamDef(name = "isDeleted", type = Boolean.class))
-@Filter(name = "deletedMenuItemFilter", condition = "deleted_at IS NULL")
-public class MenuItem {
+@Table(name = "menu_category")
+@SQLDelete(sql = "UPDATE menu_category SET deleted_at = NOW() WHERE id=?")
+@FilterDef(name = "deletedMenuCategoryFilter", parameters = @ParamDef(name = "isDeleted", type = Boolean.class))
+@Filter(name = "deletedMenuCategoryFilter", condition = "deleted_at IS NULL")
+public class MenuCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,12 +23,8 @@ public class MenuItem {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "emoji", length = 4)
-    private String emoji;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
-    private MenuCategory category;
+    @Column(name = "display_order")
+    private Integer displayOrder;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private final LocalDateTime createdAt;
@@ -36,7 +32,7 @@ public class MenuItem {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    public MenuItem() {
+    public MenuCategory() {
         this.createdAt = LocalDateTime.now();
     }
 
@@ -56,20 +52,12 @@ public class MenuItem {
         this.name = name;
     }
 
-    public String getEmoji() {
-        return emoji;
+    public Integer getDisplayOrder() {
+        return displayOrder;
     }
 
-    public void setEmoji(String emoji) {
-        this.emoji = emoji;
-    }
-
-    public MenuCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(MenuCategory category) {
-        this.category = category;
+    public void setDisplayOrder(Integer displayOrder) {
+        this.displayOrder = displayOrder;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -84,3 +72,4 @@ public class MenuItem {
         this.deletedAt = deletedAt;
     }
 }
+

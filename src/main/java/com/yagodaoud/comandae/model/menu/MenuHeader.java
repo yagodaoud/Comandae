@@ -1,4 +1,4 @@
-package com.yagodaoud.comandae.model;
+package com.yagodaoud.comandae.model.menu;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.Filter;
@@ -9,22 +9,19 @@ import org.hibernate.annotations.SQLDelete;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "menu_category")
-@SQLDelete(sql = "UPDATE menu_category SET deleted_at = NOW() WHERE id=?")
-@FilterDef(name = "deletedMenuCategoryFilter", parameters = @ParamDef(name = "isDeleted", type = Boolean.class))
-@Filter(name = "deletedMenuCategoryFilter", condition = "deleted_at IS NULL")
-public class MenuCategory {
+@Table(name = "menu_header")
+@SQLDelete(sql = "UPDATE menu_header SET deleted_at = NOW() WHERE id=?")
+@FilterDef(name = "deletedMenuHeaderFilter", parameters = @ParamDef(name = "isDeleted", type = Boolean.class))
+@Filter(name = "deletedMenuHeaderFilter", condition = "deleted_at IS NULL")
+public class MenuHeader {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "display_order")
-    private Integer displayOrder;
+    @Column(name = "header", columnDefinition = "TEXT")
+    private String header;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private final LocalDateTime createdAt;
@@ -32,7 +29,7 @@ public class MenuCategory {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    public MenuCategory() {
+    public MenuHeader() {
         this.createdAt = LocalDateTime.now();
     }
 
@@ -44,20 +41,12 @@ public class MenuCategory {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getHeader() {
+        return header;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getDisplayOrder() {
-        return displayOrder;
-    }
-
-    public void setDisplayOrder(Integer displayOrder) {
-        this.displayOrder = displayOrder;
+    public void setHeader(String header) {
+        this.header = header;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -72,4 +61,3 @@ public class MenuCategory {
         this.deletedAt = deletedAt;
     }
 }
-

@@ -1,4 +1,4 @@
-package com.yagodaoud.comandae.model;
+package com.yagodaoud.comandae.model.menu;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.Filter;

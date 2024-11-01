@@ -1,9 +1,6 @@
 package com.yagodaoud.comandae.service;
 
-import com.yagodaoud.comandae.dto.OrderDTO;
 import com.yagodaoud.comandae.dto.OrderProductDTO;
-import com.yagodaoud.comandae.dto.ProductDTO;
-import com.yagodaoud.comandae.model.Order;
 import com.yagodaoud.comandae.model.OrderProduct;
 import com.yagodaoud.comandae.model.Product;
 import com.yagodaoud.comandae.repository.OrderProductRepository;
