@@ -36,7 +36,7 @@ public class MenuItemService implements ServiceInterface<MenuItem, MenuItemDTO> 
 
     @Override
     public MenuItem getById(Long id) {
-        return menuItemRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado,"));
+        return menuItemRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Item não encontrado."));
     }
 
     @Override

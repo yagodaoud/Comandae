@@ -32,7 +32,7 @@ public class DailyMenuItemService implements ServiceInterface<DailyMenuItem, Dai
 
     @Override
     public DailyMenuItem getById(Long id) {
-        return dailyMenuItemRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Item do cardápio diário não encontrado,"));
+        return dailyMenuItemRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Item do cardápio diário não encontrado."));
     }
 
     @Override

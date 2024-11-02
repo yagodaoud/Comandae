@@ -31,7 +31,7 @@ public class MenuFooterService implements ServiceInterface<MenuFooter, MenuFoote
 
     @Override
     public MenuFooter getById(Long id) {
-        return menuFooterRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Rodapé do cardápio não encontrado,"));
+        return menuFooterRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Rodapé do cardápio não encontrado."));
     }
 
     @Override

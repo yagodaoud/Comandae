@@ -32,7 +32,7 @@ public class MenuHeaderService implements ServiceInterface<MenuHeader, MenuHeade
 
     @Override
     public MenuHeader getById(Long id) {
-        return menuHeaderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado,"));
+        return menuHeaderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Cabeçalho não encontrado."));
 
     }
 

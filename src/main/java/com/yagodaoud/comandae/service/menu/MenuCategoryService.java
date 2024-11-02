@@ -32,12 +32,12 @@ public class MenuCategoryService implements ServiceInterface<MenuCategory, MenuC
 
     @Override
     public MenuCategory getById(Long id) {
-        return menuCategoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Categoria do Cardápio não encontrada,"));
+        return menuCategoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Categoria do Cardápio não encontrada."));
     }
 
     @Override
     public MenuCategory create(MenuCategoryDTO entity) {
-        MenuCategory menuCategory = getById(entity.getId());
+        MenuCategory menuCategory = new MenuCategory();
 
         menuCategory.setName(entity.getName());
         menuCategory.setDisplayOrder(entity.getDisplayOrder());

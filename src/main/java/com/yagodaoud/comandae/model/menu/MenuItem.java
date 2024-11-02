@@ -26,7 +26,7 @@ public class MenuItem {
     @Column(name = "emoji", length = 4)
     private String emoji;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", nullable = false)
     private MenuCategory category;
 
