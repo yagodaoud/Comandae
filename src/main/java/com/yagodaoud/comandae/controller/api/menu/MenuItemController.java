@@ -1,6 +1,6 @@
-package com.yagodaoud.comandae.controller.menu;
+package com.yagodaoud.comandae.controller.api.menu;
 
-import com.yagodaoud.comandae.controller.ControllerInterface;
+import com.yagodaoud.comandae.controller.api.ControllerInterface;
 import com.yagodaoud.comandae.dto.menu.MenuItemDTO;
 import com.yagodaoud.comandae.model.menu.MenuItem;
 import com.yagodaoud.comandae.service.menu.MenuItemService;

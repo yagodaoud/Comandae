@@ -1,4 +1,4 @@
-package com.yagodaoud.comandae.controller;
+package com.yagodaoud.comandae.controller.api;
 
 import com.yagodaoud.comandae.dto.CustomerDTO;
 import com.yagodaoud.comandae.model.Customer;

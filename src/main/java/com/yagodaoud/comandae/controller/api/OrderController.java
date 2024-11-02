@@ -1,4 +1,4 @@
-package com.yagodaoud.comandae.controller;
+package com.yagodaoud.comandae.controller.api;
 
 import com.yagodaoud.comandae.dto.OrderDTO;
 import com.yagodaoud.comandae.model.Order;

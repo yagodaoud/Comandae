@@ -1,4 +1,4 @@
-package com.yagodaoud.comandae.controller;
+package com.yagodaoud.comandae.controller.api;
 
 import org.springframework.http.ResponseEntity;
 
