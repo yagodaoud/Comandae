@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.yagodaoud.comandae.controller.ui.OrderManagementController">
+    <padding>
+        <Insets top="50" bottom="50" left="50" right="50"/>
+    </padding>
+
+    <Label text="Pedidos" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="ordersTable">
+        <columns>
+            <TableColumn fx:id="orderIdColumn" text="Order ID"/>
+            <TableColumn fx:id="orderDateColumn" text="Order Date"/>
+            <TableColumn fx:id="orderStatusColumn" text="Order Status"/>
+            <TableColumn fx:id="orderTotalColumn" text="Order Total"/>
+        </columns>
+    </TableView>
+
+    <TextField fx:id="orderIdField" promptText="Order ID"/>
+    <TextField fx:id="orderDateField" promptText="Order Date"/>
+    <TextField fx:id="orderStatusField" promptText="Order Status"/>
+    <TextField fx:id="orderTotalField" promptText="Order Total"/>
+
+    <Button text="Add Order" onAction="#handleAddOrder"/>
+    <Button text="Edit Order" onAction="#handleEditOrder"/>
+    <Button text="Delete Order" onAction="#handleDeleteOrder"/>
+    <Button text="Refresh" onAction="#handleRefresh"/>
+    <Button text="Início" onAction="#goToEntryScreen"/>
+</VBox>

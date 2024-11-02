@@ -8,23 +8,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Lazy
-public class EntryScreenController {
+public class MenuScreenController {
 
     private final StageManager stageManager;
 
     @Autowired
-    public EntryScreenController(StageManager stageManager) {
+    public MenuScreenController(StageManager stageManager) {
         this.stageManager = stageManager;
     }
 
     @FXML
-    public void goToMenu() {
-        stageManager.switchScene("view/MenuScreen.fxml", "Menu Screen");
-    }
-
-    @FXML
-    public void goToOrderManagement() {
-        stageManager.switchScene("view/OrderManagementScreen.fxml", "Order Management");
-
+    public void goToEntryScreen() {
+        stageManager.switchScene("view/EntryScreen.fxml", "Comandaê");
     }
 }
