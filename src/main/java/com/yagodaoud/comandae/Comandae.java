@@ -25,7 +25,7 @@ public class Comandae extends Application {
         stageManager = context.getBean(StageManager.class);
         stageManager.setPrimaryStage(primaryStage);
 
-        stageManager.switchScene("view/MainMenu.fxml", "Comandaê");
+        stageManager.switchScene("view/EntryScreen.fxml", "Comandaê");
 
         primaryStage.setMaximized(true);
     }
