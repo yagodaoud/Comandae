@@ -2,6 +2,7 @@ package com.yagodaoud.comandae;
 
 import com.yagodaoud.comandae.utils.StageManager;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,11 +24,16 @@ public class Comandae extends Application {
     @Override
     public void start(Stage primaryStage) {
         stageManager = context.getBean(StageManager.class);
+
+        primaryStage.getIcons().add(new Image("https://brandslogos.com/wp-content/uploads/images/large/java-logo-1.png"));
+
         stageManager.setPrimaryStage(primaryStage);
 
         stageManager.switchScene("view/EntryScreen.fxml", "Comandaê");
 
         primaryStage.setMaximized(true);
+
+        primaryStage.show();
     }
 
     @Override

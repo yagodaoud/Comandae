@@ -1,16 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.yagodaoud.comandae.controller.ui.MainScreenController">
-    <padding>
-        <Insets top="50" bottom="50" left="50" right="50"/>
-    </padding>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.geometry.Insets?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.yagodaoud.comandae.controller.ui.MainScreenController">
 
-    <Label text="Welcome to Comandaê" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <HBox spacing="20" alignment="CENTER_LEFT" styleClass="header" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <Text fx:id="appTitle" text="Comandaê" styleClass="app-title">
+            <HBox.margin>
+                <Insets left="10"/>
+            </HBox.margin>
+        </Text>
 
-    <Button text="Cardápio" onAction="#goToMenu"/>
-    <Button text="Pedidos" onAction="#goToOrderManagement"/>
-</VBox>
+        <TextField fx:id="searchField" promptText="Buscar" styleClass="search-bar">
+            <HBox.margin>
+                <Insets left="90"/>
+            </HBox.margin>
+        </TextField>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <ImageView fitHeight="25" fitWidth="25" styleClass="header-icon">
+            <Image url="@/icons/notification.png"/>
+        </ImageView>
+        <ImageView fitHeight="25" fitWidth="25" styleClass="header-icon">
+            <Image url="@/icons/settings.png"/>
+        </ImageView>
+        <StackPane>
+            <Circle radius="18" fill="#d65c2f"/>
+            <ImageView fitHeight="25" fitWidth="25" styleClass="header-icon">
+                <Image url="@/icons/profile.png"/>
+            </ImageView>
+        </StackPane>
+    </HBox>
+
+    <AnchorPane styleClass="sidebar" prefWidth="200" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0">
+        <VBox alignment="CENTER" spacing="15" AnchorPane.topAnchor="50" style="-fx-padding: 0;">
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button">
+                <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
+                    <Image url="@/icons/store.png"/>
+                </ImageView>
+                <Text text="Dashboard" />
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button">
+                <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
+                    <Image url="@/icons/menu.png"/>
+                </ImageView>
+                <Text text="Menu Updates" />
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button">
+                <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
+                    <Image url="@/icons/orders.png"/>
+                </ImageView>
+                <Text text="Orders" />
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button">
+                <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
+                    <Image url="@/icons/financial.png"/>
+                </ImageView>
+                <Text text="Financial" />
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button">
+                <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
+                    <Image url="@/icons/settings.png"/>
+                </ImageView>
+                <Text text="Settings" />
+            </HBox>
+        </VBox>
+
+        <HBox alignment="CENTER" spacing="10" styleClass="sidebar-button" AnchorPane.bottomAnchor="10">
+            <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
+                <Image url="@/icons/signout.png"/>
+            </ImageView>
+            <Text text="Sign Out" />
+        </HBox>
+    </AnchorPane>
+
+    <VBox spacing="20" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="50" AnchorPane.leftAnchor="200">
+        <Text text="Insights &amp; Analytics" styleClass="section-title"/>
+
+        <HBox spacing="10" styleClass="summary-section">
+            <VBox styleClass="summary-box">
+                <Text text="Today's" styleClass="summary-title"/>
+                <Text text="15" styleClass="summary-number"/>
+                <Text text="New items" styleClass="summary-info"/>
+            </VBox>
+            <VBox styleClass="summary-box">
+                <Text text="Orders" styleClass="summary-title"/>
+                <Text text="7" styleClass="summary-number"/>
+                <Text text="New orders" styleClass="summary-info"/>
+            </VBox>
+            <VBox styleClass="summary-box">
+                <Text text="12" styleClass="summary-title"/>
+                <Text text="Refunds" styleClass="summary-info"/>
+            </VBox>
+            <VBox styleClass="summary-box">
+                <Text text="1" styleClass="summary-title"/>
+                <Text text="Messages" styleClass="summary-info"/>
+            </VBox>
+            <VBox styleClass="summary-box">
+                <Text text="4" styleClass="summary-title"/>
+                <Text text="Tasks" styleClass="summary-info"/>
+            </VBox>
+        </HBox>
+
+        <HBox spacing="10">
+            <VBox styleClass="sales-overview">
+                <Text text="Sales Overview" styleClass="section-title"/>
+                <Pane fx:id="salesChart" styleClass="chart" />
+            </VBox>
+            <VBox styleClass="popular-dishes">
+                <Text text="Popular Dishes" styleClass="section-title"/>
+                <GridPane hgap="10" vgap="10">
+                </GridPane>
+            </VBox>
+        </HBox>
+
+        <HBox spacing="10">
+            <VBox styleClass="inventory-status">
+                <Text text="Inventory Status" styleClass="section-title"/>
+                <Text text="Low stock items: 12 ▲" styleClass="info"/>
+                <Text text="Item categories: 6" styleClass="info"/>
+                <Text text="Returned items: 1" styleClass="info"/>
+            </VBox>
+            <VBox styleClass="locations-overview">
+                <Text text="Locations Overview" styleClass="section-title"/>
+                <Text text="London, UK - 12 staff, 156 items, 5 orders" styleClass="info"/>
+                <Text text="Birmingham, UK - 8 staff, 189 items, 11 orders" styleClass="info"/>
+            </VBox>
+        </HBox>
+    </VBox>
+</AnchorPane>

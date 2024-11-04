@@ -47,7 +47,7 @@ public class EntryScreenController {
 
         chefImage.sceneProperty().addListener((observable, oldScene, newScene) -> {
             if (newScene != null) {
-                String cssPath = getClass().getResource("/style.css").toExternalForm();
+                String cssPath = getClass().getResource("/css/entryScreen.css").toExternalForm();
                 newScene.getStylesheets().add(cssPath);
 
                 chefImage.getStyleClass().add("image-view");
