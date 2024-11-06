@@ -2,6 +2,8 @@ package com.yagodaoud.comandae.controller.ui;
 
 import com.yagodaoud.comandae.utils.StageManager;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -23,49 +25,37 @@ public class MainScreenController {
         this.stageManager = stageManager;
     }
 
-//    @FXML
-//    private SVGPath notificationIcon;
-//
-//    @FXML
-//    private SVGPath profileIcon;
-//
-//    @FXML
-//    private SVGPath settingsIcon;
-
     @FXML
     private Text appTitle;
 
     @FXML
-    private Button exploreButton;
+    private BarChart<String, Number> salesChart;
 
-    @FXML
-    private Pane salesChart;
+    private void setupSalesChart() {
+        salesChart.getData().clear();
+        
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Sales Status");
+
+        series.getData().add(new XYChart.Data<>("Successful", 65));
+        series.getData().add(new XYChart.Data<>("Prepared", 45));
+        series.getData().add(new XYChart.Data<>("Returned", 15));
+        series.getData().add(new XYChart.Data<>("Shipped out", 55));
+
+        salesChart.getData().add(series);
+
+        salesChart.setLegendVisible(false);
+
+        salesChart.setAnimated(false);
+    }
 
     @FXML
     public void initialize() {
-
-//        salesChart.setImage(new Image("https://i.pinimg.com/originals/0d/bb/dd/0dbbdd2944e06b540a3341c8d6a801e4.jpg"));
-
         appTitle.sceneProperty().addListener((observable, oldScene, newScene) -> {
             if (newScene != null) {
                 String cssPath = getClass().getResource("/css/mainScreen.css").toExternalForm();
                 newScene.getStylesheets().add(cssPath);
-
-//                notificationIcon.setFill(Color.valueOf("#4A4A4A"));
-//                profileIcon.setFill(Color.valueOf("#4A4A4A"));
-//                settingsIcon.setFill(Color.valueOf("#4A4A4A"));
-
-//                notificationIcon.setOnMouseClicked(event -> handleNotificationIconClick());
-//                profileIcon.setOnMouseClicked(event -> handleProfileIconClick());
-//                settingsIcon.setOnMouseClicked(event -> handleSettingsIconClick());
-
-//                chefImage.getStyleClass().add("image-view");
-//                titleText.getStyleClass().add("title-text");
-//                subtitleText.getStyleClass().add("subtitle-text");
-//                exploreButton.getStyleClass().add("button");
-//
-//                leftSpacer.prefWidthProperty().bind(newScene.widthProperty().multiply(0.25));
-//                bottomSpacer.prefHeightProperty().bind(newScene.heightProperty().subtract(chefImage.getImage().getHeight()).subtract(titleText.getLayoutBounds().getHeight() + subtitleText.getLayoutBounds().getHeight() + exploreButton.getHeight()));
+                setupSalesChart();
             }
         });
     }
