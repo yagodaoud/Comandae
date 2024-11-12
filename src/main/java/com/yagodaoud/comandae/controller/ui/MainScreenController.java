@@ -4,11 +4,6 @@ import com.yagodaoud.comandae.utils.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -33,7 +28,7 @@ public class MainScreenController {
 
     private void setupSalesChart() {
         salesChart.getData().clear();
-        
+
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Sales Status");
 
@@ -45,16 +40,26 @@ public class MainScreenController {
         salesChart.getData().add(series);
 
         salesChart.setLegendVisible(false);
-
         salesChart.setAnimated(false);
+
+        // Minimalist style adjustments
+        salesChart.setCategoryGap(50);
+        salesChart.setBarGap(16);
+
+        salesChart.setStyle("-fx-background-color: transparent;");
+        salesChart.getXAxis().setTickLabelsVisible(true);
+        salesChart.getYAxis().setTickLabelsVisible(true);
+        salesChart.getYAxis().setOpacity(0); // Make the Y-axis line invisible
+        
+
     }
 
     @FXML
     public void initialize() {
         appTitle.sceneProperty().addListener((observable, oldScene, newScene) -> {
             if (newScene != null) {
-                String cssPath = getClass().getResource("/css/mainScreen.css").toExternalForm();
-                newScene.getStylesheets().add(cssPath);
+//                String cssPath = getClass().getResource("/css/mainScreen.css").toExternalForm();
+//                newScene.getStylesheets().add(cssPath);
                 setupSalesChart();
             }
         });
@@ -73,5 +78,15 @@ public class MainScreenController {
     private void handleSettingsIconClick() {
         // Handle settings icon click
         System.out.println("Settings icon clicked!");
+    }
+
+    @FXML
+    private void handleSignOutButton() {
+        stageManager.switchScene("view/EntryScreen.fxml", "Entry Screen");
+    }
+
+    @FXML
+    private void handleMenuButton() {
+        stageManager.switchScene("view/MenuScreen.fxml", "Menu Screen");
     }
 }
