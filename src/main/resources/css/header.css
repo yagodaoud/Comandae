@@ -1,0 +1,35 @@
+.header {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 10px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.header-icon {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 0, 0, 0, 0);
+}
+
+.header-icon:hover {
+    -fx-opacity: 1.0;
+}
+
+.search-bar {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 15;
+    -fx-padding: 5px 10px;
+    -fx-prompt-text-fill: #9e9e9e;
+    -fx-border-color: transparent;
+    -fx-border-radius: 15;
+    -fx-font-size: 14px;
+    -fx-min-width: 300;
+    -fx-pref-width: 300;
+    -fx-min-height: 30;
+    -fx-pref-height: 30;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);
+}
+
+.app-title {
+    -fx-font-size: 1.5em;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}

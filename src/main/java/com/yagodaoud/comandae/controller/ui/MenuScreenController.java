@@ -1,5 +1,6 @@
 package com.yagodaoud.comandae.controller.ui;
 
+import com.yagodaoud.comandae.model.NavigationScreen;
 import com.yagodaoud.comandae.utils.StageManager;
 import javafx.fxml.FXML;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,11 @@ public class MenuScreenController {
     }
 
     @FXML
-    public void goToEntryScreen() {
-        stageManager.switchScene("view/MainScreen.fxml", "Comandaê");
+    @Autowired
+    private SidebarController sidebarController;
+
+    @FXML
+    public void initialize() {
+        sidebarController.setSelectedScreen(NavigationScreen.MENU);
     }
 }

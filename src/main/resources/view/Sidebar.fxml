@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane stylesheets="@/css/sidebar.css" styleClass="sidebar" prefWidth="200" xmlns:fx="http://javafx.com/fxml" fx:controller="com.yagodaoud.comandae.controller.ui.SidebarController">
+
+    <VBox alignment="CENTER" spacing="15" AnchorPane.topAnchor="50" style="-fx-padding: 0;">
+        <HBox fx:id="dashboardButton" alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button" onMouseClicked="#handleDashboardButton">
+            <StackPane>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
+                        <Image url="@/icons/store.png"/>
+                    </ImageView>
+                    <Text text="Dashboard" />
+                </HBox>
+            </StackPane>
+        </HBox>
+
+        <HBox fx:id="menuButton" alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button" onMouseClicked="#handleMenuButton">
+            <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
+                <Image url="@/icons/menu.png"/>
+            </ImageView>
+            <Text text="Menu" />
+        </HBox>
+
+        <HBox fx:id="ordersButton" alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button">
+            <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
+                <Image url="@/icons/orders.png"/>
+            </ImageView>
+            <Text text="Orders" />
+        </HBox>
+
+        <HBox fx:id="financialButton" alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button">
+            <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
+                <Image url="@/icons/financial.png"/>
+            </ImageView>
+            <Text text="Financial" />
+        </HBox>
+
+        <HBox fx:id="settingsButton" alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button">
+            <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
+                <Image url="@/icons/settings.png"/>
+            </ImageView>
+            <Text text="Settings" />
+        </HBox>
+    </VBox>
+
+    <HBox fx:id="signOutButton" alignment="CENTER" spacing="10" styleClass="sidebar-button" AnchorPane.bottomAnchor="40" onMouseClicked="#handleSignOutButton">
+        <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
+            <Image url="@/icons/signout.png"/>
+        </ImageView>
+        <Text text="Sign Out" />
+    </HBox>
+</AnchorPane>

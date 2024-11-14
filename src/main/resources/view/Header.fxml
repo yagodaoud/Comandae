@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Text?>
+<HBox spacing="20"
+      alignment="CENTER_LEFT"
+      styleClass="header"
+      stylesheets="@/css/header.css"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.yagodaoud.comandae.controller.ui.HeaderController">
+
+    <Text fx:id="appTitle" text="Comandaê" styleClass="app-title">
+        <HBox.margin>
+            <Insets left="10"/>
+        </HBox.margin>
+    </Text>
+
+    <TextField fx:id="searchField" promptText="Buscar" styleClass="search-bar">
+        <HBox.margin>
+            <Insets left="90"/>
+        </HBox.margin>
+    </TextField>
+
+    <Region HBox.hgrow="ALWAYS"/>
+
+    <ImageView fitHeight="25" fitWidth="25" styleClass="header-icon">
+        <Image url="@/icons/notification.png"/>
+    </ImageView>
+    <ImageView fitHeight="25" fitWidth="25" styleClass="header-icon">
+        <Image url="@/icons/settings.png"/>
+    </ImageView>
+    <StackPane>
+        <Circle radius="18" fill="#d65c2f"/>
+        <ImageView fitHeight="25" fitWidth="25" styleClass="header-icon">
+            <Image url="@/icons/profile.png"/>
+        </ImageView>
+    </StackPane>
+</HBox>
