@@ -4,6 +4,7 @@ import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class StageManager {
 
     public void switchScene(String fxmlPath, String title) {
         try {
+            Font.loadFont(getClass().getResourceAsStream("/fonts/MaterialIcons-Regular.ttf"), 16);
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/" + fxmlPath));
             loader.setControllerFactory(context::getBean);
             Parent root = loader.load();

@@ -1,9 +1,9 @@
-.sidebar {
-    -fx-background-color: #e85b27;
-    -fx-background-radius: 20;
-    -fx-padding: 10 20 10 20;
-    -fx-spacing: 10;
-}
+    .sidebar {
+        -fx-background-color: #e85b27;
+        -fx-background-radius: 0 20 20 0;
+        -fx-padding: 10 20 10 20;
+        -fx-spacing: 10;
+    }
 
 .sidebar-button {
     -fx-background-color: #e85b27;
