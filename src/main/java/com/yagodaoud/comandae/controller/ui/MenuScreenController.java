@@ -1,5 +1,8 @@
 package com.yagodaoud.comandae.controller.ui;
 
+import com.yagodaoud.comandae.controller.ui.component.CategoryModalForm;
+import com.yagodaoud.comandae.controller.ui.component.MenuItemModalForm;
+import com.yagodaoud.comandae.controller.ui.component.ModalContainer;
 import com.yagodaoud.comandae.dto.menu.MenuCategoryDTO;
 import com.yagodaoud.comandae.dto.menu.MenuItemDTO;
 import com.yagodaoud.comandae.model.NavigationScreen;
@@ -10,14 +13,11 @@ import com.yagodaoud.comandae.service.menu.MenuCategoryService;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -68,6 +68,10 @@ public class MenuScreenController {
     private MenuItemService menuItemService;
 
     @FXML
+    private StackPane modalContainer;
+    private ModalContainer modal;
+
+    @FXML
     private void initialize() { System.out.println(Font.getFamilies());
 
         sidebar.setPrefWidth(EXPANDED_WIDTH);
@@ -79,7 +83,9 @@ public class MenuScreenController {
                 newScene.heightProperty().addListener((obs, oldHeight, newHeight) -> {
                     double screenHeight = newHeight.doubleValue();
                     double buttonHeight = toggleButton.getPrefHeight();
+
                     if (buttonHeight == 0) buttonHeight = 60;
+
                     toggleButton.setText("\uE5CB");
                     toggleButton.setLayoutY(((screenHeight - buttonHeight) / 2) - 110);
                 });
@@ -94,11 +100,36 @@ public class MenuScreenController {
 
         toggleButton.setLayoutX(SIDEBAR_LEFT_ANCHOR + EXPANDED_WIDTH);
         toggleButton.toFront();
+
+        modal = new ModalContainer();
+        modalContainer.getChildren().add(modal);
+
+        modalContainer.setPickOnBounds(false);  // Allow clicks to pass through when empty
+        modalContainer.toFront();
     }
 
     private void loadCategories() {
         List<MenuCategory> categoryList = menuCategoryService.getAll(false);
         categories = FXCollections.observableArrayList(categoryList);
+        populateCategoriesList();
+    }
+
+    private void populateCategoriesList() {
+        categoriesList.getChildren().clear(); // Clear existing UI elements
+        for (MenuCategory category : categories) {
+            Label categoryLabel = new Label(category.getName());
+            categoryLabel.getStyleClass().add("category-item");
+
+            // Add selection handling
+            categoryLabel.setOnMouseClicked(event -> {
+                categoriesList.getChildren().forEach(node -> node.getStyleClass().remove("selected"));
+                categoryLabel.getStyleClass().add("selected");
+                // Uncomment the line below if you want to filter items by category
+                // filterMenuItemsByCategory(category);
+            });
+
+            categoriesList.getChildren().add(categoryLabel); // Add to the VBox
+        }
     }
 
     private void loadMenuItems() {
@@ -137,23 +168,33 @@ public class MenuScreenController {
 
     @FXML
     private void showAddCategoryDialog(ActionEvent event) {
-        MenuCategoryDTO newCategory = new MenuCategoryDTO();
-        newCategory.setName("New Category");
-        newCategory.setDisplayOrder(1);
-        MenuCategory savedCategory = menuCategoryService.create(newCategory);
-        categories.add(savedCategory);
-        refreshCategories(savedCategory);
+        CategoryModalForm form = new CategoryModalForm(
+                () -> modal.hide(),
+                categoryDTO -> {
+                    MenuCategory savedCategory = menuCategoryService.create(categoryDTO);
+                    categories.add(savedCategory);
+                    refreshCategories(savedCategory);
+                    modal.hide();
+                }
+        );
+
+        modal.show(form);
     }
 
     @FXML
     private void showAddItemDialog(ActionEvent event) {
-        MenuItemDTO newItemDTO = new MenuItemDTO();
-        newItemDTO.setName("New Item");
-        newItemDTO.setEmoji("🍔");
-        newItemDTO.setCategoryId(categories.getFirst().getId());
-        MenuItem newItem = menuItemService.create(newItemDTO);
-        menuItems.add(newItem);
-        populateMenuItemFlowPane();
+        MenuItemModalForm form = new MenuItemModalForm(
+                categories,
+                () -> modal.hide(),
+                itemDTO -> {
+                    MenuItem newItem = menuItemService.create(itemDTO);
+                    menuItems.add(newItem);
+                    populateMenuItemFlowPane();
+                    modal.hide();
+                }
+        );
+
+        modal.show(form);
     }
 
     @FXML
@@ -246,18 +287,5 @@ public class MenuScreenController {
 
         timeline.play();
     }
-
-    private void updateToggleButtonPosition(double sidebarWidth) {
-        toggleButton.setLayoutX(SIDEBAR_LEFT_ANCHOR + sidebarWidth);
-        toggleButton.toFront();
-    }
-
-//    private void animateSidebar(double targetWidth) {
-//        Timeline timeline = new Timeline();
-//        KeyValue keyValue = new KeyValue(sidebar.prefWidthProperty(), targetWidth);
-//        KeyFrame keyFrame = new KeyFrame(Duration.millis(300), keyValue);
-//        timeline.getKeyFrames().add(keyFrame);
-//        timeline.play();
-//    }
 
 }

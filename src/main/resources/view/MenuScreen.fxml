@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
 
-    <?import javafx.geometry.Insets?>
-    <?import javafx.scene.control.*?>
-    <?import javafx.scene.layout.*?>
-    <?import javafx.scene.text.Text?>
-    <AnchorPane stylesheets="@/css/menuScreen.css" xmlns:fx="http://javafx.com/fxml" fx:controller="com.yagodaoud.comandae.controller.ui.MenuScreenController">
+<AnchorPane stylesheets="@/css/menuScreen.css"
+            xmlns:fx="http://javafx.com/fxml" fx:controller="com.yagodaoud.comandae.controller.ui.MenuScreenController">
 
+    <StackPane fx:id="modalContainer" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+               AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
 
-        <fx:include source="Sidebar.fxml" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0"/>
+    <fx:include source="Sidebar.fxml" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0"/>
 
     <VBox styleClass="category-sidebar" AnchorPane.leftAnchor="205" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" minWidth="240" maxWidth="240" fx:id="sidebar">
+
         <StackPane styleClass="sidebar-header" fx:id="sidebarHeader">
             <VBox alignment="CENTER" spacing="10">
                 <Region minHeight="10"/>
@@ -28,15 +32,17 @@
             styleClass="toggle-button"
             onAction="#toggleSidebar"/>
 
+    <fx:include source="Header.fxml" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
 
-        <fx:include source="Header.fxml" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+    <VBox AnchorPane.rightAnchor="0" AnchorPane.topAnchor="70" AnchorPane.leftAnchor="460" AnchorPane.bottomAnchor="10">
 
-        <VBox AnchorPane.rightAnchor="0" AnchorPane.topAnchor="70" AnchorPane.leftAnchor="460" AnchorPane.bottomAnchor="10">
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Button text="Add Item" styleClass="primary-button" onAction="#showAddItemDialog"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <TextField fx:id="itemSearchField" promptText="Search items..." styleClass="search-field"/>
-            </HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+
+            <Button text="Add Item" styleClass="primary-button" onAction="#showAddItemDialog"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="itemSearchField" promptText="Search items..." styleClass="search-field"/>
+
+        </HBox>
 
             <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="menu-items-scroll">
                 <FlowPane fx:id="menuItemFlowPane" hgap="20" vgap="40">
