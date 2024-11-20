@@ -9,6 +9,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 
+import java.math.BigDecimal;
+
 public class MenuItemModalForm extends GridPane {
     private final TextField nameField;
     private final TextField emojiField;
@@ -62,11 +64,11 @@ public class MenuItemModalForm extends GridPane {
             item.setName(nameField.getText());
             item.setEmoji(emojiField.getText());
             try {
-//                item.setPrice(Double.parseDouble(priceField.getText()));
+                item.setPrice(BigDecimal.valueOf(Double.parseDouble(priceField.getText())));
             } catch (NumberFormatException ex) {
-//                item.setPrice(0.0);
+                item.setPrice(BigDecimal.valueOf(0.0));
             }
-//            item.setDescription(descriptionArea.getText());
+            item.setDescription(descriptionArea.getText());
             item.setCategoryId(categoryComboBox.getValue().getId());
             onSave.accept(item);
         });

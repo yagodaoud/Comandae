@@ -51,6 +51,8 @@ CREATE TABLE IF NOT EXISTS menu_item (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     emoji VARCHAR(4),
+    price DECIMAL(10, 2) DEFAULT 0,
+    description TEXT,
     category_id BIGINT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,

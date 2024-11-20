@@ -48,6 +48,8 @@ public class MenuItemService implements ServiceInterface<MenuItem, MenuItemDTO> 
         menuItem.setEmoji(entity.getEmoji());
         menuItem.setName(entity.getName());
         menuItem.setCategory(menuCategory);
+        menuItem.setPrice(entity.getPrice());
+        menuItem.setDescription(entity.getDescription());
 
         return menuItemRepository.save(menuItem);
     }
@@ -61,6 +63,8 @@ public class MenuItemService implements ServiceInterface<MenuItem, MenuItemDTO> 
         menuItem.setEmoji(entity.getEmoji());
         menuItem.setName(entity.getName());
         menuItem.setCategory(menuCategory);
+        menuItem.setPrice(entity.getPrice());
+        menuItem.setDescription(entity.getDescription());
 
         return menuItemRepository.save(menuItem);
     }

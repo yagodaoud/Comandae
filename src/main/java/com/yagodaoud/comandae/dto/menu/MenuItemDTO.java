@@ -1,9 +1,13 @@
 package com.yagodaoud.comandae.dto.menu;
 
+import java.math.BigDecimal;
+
 public class MenuItemDTO {
     private Long id;
     private String name;
     private String emoji;
+    private BigDecimal price;
+    private String description;
     private Long categoryId;
 
     public Long getId() {
@@ -28,6 +32,22 @@ public class MenuItemDTO {
 
     public void setEmoji(String emoji) {
         this.emoji = emoji;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Long getCategoryId() {

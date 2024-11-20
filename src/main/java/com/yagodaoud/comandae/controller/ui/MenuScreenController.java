@@ -19,16 +19,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Component
@@ -154,17 +152,36 @@ public class MenuScreenController {
 
         Label nameLabel = new Label(menuItem.getName());
         nameLabel.getStyleClass().add("name");
+        nameLabel.setLayoutX(15);
+        nameLabel.setLayoutY(15);
 
-        Label emojiLabel = new Label(menuItem.getEmoji());
-        emojiLabel.getStyleClass().add("emoji");
+        Label descriptionLabel = new Label(menuItem.getDescription());
+        descriptionLabel.getStyleClass().add("description");
+        descriptionLabel.setLayoutX(15);
+        descriptionLabel.setLayoutY(45);
 
-        Label categoryLabel = new Label(menuItem.getCategory().getName());
-        categoryLabel.getStyleClass().add("category");
+        Label bottomCategoryLabel = new Label(menuItem.getCategory().getName());
+        bottomCategoryLabel.getStyleClass().add("category");
+        bottomCategoryLabel.setLayoutX(320);
+        bottomCategoryLabel.setLayoutY(90);
 
-        VBox cardContent = new VBox(nameLabel, emojiLabel, categoryLabel);
-        cardContent.setSpacing(5);
+        Label priceLabel = new Label(menuItem.getPrice().compareTo(BigDecimal.ZERO) > 0 ? String.format("R$%.2f", menuItem.getPrice()) : "");
+        priceLabel.getStyleClass().add("price");
+        priceLabel.setLayoutX(15);
+        priceLabel.setLayoutY(90);
 
-        card.getChildren().add(cardContent);
+        Button editButton = new Button("\uF88D");
+        editButton.getStyleClass().add("action-button");
+        editButton.setLayoutX(320);
+        editButton.setLayoutY(10);
+
+        Button deleteButton = new Button("\uE872");
+        deleteButton.getStyleClass().add("action-button");
+        deleteButton.setLayoutX(360);
+        deleteButton.setLayoutY(10);
+
+        card.getChildren().addAll(nameLabel, descriptionLabel, bottomCategoryLabel, priceLabel, editButton, deleteButton);
+
         return card;
     }
 
