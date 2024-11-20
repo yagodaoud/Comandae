@@ -192,15 +192,16 @@
 .category-item {
     -fx-padding: 10px;
     -fx-pref-width: 200px;
-    -fx-pref-height: 30px;
+    -fx-min-height: 30px;
     -fx-background-color: white;
     -fx-border-color: #e0e0e0;
     -fx-border-width: 1px;
     -fx-background-radius: 10px;
     -fx-border-radius: 7px;
     -fx-cursor: hand;
-    -fx-alignment: center;
-    -fx-text-alignment: center;
+    -fx-alignment: center-left;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 1);
+    -fx-margin: 0 0 8px 0;
 }
 
 .category-item:hover {
@@ -209,6 +210,28 @@
 
 .category-item.selected {
     -fx-background-color: #e8e8e8;
+}
+
+.category-item.dragging {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #e0e0e0;
+    -fx-opacity: 0.95;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
+}
+
+.category-scroll {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+    -fx-spacing: 8px;
+}
+
+.category-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+#categoriesList {
+    -fx-spacing: 8px;
+    -fx-padding: 4px;
 }
 
 .toggle-button {
@@ -287,4 +310,12 @@
 
 .text-area {
     -fx-pref-height: 100;
+}
+
+.drag-icon {
+    -fx-font-family: "Material Icons";
+    -fx-font-size: 16px;
+    -fx-text-fill: #666;
+    -fx-cursor: move;
+    -fx-padding: 0 5 0 5;
 }

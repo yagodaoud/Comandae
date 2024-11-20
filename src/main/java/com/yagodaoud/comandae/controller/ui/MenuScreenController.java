@@ -1,15 +1,14 @@
 package com.yagodaoud.comandae.controller.ui;
 
 import com.yagodaoud.comandae.controller.ui.component.CategoryModalForm;
+import com.yagodaoud.comandae.controller.ui.component.DraggableCategoryItem;
 import com.yagodaoud.comandae.controller.ui.component.MenuItemModalForm;
 import com.yagodaoud.comandae.controller.ui.component.ModalContainer;
-import com.yagodaoud.comandae.dto.menu.MenuCategoryDTO;
-import com.yagodaoud.comandae.dto.menu.MenuItemDTO;
 import com.yagodaoud.comandae.model.NavigationScreen;
 import com.yagodaoud.comandae.model.menu.MenuCategory;
 import com.yagodaoud.comandae.model.menu.MenuItem;
-import com.yagodaoud.comandae.service.menu.MenuItemService;
 import com.yagodaoud.comandae.service.menu.MenuCategoryService;
+import com.yagodaoud.comandae.service.menu.MenuItemService;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -17,7 +16,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -104,7 +105,7 @@ public class MenuScreenController {
         modal = new ModalContainer();
         modalContainer.getChildren().add(modal);
 
-        modalContainer.setPickOnBounds(false);  // Allow clicks to pass through when empty
+        modalContainer.setPickOnBounds(false);
         modalContainer.toFront();
     }
 
@@ -115,20 +116,21 @@ public class MenuScreenController {
     }
 
     private void populateCategoriesList() {
-        categoriesList.getChildren().clear(); // Clear existing UI elements
+        categoriesList.getChildren().clear();
         for (MenuCategory category : categories) {
-            Label categoryLabel = new Label(category.getName());
-            categoryLabel.getStyleClass().add("category-item");
+            DraggableCategoryItem categoryItem = new DraggableCategoryItem(category.getName());
 
-            // Add selection handling
-            categoryLabel.setOnMouseClicked(event -> {
-                categoriesList.getChildren().forEach(node -> node.getStyleClass().remove("selected"));
-                categoryLabel.getStyleClass().add("selected");
-                // Uncomment the line below if you want to filter items by category
+            categoryItem.setOnMouseClicked(event -> {
+                categoriesList.getChildren().forEach(node -> {
+                    if (node instanceof DraggableCategoryItem) {
+                        ((DraggableCategoryItem) node).setSelected(false);
+                    }
+                });
+                categoryItem.setSelected(true);
                 // filterMenuItemsByCategory(category);
             });
 
-            categoriesList.getChildren().add(categoryLabel); // Add to the VBox
+            categoriesList.getChildren().add(categoryItem);
         }
     }
 
@@ -199,16 +201,19 @@ public class MenuScreenController {
 
     @FXML
     private void refreshCategories(MenuCategory newCategory) {
-        Label categoryLabel = new Label(newCategory.getName());
-        categoryLabel.getStyleClass().add("category-item");
+        DraggableCategoryItem categoryItem = new DraggableCategoryItem(newCategory.getName());
 
-        categoryLabel.setOnMouseClicked(event -> {
-            categoriesList.getChildren().forEach(node -> node.getStyleClass().remove("selected"));
-            categoryLabel.getStyleClass().add("selected");
-//            filterMenuItemsByCategory(newCategory);
+        categoryItem.setOnMouseClicked(event -> {
+            categoriesList.getChildren().forEach(node -> {
+                if (node instanceof DraggableCategoryItem) {
+                    ((DraggableCategoryItem) node).setSelected(false);
+                }
+            });
+            categoryItem.setSelected(true);
+            // filterMenuItemsByCategory(newCategory);
         });
 
-        categoriesList.getChildren().add(categoryLabel);
+        categoriesList.getChildren().add(categoryItem);
     }
 
     @FXML
@@ -287,5 +292,4 @@ public class MenuScreenController {
 
         timeline.play();
     }
-
 }
