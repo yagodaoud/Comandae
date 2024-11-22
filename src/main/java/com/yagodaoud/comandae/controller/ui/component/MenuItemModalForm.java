@@ -4,6 +4,7 @@ import com.yagodaoud.comandae.dto.menu.MenuItemDTO;
 import com.yagodaoud.comandae.model.menu.MenuCategory;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -39,6 +40,7 @@ public class MenuItemModalForm extends GridPane {
 
         emojiField = new TextField();
         emojiField.setPromptText("Item emoji");
+        emojiField.setStyle("-fx-font-family: 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji';");
         addFormRow("Emoji:", emojiField, 2);
 
         priceField = new TextField();

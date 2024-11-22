@@ -170,6 +170,11 @@ public class MenuScreenController {
         priceLabel.setLayoutX(15);
         priceLabel.setLayoutY(90);
 
+        Label emojiLabel = new Label(menuItem.getEmoji());
+        emojiLabel.getStyleClass().add("emoji");
+        emojiLabel.setLayoutX(50);
+        emojiLabel.setLayoutY(90);
+
         Button editButton = new Button("\uF88D");
         editButton.getStyleClass().add("action-button");
         editButton.setLayoutX(320);

@@ -57,6 +57,11 @@
     -fx-text-fill: black;
 }
 
+.menu-item-card .emoji {
+    -fx-font-family: "noto-fonts-emoji";
+    -fx-font-size: 30px;
+}
+
 .menu-item-card .description {
     -fx-font-size: 14px;
     -fx-text-fill: #777777;

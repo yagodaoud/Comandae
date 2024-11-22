@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS menu_category (
 CREATE TABLE IF NOT EXISTS menu_item (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
-    emoji VARCHAR(4),
+    emoji VARCHAR(10) CHARACTER SET utf8mb4,
     price DECIMAL(10, 2) DEFAULT 0,
     description TEXT,
     category_id BIGINT NOT NULL,
