@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -157,6 +158,8 @@ public class MenuScreenController {
 
         Label descriptionLabel = new Label(menuItem.getDescription());
         descriptionLabel.getStyleClass().add("description");
+        descriptionLabel.setWrapText(true);
+        descriptionLabel.setPrefWidth(370);
         descriptionLabel.setLayoutX(15);
         descriptionLabel.setLayoutY(45);
 
@@ -179,13 +182,14 @@ public class MenuScreenController {
         editButton.getStyleClass().add("action-button");
         editButton.setLayoutX(320);
         editButton.setLayoutY(10);
+        editButton.setOnAction(e -> showEditItemDialog(menuItem));
 
         Button deleteButton = new Button("\uE872");
         deleteButton.getStyleClass().add("action-button");
         deleteButton.setLayoutX(360);
         deleteButton.setLayoutY(10);
 
-        card.getChildren().addAll(nameLabel, descriptionLabel, bottomCategoryLabel, priceLabel, editButton, deleteButton);
+        card.getChildren().addAll(nameLabel, descriptionLabel, bottomCategoryLabel, priceLabel, emojiLabel, editButton, deleteButton);
 
         return card;
     }
@@ -216,6 +220,26 @@ public class MenuScreenController {
                     populateMenuItemFlowPane();
                     modal.hide();
                 }
+        );
+
+        modal.show(form);
+    }
+
+    private void showEditItemDialog(MenuItem menuItem) {
+        MenuItemModalForm form = new MenuItemModalForm(
+                categories,
+                () -> modal.hide(),
+                itemDTO -> {
+                    MenuItem updatedItem = menuItemService.update(itemDTO.getId(), itemDTO);
+                    // Find and replace the item in the observable list
+                    int index = menuItems.indexOf(menuItem);
+                    if (index >= 0) {
+                        menuItems.set(index, updatedItem);
+                    }
+                    populateMenuItemFlowPane();
+                    modal.hide();
+                },
+                menuItem
         );
 
         modal.show(form);

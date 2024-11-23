@@ -2,9 +2,9 @@ package com.yagodaoud.comandae.controller.ui.component;
 
 import com.yagodaoud.comandae.dto.menu.MenuItemDTO;
 import com.yagodaoud.comandae.model.menu.MenuCategory;
+import com.yagodaoud.comandae.model.menu.MenuItem;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.input.Clipboard;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -20,6 +20,36 @@ public class MenuItemModalForm extends GridPane {
     private final ComboBox<MenuCategory> categoryComboBox;
     private final Button saveButton;
     private final Button cancelButton;
+    private Long editingItemId;
+
+    public MenuItemModalForm(java.util.List<MenuCategory> categories,
+                             Runnable onCancel,
+                             java.util.function.Consumer<MenuItemDTO> onSave,
+                             MenuItem existingItem) {
+        this(categories, onCancel, onSave);
+        this.editingItemId = existingItem != null ? existingItem.getId() : null;
+
+        Text title = (Text) getChildren().stream()
+                .filter(node -> node instanceof Text)
+                .findFirst()
+                .orElse(null);
+        if (title != null) {
+            title.setText("Edit Menu Item");
+        }
+
+        if (existingItem != null) {
+            nameField.setText(existingItem.getName());
+            emojiField.setText(existingItem.getEmoji());
+            priceField.setText(existingItem.getPrice().toString());
+            descriptionArea.setText(existingItem.getDescription());
+
+            MenuCategory categoryToSelect = categories.stream()
+                    .filter(category -> category.getId().equals(existingItem.getCategory().getId()))
+                    .findFirst()
+                    .orElse(null);
+            categoryComboBox.getSelectionModel().select(categoryToSelect);
+        }
+    }
 
     public MenuItemModalForm(java.util.List<MenuCategory> categories,
                              Runnable onCancel,
@@ -27,13 +57,12 @@ public class MenuItemModalForm extends GridPane {
         setHgap(10);
         setVgap(15);
         getStyleClass().add("modal-form");
+        this.editingItemId = null;
 
-        // Title
         Text title = new Text("Add Menu Item");
         title.getStyleClass().add("modal-title");
         add(title, 0, 0, 2, 1);
 
-        // Form fields
         nameField = new TextField();
         nameField.setPromptText("Item name");
         addFormRow("Name:", nameField, 1);
@@ -58,11 +87,11 @@ public class MenuItemModalForm extends GridPane {
         descriptionArea.setPrefRowCount(3);
         addFormRow("Description:", descriptionArea, 5);
 
-        // Buttons
         saveButton = new Button("Save");
         saveButton.getStyleClass().addAll("button", "primary-button");
         saveButton.setOnAction(e -> {
             MenuItemDTO item = new MenuItemDTO();
+            item.setId(editingItemId);
             item.setName(nameField.getText());
             item.setEmoji(emojiField.getText());
             try {
@@ -83,7 +112,6 @@ public class MenuItemModalForm extends GridPane {
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
         add(buttonBox, 0, 6, 2, 1);
 
-        // Validation
         setupValidation();
     }
 
@@ -92,7 +120,11 @@ public class MenuItemModalForm extends GridPane {
             @Override
             protected void updateItem(MenuCategory item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(empty ? null : item.getName());
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getName());
+                }
             }
         });
 
@@ -100,7 +132,11 @@ public class MenuItemModalForm extends GridPane {
             @Override
             protected void updateItem(MenuCategory item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(empty ? null : item.getName());
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getName());
+                }
             }
         });
     }
@@ -108,7 +144,6 @@ public class MenuItemModalForm extends GridPane {
     private void setupValidation() {
         saveButton.setDisable(true);
 
-        // Enable save button only when required fields are filled
         nameField.textProperty().addListener((obs, old, newValue) -> validateInput());
         priceField.textProperty().addListener((obs, old, newValue) -> validateInput());
         categoryComboBox.valueProperty().addListener((obs, old, newValue) -> validateInput());
