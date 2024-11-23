@@ -67,7 +67,7 @@ public class ModalContainer extends StackPane {
         fadeOut.setOnFinished(e -> {
             modalOverlay.setVisible(false);
             modalContent.getChildren().clear();
-            setPickOnBounds(false);  // Disable mouse event interception when hidden
+            setPickOnBounds(false);
         });
         fadeOut.play();
     }

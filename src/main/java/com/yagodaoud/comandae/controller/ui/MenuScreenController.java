@@ -1,9 +1,6 @@
 package com.yagodaoud.comandae.controller.ui;
 
-import com.yagodaoud.comandae.controller.ui.component.CategoryModalForm;
-import com.yagodaoud.comandae.controller.ui.component.DraggableCategoryItem;
-import com.yagodaoud.comandae.controller.ui.component.MenuItemModalForm;
-import com.yagodaoud.comandae.controller.ui.component.ModalContainer;
+import com.yagodaoud.comandae.controller.ui.component.*;
 import com.yagodaoud.comandae.model.NavigationScreen;
 import com.yagodaoud.comandae.model.menu.MenuCategory;
 import com.yagodaoud.comandae.model.menu.MenuItem;
@@ -16,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -188,6 +186,7 @@ public class MenuScreenController {
         deleteButton.getStyleClass().add("action-button");
         deleteButton.setLayoutX(360);
         deleteButton.setLayoutY(10);
+        deleteButton.setOnAction(e -> showDeleteConfirmationDialog(menuItem));
 
         card.getChildren().addAll(nameLabel, descriptionLabel, bottomCategoryLabel, priceLabel, emojiLabel, editButton, deleteButton);
 
@@ -231,7 +230,6 @@ public class MenuScreenController {
                 () -> modal.hide(),
                 itemDTO -> {
                     MenuItem updatedItem = menuItemService.update(itemDTO.getId(), itemDTO);
-                    // Find and replace the item in the observable list
                     int index = menuItems.indexOf(menuItem);
                     if (index >= 0) {
                         menuItems.set(index, updatedItem);
@@ -243,6 +241,23 @@ public class MenuScreenController {
         );
 
         modal.show(form);
+    }
+
+    private void showDeleteConfirmationDialog(MenuItem menuItem) {
+        String message = String.format("Do you want to delete \"%s\"?", menuItem.getName());
+
+        DeleteConfirmationModal confirmationModal = new DeleteConfirmationModal(
+                message,
+                () -> modal.hide(),
+                () -> {
+                    menuItemService.delete(menuItem.getId());
+                    menuItems.remove(menuItem);
+                    populateMenuItemFlowPane();
+                    modal.hide();
+                }
+        );
+
+        modal.show(confirmationModal);
     }
 
     @FXML

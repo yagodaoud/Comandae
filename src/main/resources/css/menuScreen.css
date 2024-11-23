@@ -371,3 +371,31 @@
     -fx-cursor: move;
     -fx-padding: 0 5 0 5;
 }
+
+.confirmation-message {
+    -fx-font-size: 14px;
+    -fx-padding: 0;
+    -fx-fill: #333333;
+}
+
+.danger-button {
+    -fx-background-color: #e85b27;
+    -fx-text-fill: white;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.danger-button:hover {
+    -fx-background-color: #c82333;
+}
+
+.secondary-button {
+    -fx-background-color: #e9ecef;
+    -fx-text-fill: #333333;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #dae0e5;
+}
