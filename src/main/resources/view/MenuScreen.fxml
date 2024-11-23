@@ -39,6 +39,8 @@
         <HBox spacing="10" alignment="CENTER_LEFT">
 
             <Button text="Add Item" styleClass="primary-button" onAction="#showAddItemDialog"/>
+            <Button text="Generate Menu" styleClass="primary-button" onAction="#showGenerateMenuDialog"/>
+
             <Region HBox.hgrow="ALWAYS"/>
             <TextField fx:id="itemSearchField" promptText="Search items..." styleClass="search-field"/>
 

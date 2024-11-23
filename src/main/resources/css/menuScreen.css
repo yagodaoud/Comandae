@@ -399,3 +399,48 @@
 .secondary-button:hover {
     -fx-background-color: #dae0e5;
 }
+
+.menu-generation-scroll {
+    -fx-background-color: transparent;
+    -fx-max-height: 400px;
+}
+
+.menu-generation-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+.category-header {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0 5 0;
+    -fx-text-fill: #333333;
+}
+
+.menu-item-checkbox {
+    -fx-padding: 5 10;
+}
+
+.menu-item-checkbox:hover {
+    -fx-background-color: #f8f8f8;
+    -fx-background-radius: 4;
+}
+
+.menu-item-checkbox .box {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 3px;
+}
+
+.menu-item-checkbox:selected .box {
+    -fx-background-color: #e85b27;
+    -fx-border-color: #e85b27;
+}
+
+.menu-item-checkbox:selected .mark {
+    -fx-background-color: white;
+}
+
+.price-label {
+    -fx-text-fill: #666666;
+    -fx-font-size: 12px;
+}

@@ -26,7 +26,10 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 @Lazy
@@ -352,5 +355,59 @@ public class MenuScreenController {
         }
 
         timeline.play();
+    }
+
+    @FXML
+    private void showGenerateMenuDialog() {
+        MenuGenerationModal form = new MenuGenerationModal(
+                menuItems,
+                () -> modal.hide(),
+                () -> {
+                    List<MenuItem> selectedItems = ((MenuGenerationModal) modal
+                            .getChildren()
+                            .get(0)
+                            .lookup(".modal-form"))
+                            .getSelectedItems();
+
+                    System.out.println("Selected items: " + selectedItems.size());
+
+                    System.out.println(getFormattedMenu(selectedItems));
+
+                    modal.hide();
+                }
+        );
+
+        modal.show(form);
+    }
+
+    private String getFormattedMenu(List<MenuItem> menuItems) {
+        Map<MenuCategory, List<MenuItem>> itemsByCategory = menuItems.stream()
+                .collect(Collectors.groupingBy(MenuItem::getCategory));
+
+        List<Map.Entry<MenuCategory, List<MenuItem>>> sortedCategories = itemsByCategory.entrySet()
+                .stream()
+                .sorted((a, b) -> {
+                    Integer orderA = a.getKey().getDisplayOrder() != null ? a.getKey().getDisplayOrder() : Integer.MAX_VALUE;
+                    Integer orderB = b.getKey().getDisplayOrder() != null ? b.getKey().getDisplayOrder() : Integer.MAX_VALUE;
+                    return orderA.compareTo(orderB);
+                })
+                .collect(Collectors.toList());
+
+        StringBuilder menuText = new StringBuilder();
+
+        for (Map.Entry<MenuCategory, List<MenuItem>> entry : sortedCategories) {
+            List<MenuItem> items = entry.getValue();
+
+            items.sort(Comparator.comparing(MenuItem::getName, String.CASE_INSENSITIVE_ORDER));
+
+            for (MenuItem item : items) {
+                String emoji = item.getEmoji() != null ? item.getEmoji() : "•";
+                menuText.append(emoji).append(item.getName()).append("\n");
+            }
+
+            menuText.append("\n");
+        }
+
+        return menuText.toString();
     }
 }
