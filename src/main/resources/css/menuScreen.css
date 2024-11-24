@@ -444,3 +444,44 @@
     -fx-text-fill: #666666;
     -fx-font-size: 12px;
 }
+
+.menu-text-area {
+    -fx-font-family: monospace;
+    -fx-font-size: 14px;
+    -fx-pref-height: 400px;
+}
+
+.menu-text-area .content {
+    -fx-background-color: -fx-background;
+}
+
+.menu-text-area:focused {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-padding: 0;
+    -fx-shape: null;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    visibility: hidden;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #e85b27;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-padding: 2;
+    -fx-background-radius: 10;
+}

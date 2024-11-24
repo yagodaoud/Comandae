@@ -8,15 +8,17 @@ import com.yagodaoud.comandae.service.menu.MenuCategoryService;
 import com.yagodaoud.comandae.service.menu.MenuItemService;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -367,12 +369,25 @@ public class MenuScreenController {
                             .lookup(".modal-form"))
                             .getSelectedItems();
 
-                    System.out.println("Selected items: " + selectedItems.size());
-
-                    System.out.println(getFormattedMenu(selectedItems));
-
-                    modal.hide();
+                    if (selectedItems.isEmpty()) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("No Items Selected");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Please select at least one item to generate the menu.");
+                        alert.showAndWait();
+                        return;
+                    }
+                    showGeneratedMenuModal(getFormattedMenu(selectedItems));
                 }
+        );
+
+        modal.show(form);
+    }
+
+    private void showGeneratedMenuModal(String menuContent) {
+        GeneratedMenuModal form = new GeneratedMenuModal(
+                menuContent,
+                () -> modal.hide()
         );
 
         modal.show(form);
