@@ -26,9 +26,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -381,8 +379,11 @@ public class MenuScreenController {
     }
 
     private String getFormattedMenu(List<MenuItem> menuItems) {
-        Map<MenuCategory, List<MenuItem>> itemsByCategory = menuItems.stream()
-                .collect(Collectors.groupingBy(MenuItem::getCategory));
+        Map<MenuCategory, List<MenuItem>> itemsByCategory = new LinkedHashMap<>();
+
+        for (MenuItem item : menuItems) {
+            itemsByCategory.computeIfAbsent(item.getCategory(), k -> new ArrayList<>()).add(item);
+        }
 
         List<Map.Entry<MenuCategory, List<MenuItem>>> sortedCategories = itemsByCategory.entrySet()
                 .stream()
@@ -397,8 +398,6 @@ public class MenuScreenController {
 
         for (Map.Entry<MenuCategory, List<MenuItem>> entry : sortedCategories) {
             List<MenuItem> items = entry.getValue();
-
-            items.sort(Comparator.comparing(MenuItem::getName, String.CASE_INSENSITIVE_ORDER));
 
             for (MenuItem item : items) {
                 String emoji = item.getEmoji() != null ? item.getEmoji() : "•";

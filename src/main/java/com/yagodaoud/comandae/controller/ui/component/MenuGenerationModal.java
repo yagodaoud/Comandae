@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.scene.layout.HBox;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class MenuGenerationModal extends VBox {
     private final List<MenuItem> menuItems;
     private final Runnable onClose;
     private final Runnable onGenerate;
+    private final List<MenuItem> selectedItemsOrder = new ArrayList<>();
 
     public MenuGenerationModal(
             List<MenuItem> items,
@@ -80,7 +82,15 @@ public class MenuGenerationModal extends VBox {
                         checkBox.setUserData(item);
                         checkBox.getStyleClass().add("menu-item-checkbox");
 
-                        // Add price if available
+                        checkBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+                            MenuItem menuItem = (MenuItem) checkBox.getUserData();
+                            if (isSelected) {
+                                selectedItemsOrder.add(menuItem);
+                            } else {
+                                selectedItemsOrder.remove(menuItem);
+                            }
+                        });
+
                         if (item.getPrice() != null && item.getPrice().compareTo(BigDecimal.ZERO) > 0) {
                             HBox itemBox = new HBox();
                             itemBox.setSpacing(10);
@@ -119,10 +129,7 @@ public class MenuGenerationModal extends VBox {
     }
 
     public List<MenuItem> getSelectedItems() {
-        return getAllCheckBoxes().stream()
-                .filter(CheckBox::isSelected)
-                .map(cb -> (MenuItem) cb.getUserData())
-                .collect(Collectors.toList());
+        return new ArrayList<>(selectedItemsOrder);
     }
 
     private List<CheckBox> getAllCheckBoxes() {
