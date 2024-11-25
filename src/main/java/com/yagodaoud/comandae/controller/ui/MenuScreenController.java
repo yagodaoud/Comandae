@@ -64,6 +64,7 @@ public class MenuScreenController {
 
     private ObservableList<MenuCategory> categories;
     private ObservableList<MenuItem> menuItems;
+    private MenuCategory selectedCategory = null;
 
     @Autowired
     private MenuCategoryService menuCategoryService;
@@ -120,27 +121,54 @@ public class MenuScreenController {
 
     private void populateCategoriesList() {
         categoriesList.getChildren().clear();
+
         for (MenuCategory category : categories) {
             DraggableCategoryItem categoryItem = new DraggableCategoryItem(category.getName());
 
             categoryItem.setOnMouseClicked(event -> {
-                categoriesList.getChildren().forEach(node -> {
-                    if (node instanceof DraggableCategoryItem) {
-                        ((DraggableCategoryItem) node).setSelected(false);
-                    }
-                });
-                categoryItem.setSelected(true);
-                // filterMenuItemsByCategory(category);
+                if (categoryItem.getStyleClass().contains("selected")) {
+                    categoryItem.setSelected(false);
+                    selectedCategory = null;
+                    filterMenuItemsByCategory(null);
+                } else {
+                    categoriesList.getChildren().forEach(node -> {
+                        if (node instanceof DraggableCategoryItem) {
+                            ((DraggableCategoryItem) node).setSelected(false);
+                        }
+                    });
+                    categoryItem.setSelected(true);
+                    selectedCategory = category;
+                    filterMenuItemsByCategory(category);
+                }
             });
 
             categoriesList.getChildren().add(categoryItem);
         }
     }
 
+    private void filterMenuItemsByCategory(MenuCategory category) {
+        menuItemFlowPane.getChildren().clear();
+
+        if (category == null) {
+            for (MenuItem menuItem : menuItems) {
+                Pane menuItemCard = createMenuItemCard(menuItem);
+                menuItemFlowPane.getChildren().add(menuItemCard);
+            }
+        } else {
+            for (MenuItem menuItem : menuItems) {
+                if (menuItem.getCategory().getId().equals(category.getId())) {
+                    Pane menuItemCard = createMenuItemCard(menuItem);
+                    menuItemFlowPane.getChildren().add(menuItemCard);
+                }
+            }
+        }
+    }
+
+
     private void loadMenuItems() {
         List<MenuItem> itemList = menuItemService.getAll(false);
         menuItems = FXCollections.observableArrayList(itemList);
-        populateMenuItemFlowPane();
+        filterMenuItemsByCategory(selectedCategory);
     }
 
     private void populateMenuItemFlowPane() {
@@ -271,13 +299,20 @@ public class MenuScreenController {
         DraggableCategoryItem categoryItem = new DraggableCategoryItem(newCategory.getName());
 
         categoryItem.setOnMouseClicked(event -> {
-            categoriesList.getChildren().forEach(node -> {
-                if (node instanceof DraggableCategoryItem) {
-                    ((DraggableCategoryItem) node).setSelected(false);
-                }
-            });
-            categoryItem.setSelected(true);
-            // filterMenuItemsByCategory(newCategory);
+            if (categoryItem.getStyleClass().contains("selected")) {
+                categoryItem.setSelected(false);
+                selectedCategory = null;
+                filterMenuItemsByCategory(null);
+            } else {
+                categoriesList.getChildren().forEach(node -> {
+                    if (node instanceof DraggableCategoryItem) {
+                        ((DraggableCategoryItem) node).setSelected(false);
+                    }
+                });
+                categoryItem.setSelected(true);
+                selectedCategory = newCategory;
+                filterMenuItemsByCategory(newCategory);
+            }
         });
 
         categoriesList.getChildren().add(categoryItem);
