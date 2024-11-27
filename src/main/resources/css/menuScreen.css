@@ -506,3 +506,7 @@
     -fx-text-fill: #333333;
     -fx-padding: 0 0 5 0;
 }
+
+.search-field {
+    -fx-translate-x: 600;
+}

@@ -19,10 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -48,12 +45,15 @@ public class MenuScreenController {
     @Autowired
     private SidebarController sidebarController;
 
-    @FXML private FlowPane menuItemFlowPane;
+    @FXML
+    private FlowPane menuItemFlowPane;
 
     @FXML
     private VBox sidebar;
-    @FXML private StackPane sidebarHeader;
-    @FXML private ScrollPane categoryScroll;
+    @FXML
+    private StackPane sidebarHeader;
+    @FXML
+    private ScrollPane categoryScroll;
 
     @FXML
     private Button toggleButton;
@@ -67,6 +67,9 @@ public class MenuScreenController {
 
     @FXML
     private VBox categoriesList;
+
+    @FXML
+    private TextField itemSearchField;
 
     @Autowired
     private MenuHeaderService menuHeaderService;
@@ -95,7 +98,8 @@ public class MenuScreenController {
     private ModalContainer modal;
 
     @FXML
-    private void initialize() { System.out.println(Font.getFamilies());
+    private void initialize() {
+        System.out.println(Font.getFamilies());
 
         sidebar.setPrefWidth(EXPANDED_WIDTH);
         sidebar.setMinWidth(0);
@@ -113,6 +117,10 @@ public class MenuScreenController {
                     toggleButton.setLayoutY(((screenHeight - buttonHeight) / 2) - 110);
                 });
             }
+        });
+
+        itemSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterMenuItems(newValue);
         });
 
         sidebarHeader.maxWidthProperty().bind(sidebar.prefWidthProperty());
@@ -351,7 +359,7 @@ public class MenuScreenController {
     }
 
     @FXML
-    private void toggleSidebar()        {
+    private void toggleSidebar() {
         double targetWidth = isSidebarExpanded ? COLLAPSED_WIDTH : EXPANDED_WIDTH;
 
         double targetButtonX = isSidebarExpanded ?
@@ -547,5 +555,28 @@ public class MenuScreenController {
         }
 
         return menuText.toString();
+    }
+
+    private void filterMenuItems(String searchText) {
+        if (searchText == null || searchText.trim().isEmpty()) {
+            populateMenuItemFlowPane();
+            return;
+        }
+
+        String lowerCaseSearchText = searchText.toLowerCase().trim();
+
+        menuItemFlowPane.getChildren().clear();
+
+        for (MenuItem menuItem : menuItems) {
+            boolean matches =
+                    menuItem.getName().toLowerCase().contains(lowerCaseSearchText) ||
+                            menuItem.getDescription().toLowerCase().contains(lowerCaseSearchText) ||
+                            menuItem.getCategory().getName().toLowerCase().contains(lowerCaseSearchText);
+
+            if (matches) {
+                Pane menuItemCard = createMenuItemCard(menuItem);
+                menuItemFlowPane.getChildren().add(menuItemCard);
+            }
+        }
     }
 }
