@@ -72,21 +72,3 @@ CREATE TABLE IF NOT EXISTS menu_footer (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP
 );
-
-CREATE TABLE IF NOT EXISTS daily_menu (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    footer_id BIGINT,
-    header_id BIGINT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP,
-    FOREIGN KEY (footer_id) REFERENCES menu_footer(id),
-    FOREIGN KEY (header_id) REFERENCES menu_header(id)
-);
-
-CREATE TABLE IF NOT EXISTS daily_menu_item (
-    menu_id BIGINT NOT NULL,
-    menu_item_id BIGINT NOT NULL,
-    FOREIGN KEY (menu_id) REFERENCES daily_menu(id) ON DELETE CASCADE,
-    FOREIGN KEY (menu_item_id) REFERENCES menu_item(id) ON DELETE CASCADE,
-    PRIMARY KEY (menu_id, menu_item_id)
-);

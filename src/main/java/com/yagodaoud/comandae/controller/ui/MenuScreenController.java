@@ -1,10 +1,16 @@
 package com.yagodaoud.comandae.controller.ui;
 
 import com.yagodaoud.comandae.controller.ui.component.*;
+import com.yagodaoud.comandae.dto.menu.MenuFooterDTO;
+import com.yagodaoud.comandae.dto.menu.MenuHeaderDTO;
 import com.yagodaoud.comandae.model.NavigationScreen;
 import com.yagodaoud.comandae.model.menu.MenuCategory;
+import com.yagodaoud.comandae.model.menu.MenuFooter;
+import com.yagodaoud.comandae.model.menu.MenuHeader;
 import com.yagodaoud.comandae.model.menu.MenuItem;
 import com.yagodaoud.comandae.service.menu.MenuCategoryService;
+import com.yagodaoud.comandae.service.menu.MenuFooterService;
+import com.yagodaoud.comandae.service.menu.MenuHeaderService;
 import com.yagodaoud.comandae.service.menu.MenuItemService;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -62,6 +68,18 @@ public class MenuScreenController {
     @FXML
     private VBox categoriesList;
 
+    @Autowired
+    private MenuHeaderService menuHeaderService;
+
+    @Autowired
+    private MenuFooterService menuFooterService;
+
+    private String menuHeader = "";
+    private String menuFooter = "";
+
+    private MenuHeader currentMenuHeader;
+    private MenuFooter currentMenuFooter;
+
     private ObservableList<MenuCategory> categories;
     private ObservableList<MenuItem> menuItems;
     private MenuCategory selectedCategory = null;
@@ -102,6 +120,8 @@ public class MenuScreenController {
         sidebarController.setSelectedScreen(NavigationScreen.MENU);
         loadCategories();
         loadMenuItems();
+
+        loadMenuSettings();
 
         toggleButton.setLayoutX(SIDEBAR_LEFT_ANCHOR + EXPANDED_WIDTH);
         toggleButton.toFront();
@@ -169,6 +189,18 @@ public class MenuScreenController {
         List<MenuItem> itemList = menuItemService.getAll(false);
         menuItems = FXCollections.observableArrayList(itemList);
         filterMenuItemsByCategory(selectedCategory);
+    }
+
+    private void loadMenuSettings() {
+        // Get the most recent header and footer
+        List<MenuHeader> headers = menuHeaderService.getAll(false);
+        List<MenuFooter> footers = menuFooterService.getAll(false);
+
+        currentMenuHeader = headers.isEmpty() ? null : headers.get(headers.size() - 1);
+        currentMenuFooter = footers.isEmpty() ? null : footers.get(footers.size() - 1);
+
+        menuHeader = currentMenuHeader != null ? currentMenuHeader.getHeader() : "";
+        menuFooter = currentMenuFooter != null ? currentMenuFooter.getFooter() : "";
     }
 
     private void populateMenuItemFlowPane() {
@@ -431,7 +463,59 @@ public class MenuScreenController {
         modal.show(form);
     }
 
+    @FXML
+    private void showMenuSettingsDialog() {
+        MenuSettingsModal form = new MenuSettingsModal(
+                menuHeader,
+                menuFooter,
+                () -> modal.hide(),
+                () -> {
+                    MenuSettingsModal settingsModal = (MenuSettingsModal) modal
+                            .getChildren()
+                            .get(0)
+                            .lookup(".modal-form");
+
+                    String newHeader = settingsModal.getHeaderText();
+                    String newFooter = settingsModal.getFooterText();
+
+                    if (!newHeader.equals(menuHeader)) {
+                        MenuHeaderDTO headerDTO = new MenuHeaderDTO();
+                        headerDTO.setHeader(newHeader);
+                        if (currentMenuHeader != null) {
+                            headerDTO.setId(currentMenuHeader.getId());
+                            currentMenuHeader = menuHeaderService.update(currentMenuHeader.getId(), headerDTO);
+                        } else {
+                            currentMenuHeader = menuHeaderService.create(headerDTO);
+                        }
+                        menuHeader = newHeader;
+                    }
+
+                    if (!newFooter.equals(menuFooter)) {
+                        MenuFooterDTO footerDTO = new MenuFooterDTO();
+                        footerDTO.setFooter(newFooter);
+                        if (currentMenuFooter != null) {
+                            footerDTO.setId(currentMenuFooter.getId());
+                            currentMenuFooter = menuFooterService.update(currentMenuFooter.getId(), footerDTO);
+                        } else {
+                            currentMenuFooter = menuFooterService.create(footerDTO);
+                        }
+                        menuFooter = newFooter;
+                    }
+
+                    modal.hide();
+                }
+        );
+
+        modal.show(form);
+    }
+
     private String getFormattedMenu(List<MenuItem> menuItems) {
+        StringBuilder menuText = new StringBuilder();
+
+        if (menuHeader != null && !menuHeader.trim().isEmpty()) {
+            menuText.append(menuHeader).append("\n\n");
+        }
+
         Map<MenuCategory, List<MenuItem>> itemsByCategory = new LinkedHashMap<>();
 
         for (MenuItem item : menuItems) {
@@ -447,8 +531,6 @@ public class MenuScreenController {
                 })
                 .collect(Collectors.toList());
 
-        StringBuilder menuText = new StringBuilder();
-
         for (Map.Entry<MenuCategory, List<MenuItem>> entry : sortedCategories) {
             List<MenuItem> items = entry.getValue();
 
@@ -458,6 +540,10 @@ public class MenuScreenController {
             }
 
             menuText.append("\n");
+        }
+
+        if (menuFooter != null && !menuFooter.trim().isEmpty()) {
+            menuText.append(menuFooter);
         }
 
         return menuText.toString();

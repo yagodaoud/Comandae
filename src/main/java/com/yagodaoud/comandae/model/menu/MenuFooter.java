@@ -9,7 +9,7 @@ import org.hibernate.annotations.SQLDelete;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "menu_header")
+@Table(name = "menu_footer")
 @SQLDelete(sql = "UPDATE menu_header SET deleted_at = NOW() WHERE id=?")
 @FilterDef(name = "deletedMenuFooterFilter", parameters = @ParamDef(name = "isDeleted", type = Boolean.class))
 @Filter(name = "deletedMenuFooterFilter", condition = "deleted_at IS NULL")

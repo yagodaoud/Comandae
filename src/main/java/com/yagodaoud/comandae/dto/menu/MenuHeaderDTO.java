@@ -19,4 +19,12 @@ public class MenuHeaderDTO {
     public void setHeader(String header) {
         this.header = header;
     }
+
+    @Override
+    public String toString() {
+        return "MenuHeaderDTO{" +
+                "id=" + id +
+                ", header='" + header + '\'' +
+                '}';
+    }
 }

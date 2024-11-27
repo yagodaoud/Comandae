@@ -40,6 +40,7 @@
 
             <Button text="Add Item" styleClass="primary-button" onAction="#showAddItemDialog"/>
             <Button text="Generate Menu" styleClass="primary-button" onAction="#showGenerateMenuDialog"/>
+            <Button text="Menu Settings" styleClass="primary-button" onAction="#showMenuSettingsDialog" />
 
             <Region HBox.hgrow="ALWAYS"/>
             <TextField fx:id="itemSearchField" promptText="Search items..." styleClass="search-field"/>

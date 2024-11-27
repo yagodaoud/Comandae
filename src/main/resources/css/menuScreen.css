@@ -485,3 +485,24 @@
     -fx-padding: 2;
     -fx-background-radius: 10;
 }
+
+.menu-settings-textarea {
+    -fx-pref-width: 460px;
+    -fx-pref-height: 200px;
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 8px;
+}
+
+.menu-settings-textarea:focused {
+    -fx-border-color: #e85b27;
+}
+
+.form-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 0 0 5 0;
+}
