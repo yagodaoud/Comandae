@@ -20,10 +20,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +47,9 @@ public class MenuScreenController {
 
     @FXML
     private VBox sidebar;
+
+    @FXML
+    private VBox translateVbox;
     @FXML
     private StackPane sidebarHeader;
     @FXML
@@ -407,11 +407,13 @@ public class MenuScreenController {
                 sidebarHeader.setVisible(false);
                 categoryScroll.setDisable(true);
                 categoryScroll.setVisible(false);
+                AnchorPane.setLeftAnchor(translateVbox, 205.00);
             } else {
                 sidebarHeader.setDisable(false);
                 sidebarHeader.setVisible(true);
                 categoryScroll.setDisable(false);
                 categoryScroll.setVisible(true);
+                AnchorPane.setLeftAnchor(translateVbox, 460.0);
             }
             isSidebarExpanded = !isSidebarExpanded;
         });

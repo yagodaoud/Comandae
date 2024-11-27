@@ -34,8 +34,9 @@
 
     <fx:include source="Header.fxml" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
 
-    <VBox AnchorPane.rightAnchor="0" AnchorPane.topAnchor="70" AnchorPane.leftAnchor="460" AnchorPane.bottomAnchor="10">
-
+    <VBox AnchorPane.rightAnchor="0" AnchorPane.topAnchor="70"
+          AnchorPane.leftAnchor="460"
+          AnchorPane.bottomAnchor="10" fx:id="translateVbox">
         <HBox spacing="10" alignment="CENTER_LEFT">
 
             <Button text="Add Item" styleClass="primary-button" onAction="#showAddItemDialog"/>
