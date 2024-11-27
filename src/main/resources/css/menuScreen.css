@@ -510,3 +510,7 @@
 .search-field {
     -fx-translate-x: 600;
 }
+
+.search-field-menu {
+    -fx-width: 10px;
+}

@@ -4,10 +4,7 @@ import com.yagodaoud.comandae.model.menu.MenuCategory;
 import com.yagodaoud.comandae.model.menu.MenuItem;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -25,6 +22,7 @@ public class MenuGenerationModal extends VBox {
     private final Runnable onClose;
     private final Runnable onGenerate;
     private final List<MenuItem> selectedItemsOrder = new ArrayList<>();
+    private TextField searchField;
 
     public MenuGenerationModal(
             List<MenuItem> items,
@@ -48,6 +46,12 @@ public class MenuGenerationModal extends VBox {
         Text title = new Text("Generate Menu");
         title.getStyleClass().add("modal-title");
 
+        searchField = new TextField();
+        searchField.setPromptText("Search items...");
+        searchField.getStyleClass().add("search-field-menu");
+        searchField.setMaxWidth(200);
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> filterItems(newValue));
+
         Map<MenuCategory, List<MenuItem>> itemsByCategory = menuItems.stream()
                 .collect(Collectors.groupingBy(MenuItem::getCategory));
 
@@ -68,6 +72,34 @@ public class MenuGenerationModal extends VBox {
         contentBox.setSpacing(15);
         contentBox.setPadding(new Insets(10));
 
+        populateCategories(sortedCategories, contentBox);
+
+        scrollPane.setContent(contentBox);
+
+        HBox buttonBox = new HBox();
+        buttonBox.setSpacing(10);
+        buttonBox.setAlignment(Pos.CENTER_RIGHT);
+
+        Button cancelButton = new Button("Cancel");
+        cancelButton.getStyleClass().add("secondary-button");
+        cancelButton.setOnAction(e -> onClose.run());
+
+        Button generateButton = new Button("Generate Menu");
+        generateButton.getStyleClass().add("primary-button");
+        generateButton.setOnAction(e -> onGenerate.run());
+
+        buttonBox.getChildren().addAll(cancelButton, generateButton);
+
+        getChildren().addAll(title, searchField, scrollPane, buttonBox);
+    }
+
+    public List<MenuItem> getSelectedItems() {
+        return new ArrayList<>(selectedItemsOrder);
+    }
+
+    private void populateCategories(List<Map.Entry<MenuCategory, List<MenuItem>>> sortedCategories, VBox contentBox) {
+        contentBox.getChildren().clear();
+
         for (Map.Entry<MenuCategory, List<MenuItem>> entry : sortedCategories) {
             MenuCategory category = entry.getKey();
             List<MenuItem> items = entry.getValue();
@@ -85,10 +117,14 @@ public class MenuGenerationModal extends VBox {
                         checkBox.setUserData(item);
                         checkBox.getStyleClass().add("menu-item-checkbox");
 
+                        checkBox.setSelected(selectedItemsOrder.contains(item));
+
                         checkBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
                             MenuItem menuItem = (MenuItem) checkBox.getUserData();
                             if (isSelected) {
-                                selectedItemsOrder.add(menuItem);
+                                if (!selectedItemsOrder.contains(menuItem)) {
+                                    selectedItemsOrder.add(menuItem);
+                                }
                             } else {
                                 selectedItemsOrder.remove(menuItem);
                             }
@@ -111,45 +147,47 @@ public class MenuGenerationModal extends VBox {
 
             contentBox.getChildren().addAll(categoryLabel, itemsBox);
         }
-
-        scrollPane.setContent(contentBox);
-
-        HBox buttonBox = new HBox();
-        buttonBox.setSpacing(10);
-        buttonBox.setAlignment(Pos.CENTER_RIGHT);
-
-        Button cancelButton = new Button("Cancel");
-        cancelButton.getStyleClass().add("secondary-button");
-        cancelButton.setOnAction(e -> onClose.run());
-
-        Button generateButton = new Button("Generate Menu");
-        generateButton.getStyleClass().add("primary-button");
-        generateButton.setOnAction(e -> onGenerate.run());
-
-        buttonBox.getChildren().addAll(cancelButton, generateButton);
-
-        getChildren().addAll(title, scrollPane, buttonBox);
     }
 
-    public List<MenuItem> getSelectedItems() {
-        return new ArrayList<>(selectedItemsOrder);
-    }
+    private void filterItems(String searchText) {
+        if (searchText == null || searchText.trim().isEmpty()) {
+            Map<MenuCategory, List<MenuItem>> itemsByCategory = menuItems.stream()
+                    .collect(Collectors.groupingBy(MenuItem::getCategory));
 
-    private List<CheckBox> getAllCheckBoxes() {
-        VBox contentBox = (VBox) ((ScrollPane) getChildren().get(1)).getContent();
-        return contentBox.getChildren().stream()
-                .filter(node -> node instanceof VBox)
-                .flatMap(node -> ((VBox) node).getChildren().stream())
-                .flatMap(node -> {
-                    if (node instanceof CheckBox) {
-                        return Stream.of((CheckBox) node);
-                    } else if (node instanceof HBox) {
-                        return ((HBox) node).getChildren().stream()
-                                .filter(child -> child instanceof CheckBox)
-                                .map(child -> (CheckBox) child);
-                    }
-                    return Stream.empty();
+            List<Map.Entry<MenuCategory, List<MenuItem>>> sortedCategories = itemsByCategory.entrySet()
+                    .stream()
+                    .sorted((a, b) -> {
+                        Integer orderA = a.getKey().getDisplayOrder() != null ? a.getKey().getDisplayOrder() : Integer.MAX_VALUE;
+                        Integer orderB = b.getKey().getDisplayOrder() != null ? b.getKey().getDisplayOrder() : Integer.MAX_VALUE;
+                        return orderA.compareTo(orderB);
+                    })
+                    .collect(Collectors.toList());
+
+            VBox contentBox = (VBox) ((ScrollPane) getChildren().get(2)).getContent();
+            populateCategories(sortedCategories, contentBox);
+            return;
+        }
+
+        String lowerCaseSearchText = searchText.toLowerCase().trim();
+
+        Map<MenuCategory, List<MenuItem>> filteredItemsByCategory = menuItems.stream()
+                .filter(menuItem ->
+                        menuItem.getName().toLowerCase().contains(lowerCaseSearchText) ||
+                                menuItem.getDescription().toLowerCase().contains(lowerCaseSearchText) ||
+                                menuItem.getCategory().getName().toLowerCase().contains(lowerCaseSearchText)
+                )
+                .collect(Collectors.groupingBy(MenuItem::getCategory));
+
+        List<Map.Entry<MenuCategory, List<MenuItem>>> sortedFilteredCategories = filteredItemsByCategory.entrySet()
+                .stream()
+                .sorted((a, b) -> {
+                    Integer orderA = a.getKey().getDisplayOrder() != null ? a.getKey().getDisplayOrder() : Integer.MAX_VALUE;
+                    Integer orderB = b.getKey().getDisplayOrder() != null ? b.getKey().getDisplayOrder() : Integer.MAX_VALUE;
+                    return orderA.compareTo(orderB);
                 })
                 .collect(Collectors.toList());
+
+        VBox contentBox = (VBox) ((ScrollPane) getChildren().get(2)).getContent();
+        populateCategories(sortedFilteredCategories, contentBox);
     }
 }
