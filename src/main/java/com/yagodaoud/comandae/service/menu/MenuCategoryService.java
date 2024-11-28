@@ -2,6 +2,7 @@ package com.yagodaoud.comandae.service.menu;
 
 import com.yagodaoud.comandae.dto.menu.MenuCategoryDTO;
 import com.yagodaoud.comandae.model.menu.MenuCategory;
+import com.yagodaoud.comandae.model.menu.MenuItem;
 import com.yagodaoud.comandae.repository.menu.MenuCategoryRepository;
 import com.yagodaoud.comandae.service.ServiceInterface;
 import jakarta.persistence.EntityManager;
@@ -45,15 +46,15 @@ public class MenuCategoryService implements ServiceInterface<MenuCategory, MenuC
         return menuCategoryRepository.save(menuCategory);
     }
 
-    @Override
-    public MenuCategory update(Long id, MenuCategoryDTO entity) {
-        MenuCategory menuCategory = new MenuCategory();
+        @Override
+        public MenuCategory update(Long id, MenuCategoryDTO entity) {
+            MenuCategory menuCategory = getById(entity.getId());
 
-        menuCategory.setName(entity.getName());
-        menuCategory.setDisplayOrder(entity.getDisplayOrder());
+            menuCategory.setName(entity.getName());
+            menuCategory.setDisplayOrder(entity.getDisplayOrder());
 
-        return menuCategoryRepository.save(menuCategory);
-    }
+            return menuCategoryRepository.save(menuCategory);
+        }
 
     @Override
     public void delete(Long id) {

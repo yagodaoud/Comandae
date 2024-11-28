@@ -19,23 +19,19 @@ public class CategoryModalForm extends GridPane {
         setVgap(15);
         getStyleClass().add("modal-form");
 
-        // Title
         Text title = new Text("Add Category");
         title.getStyleClass().add("modal-title");
         add(title, 0, 0, 2, 1);
 
-        // Name field
         nameField = new TextField();
         nameField.setPromptText("Category name");
         addFormRow("Name:", nameField, 1);
 
-        // Display order spinner
-        displayOrderSpinner = new Spinner<>(1, 100, 1);
+        displayOrderSpinner = new Spinner<>(0, 100, 1);
         displayOrderSpinner.setEditable(true);
         displayOrderSpinner.setPrefWidth(100);
         addFormRow("Display Order:", displayOrderSpinner, 2);
 
-        // Buttons
         saveButton = new Button("Save");
         saveButton.getStyleClass().addAll("button", "primary-button");
         saveButton.setOnAction(e -> {
@@ -53,7 +49,6 @@ public class CategoryModalForm extends GridPane {
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
         add(buttonBox, 0, 3, 2, 1);
 
-        // Validation
         nameField.textProperty().addListener((obs, old, newValue) ->
                 saveButton.setDisable(newValue.trim().isEmpty()));
         saveButton.setDisable(true);
