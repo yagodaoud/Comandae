@@ -2,7 +2,6 @@ package com.yagodaoud.comandae.service.menu;
 
 import com.yagodaoud.comandae.dto.menu.MenuCategoryDTO;
 import com.yagodaoud.comandae.model.menu.MenuCategory;
-import com.yagodaoud.comandae.model.menu.MenuItem;
 import com.yagodaoud.comandae.repository.menu.MenuCategoryRepository;
 import com.yagodaoud.comandae.service.ServiceInterface;
 import jakarta.persistence.EntityManager;

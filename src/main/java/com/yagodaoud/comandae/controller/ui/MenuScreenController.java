@@ -23,7 +23,6 @@
     import javafx.scene.Node;
     import javafx.scene.control.*;
     import javafx.scene.layout.*;
-    import javafx.scene.text.Font;
     import javafx.util.Duration;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.context.annotation.Lazy;
@@ -98,8 +97,6 @@
 
         @FXML
         private void initialize() {
-            System.out.println(Font.getFamilies());
-
             sidebar.setPrefWidth(EXPANDED_WIDTH);
             sidebar.setMinWidth(0);
             menuItemFlowPane.setLayoutX(SIDEBAR_LEFT_ANCHOR + EXPANDED_WIDTH + 15);
