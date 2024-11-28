@@ -41,10 +41,9 @@
 
             <Button text="Add Item" styleClass="primary-button" onAction="#showAddItemDialog"/>
             <Button text="Generate Menu" styleClass="primary-button" onAction="#showGenerateMenuDialog"/>
-            <Button text="Menu Settings" styleClass="primary-button" onAction="#showMenuSettingsDialog" />
+            <Button text="Menu Settings" styleClass="primary-button" onAction="#showMenuSettingsDialog"/>
 
             <TextField fx:id="itemSearchField" promptText="Search items..." styleClass="search-field"/>
-
         </HBox>
 
             <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="menu-items-scroll">
