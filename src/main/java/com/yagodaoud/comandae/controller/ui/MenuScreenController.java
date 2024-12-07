@@ -176,22 +176,18 @@
         }
 
         private void updateCategoryDisplayOrder(DraggableCategoryItem.CategoryReorderEvent event) {
-            // Iterate through the categories in the categoriesList
             for (int i = 0; i < categoriesList.getChildren().size(); i++) {
                 Node node = categoriesList.getChildren().get(i);
 
-                // Only process DraggableCategoryItem instances
                 if (node instanceof DraggableCategoryItem) {
                     DraggableCategoryItem categoryItem = (DraggableCategoryItem) node;
 
-                    // Find the corresponding MenuCategory
                     MenuCategory category = categories.stream()
                             .filter(c -> c.getName().equals(categoryItem.getCategoryLabel().getText()))
                             .findFirst()
                             .orElse(null);
 
                     if (category != null) {
-                        // Update the display order
                         category.setDisplayOrder(i);
 
                         menuCategoryService.update(category.getId(), convertToDTO(category));
@@ -234,7 +230,6 @@
         }
 
         private void loadMenuSettings() {
-            // Get the most recent header and footer
             List<MenuHeader> headers = menuHeaderService.getAll(false);
             List<MenuFooter> footers = menuFooterService.getAll(false);
 

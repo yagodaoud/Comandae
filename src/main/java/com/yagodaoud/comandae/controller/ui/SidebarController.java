@@ -79,4 +79,11 @@ public class SidebarController {
             stageManager.switchScene("view/MenuScreen.fxml", "Menu Screen");
         }
     }
+
+    @FXML
+    private void handleFinancialButton() {
+        if (currentScreen != NavigationScreen.FINANCIAL) {
+            stageManager.switchScene("view/FinancialScreen.fxml", "Financial Screen");
+        }
+    }
 }

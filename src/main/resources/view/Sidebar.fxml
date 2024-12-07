@@ -31,7 +31,7 @@
             <Text text="Orders" />
         </HBox>
 
-        <HBox fx:id="financialButton" alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button">
+        <HBox fx:id="financialButton" alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button" onMouseClicked="#handleFinancialButton">
             <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
                 <Image url="@/icons/financial.png"/>
             </ImageView>

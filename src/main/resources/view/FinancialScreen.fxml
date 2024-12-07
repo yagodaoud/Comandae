@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane stylesheets="@/css/financialScreen.css"
+            xmlns:fx="http://javafx.com/fxml" fx:controller="com.yagodaoud.comandae.controller.ui.FinancialScreenController">
+
+    <StackPane fx:id="modalContainer" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+               AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+
+    <fx:include source="Sidebar.fxml" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0"/>
+
+    <fx:include source="Header.fxml" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+
+    <VBox AnchorPane.rightAnchor="0" AnchorPane.topAnchor="70"
+          AnchorPane.leftAnchor="460"
+          AnchorPane.bottomAnchor="10" spacing="20">
+
+        <HBox spacing="20">
+            <Pane styleClass="payment-method-card">
+                <ImageView fx:id="bitcoinLogo" layoutX="20" layoutY="10" fitWidth="80" fitHeight="80">
+                    <Image url="@/images/bitcoin-logo.png"/>
+                </ImageView>
+                <Text layoutX="110" layoutY="35" styleClass="payment-method-name" text="Bitcoin" />
+                <Text layoutX="110" layoutY="55" styleClass="payment-method-description" text="Peer-to-peer currency    " />
+                <Button layoutX="320" layoutY="25" styleClass="view-button" text="View" onAction="#showBitcoinRegistrationModal" />
+            </Pane>
+
+            <Pane styleClass="payment-method-card">
+                <ImageView fx:id="pixLogo" layoutX="20" layoutY="10" fitWidth="80" fitHeight="80">
+                    <Image url="@/images/pix-logo.png"/>
+                </ImageView>
+                <Text layoutX="110" layoutY="35" styleClass="payment-method-name" text="Pix" />
+                <Text layoutX="110" layoutY="55" styleClass="payment-method-description" text="Instant bank transfers" />
+                <Button layoutX="320" layoutY="25" styleClass="view-button" text="View" onAction="#showPixRegistrationModal" />
+            </Pane>
+        </HBox>
+
+        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="payment-methods-scroll">
+            <FlowPane hgap="20" vgap="20">
+            </FlowPane>
+        </ScrollPane>
+    </VBox>
+</AnchorPane>
