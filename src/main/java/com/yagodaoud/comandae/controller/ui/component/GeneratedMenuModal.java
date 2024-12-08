@@ -1,5 +1,7 @@
 package com.yagodaoud.comandae.controller.ui.component;
 
+import com.yagodaoud.comandae.model.menu.MenuItem;
+import com.yagodaoud.comandae.service.MenuPDFGenerator;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -11,17 +13,22 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.util.List;
+
 public class GeneratedMenuModal extends VBox {
     private final String menuContent;
     private final Runnable onClose;
     private TextArea menuArea;
+    private List<MenuItem> menuItemList;
 
     public GeneratedMenuModal(
             String menuContent,
+            List<MenuItem> menuItemList,
             Runnable onCloseHandler
     ) {
         this.menuContent = menuContent;
         this.onClose = onCloseHandler;
+        this.menuItemList = menuItemList;
 
         setupUI();
     }
@@ -68,11 +75,17 @@ public class GeneratedMenuModal extends VBox {
             pause.play();
         });
 
+        Button pdfButton = new Button("PDF");
+        pdfButton.getStyleClass().add("primary-button");
+        pdfButton.setOnAction(e -> {
+            MenuPDFGenerator.generateMenuPDF(menuItemList, "files/menu.pdf");
+        });
+
         Button closeButton = new Button("Close");
         closeButton.getStyleClass().add("secondary-button");
         closeButton.setOnAction(e -> onClose.run());
 
-        buttonBox.getChildren().addAll(copyButton, closeButton);
+        buttonBox.getChildren().addAll(copyButton, pdfButton, closeButton);
         return buttonBox;
     }
 

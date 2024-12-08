@@ -486,16 +486,17 @@
                             alert.showAndWait();
                             return;
                         }
-                        showGeneratedMenuModal(getFormattedMenu(selectedItems));
+                        showGeneratedMenuModal(getFormattedMenu(selectedItems), selectedItems);
                     }
             );
 
             modal.show(form);
         }
 
-        private void showGeneratedMenuModal(String menuContent) {
+        private void showGeneratedMenuModal(String menuContent, List<MenuItem> menuItems) {
             GeneratedMenuModal form = new GeneratedMenuModal(
                     menuContent,
+                    menuItems,
                     () -> modal.hide()
             );
 
@@ -548,45 +549,45 @@
             modal.show(form);
         }
 
-        private String getFormattedMenu(List<MenuItem> menuItems) {
-            StringBuilder menuText = new StringBuilder();
+            private String getFormattedMenu(List<MenuItem> menuItems) {
+                StringBuilder menuText = new StringBuilder();
 
-            if (menuHeader != null && !menuHeader.trim().isEmpty()) {
-                menuText.append(menuHeader).append("\n\n");
-            }
-
-            Map<MenuCategory, List<MenuItem>> itemsByCategory = new LinkedHashMap<>();
-
-            for (MenuItem item : menuItems) {
-                itemsByCategory.computeIfAbsent(item.getCategory(), k -> new ArrayList<>()).add(item);
-            }
-
-            List<Map.Entry<MenuCategory, List<MenuItem>>> sortedCategories = itemsByCategory.entrySet()
-                    .stream()
-                    .sorted((a, b) -> {
-                        Integer orderA = a.getKey().getDisplayOrder() != null ? a.getKey().getDisplayOrder() : Integer.MAX_VALUE;
-                        Integer orderB = b.getKey().getDisplayOrder() != null ? b.getKey().getDisplayOrder() : Integer.MAX_VALUE;
-                        return orderA.compareTo(orderB);
-                    })
-                    .collect(Collectors.toList());
-
-            for (Map.Entry<MenuCategory, List<MenuItem>> entry : sortedCategories) {
-                List<MenuItem> items = entry.getValue();
-
-                for (MenuItem item : items) {
-                    String emoji = item.getEmoji() != null ? item.getEmoji() : "•";
-                    menuText.append(emoji).append(item.getName()).append("\n");
+                if (menuHeader != null && !menuHeader.trim().isEmpty()) {
+                    menuText.append(menuHeader).append("\n\n");
                 }
 
-                menuText.append("\n");
-            }
+                Map<MenuCategory, List<MenuItem>> itemsByCategory = new LinkedHashMap<>();
 
-            if (menuFooter != null && !menuFooter.trim().isEmpty()) {
-                menuText.append(menuFooter);
-            }
+                for (MenuItem item : menuItems) {
+                    itemsByCategory.computeIfAbsent(item.getCategory(), k -> new ArrayList<>()).add(item);
+                }
 
-            return menuText.toString();
-        }
+                List<Map.Entry<MenuCategory, List<MenuItem>>> sortedCategories = itemsByCategory.entrySet()
+                        .stream()
+                        .sorted((a, b) -> {
+                            Integer orderA = a.getKey().getDisplayOrder() != null ? a.getKey().getDisplayOrder() : Integer.MAX_VALUE;
+                            Integer orderB = b.getKey().getDisplayOrder() != null ? b.getKey().getDisplayOrder() : Integer.MAX_VALUE;
+                            return orderA.compareTo(orderB);
+                        })
+                        .collect(Collectors.toList());
+
+                for (Map.Entry<MenuCategory, List<MenuItem>> entry : sortedCategories) {
+                    List<MenuItem> items = entry.getValue();
+
+                    for (MenuItem item : items) {
+                        String emoji = item.getEmoji() != null ? item.getEmoji() : "•";
+                        menuText.append(emoji).append(item.getName()).append("\n");
+                    }
+
+                    menuText.append("\n");
+                }
+
+                if (menuFooter != null && !menuFooter.trim().isEmpty()) {
+                    menuText.append(menuFooter);
+                }
+
+                return menuText.toString();
+            }
 
         private void filterMenuItems(String searchText) {
             if (searchText == null || searchText.trim().isEmpty()) {

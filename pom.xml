@@ -59,6 +59,12 @@
             <version>21</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
         <!-- Twilio/WhatsApp -->
         <!--<dependency>
            <groupId>com.twilio.sdk</groupId>
