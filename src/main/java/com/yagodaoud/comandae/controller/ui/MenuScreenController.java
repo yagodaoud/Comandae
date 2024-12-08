@@ -21,7 +21,10 @@
     import javafx.event.ActionEvent;
     import javafx.fxml.FXML;
     import javafx.scene.Node;
-    import javafx.scene.control.*;
+    import javafx.scene.control.Button;
+    import javafx.scene.control.Label;
+    import javafx.scene.control.ScrollPane;
+    import javafx.scene.control.TextField;
     import javafx.scene.layout.*;
     import javafx.util.Duration;
     import org.springframework.beans.factory.annotation.Autowired;
@@ -479,11 +482,6 @@
                                 .getSelectedItems();
 
                         if (selectedItems.isEmpty()) {
-                            Alert alert = new Alert(Alert.AlertType.WARNING);
-                            alert.setTitle("No Items Selected");
-                            alert.setHeaderText(null);
-                            alert.setContentText("Please select at least one item to generate the menu.");
-                            alert.showAndWait();
                             return;
                         }
                         showGeneratedMenuModal(getFormattedMenu(selectedItems), selectedItems);
