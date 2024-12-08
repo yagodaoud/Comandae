@@ -7,6 +7,7 @@ import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -69,6 +70,7 @@ public class GeneratedMenuModal extends VBox {
         buttonBox.setSpacing(10);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
         buttonBox.setLayoutY(5);
+        buttonBox.setTranslateY(5);
 
         Button copyButton = new Button("Copy to Clipboard");
         copyButton.getStyleClass().add("primary-button");
@@ -118,12 +120,22 @@ public class GeneratedMenuModal extends VBox {
             PDFPrinterService pdfPrinterService = new PDFPrinterService();
             try {
                 pdfPrinterService.printPDF(pdfPath);
-            } catch (PrinterException | IOException ex) {
-                ex.printStackTrace();
+            } catch (IOException | PrinterException ex) {
+                Label errorLabel = new Label("Failed to print the PDF. Please try again.");
+                errorLabel.getStyleClass().add("error-label");
+
+                boolean labelExists = pdfPreviewBox.getChildren().stream()
+                        .filter(node -> node instanceof Label)
+                        .map(node -> (Label) node)
+                        .anyMatch(label -> "Failed to print the PDF. Please try again.".equals(label.getText()));
+
+                if (!labelExists) {
+                    pdfPreviewBox.getChildren().add(errorLabel);
+                }
             }
         });
 
-        HBox buttonBox = new HBox(10, printButton, backButton );
+        HBox buttonBox = new HBox(10, printButton, backButton);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(printButton, Priority.ALWAYS);
 
@@ -132,13 +144,5 @@ public class GeneratedMenuModal extends VBox {
         VBox.setMargin(buttonBox, new Insets(10, 10, 0, 0));
 
         getChildren().add(pdfPreviewBox);
-    }
-
-    public String getMenuContent() {
-        return menuContent;
-    }
-
-    public TextArea getMenuArea() {
-        return menuArea;
     }
 }

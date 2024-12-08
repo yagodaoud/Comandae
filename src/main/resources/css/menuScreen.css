@@ -510,3 +510,9 @@
 .search-field-menu {
     -fx-width: 10px;
 }
+
+.error-label {
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0 0 0;
+}
