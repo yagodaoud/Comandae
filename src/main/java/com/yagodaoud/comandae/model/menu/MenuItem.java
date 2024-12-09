@@ -33,6 +33,9 @@ public class MenuItem {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "favorite")
+    private Boolean favorite;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", nullable = false)
     private MenuCategory category;
@@ -85,6 +88,14 @@ public class MenuItem {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
     }
 
     public MenuCategory getCategory() {

@@ -6,6 +6,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -14,23 +16,27 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class MenuGenerationModal extends VBox {
     private final List<MenuItem> menuItems;
     private final Runnable onClose;
     private final Runnable onGenerate;
+    private final Consumer<MenuItem> onFavorite; // New consumer for favorite action
     private final List<MenuItem> selectedItemsOrder = new ArrayList<>();
     private TextField searchField;
 
     public MenuGenerationModal(
             List<MenuItem> items,
             Runnable onCloseHandler,
-            Runnable onGenerateHandler
+            Runnable onGenerateHandler,
+            Consumer<MenuItem> onFavoriteHandler
     ) {
         this.menuItems = items;
         this.onClose = onCloseHandler;
         this.onGenerate = onGenerateHandler;
+        this.onFavorite = onFavoriteHandler;
 
         setupUI();
     }
@@ -108,15 +114,26 @@ public class MenuGenerationModal extends VBox {
 
             VBox itemsBox = new VBox();
             itemsBox.setSpacing(8);
-
             items.stream()
-                    .sorted(Comparator.comparing(MenuItem::getName, String.CASE_INSENSITIVE_ORDER))
+                    .sorted(Comparator.comparing(
+                            item -> item.getName() != null ? item.getName() : "",
+                            String.CASE_INSENSITIVE_ORDER
+                    ))
                     .forEach(item -> {
-                        CheckBox checkBox = new CheckBox(item.getName());
+                        HBox itemLayout = new HBox();
+                        itemLayout.setAlignment(Pos.CENTER_LEFT);
+                        itemLayout.setSpacing(10);
+
+                        String itemName = item.getName() != null ? item.getName() : "Unnamed Item";
+                        CheckBox checkBox = new CheckBox(itemName);
                         checkBox.setUserData(item);
                         checkBox.getStyleClass().add("menu-item-checkbox");
 
-                        checkBox.setSelected(selectedItemsOrder.contains(item));
+                        checkBox.setSelected(selectedItemsOrder.contains(item) || item.isFavorite());
+
+                        if (item.isFavorite()) {
+                            selectedItemsOrder.add(item);
+                        }
 
                         checkBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
                             MenuItem menuItem = (MenuItem) checkBox.getUserData();
@@ -128,20 +145,44 @@ public class MenuGenerationModal extends VBox {
                                 selectedItemsOrder.remove(menuItem);
                             }
                         });
+                        Label favoriteLabel = new Label(
+                                item.isFavorite() ? "\uE838" : "\uE83A"
+                        );
+                        favoriteLabel.getStyleClass().add("favorite-icon");
+
+                        favoriteLabel.setOnMouseClicked(event -> {
+                            boolean newFavoriteStatus = !item.isFavorite();
+                            item.setFavorite(newFavoriteStatus);
+
+                            favoriteLabel.setText(newFavoriteStatus ? "\uE838" : "\uE83A");
+
+                            if (onFavorite != null) {
+                                onFavorite.accept(item);
+                            }
+                        });
+
+                        Region spacer = new Region();
+                        HBox.setHgrow(spacer, Priority.ALWAYS);
 
                         if (item.getPrice() != null && item.getPrice().compareTo(BigDecimal.ZERO) > 0) {
-                            HBox itemBox = new HBox();
-                            itemBox.setSpacing(10);
-                            itemBox.setAlignment(Pos.CENTER_LEFT);
-
                             Label priceLabel = new Label(String.format("R$ %.2f", item.getPrice()));
                             priceLabel.getStyleClass().add("price-label");
 
-                            itemBox.getChildren().addAll(checkBox, priceLabel);
-                            itemsBox.getChildren().add(itemBox);
+                            itemLayout.getChildren().addAll(
+                                    checkBox,
+                                    spacer,
+                                    priceLabel,
+                                    favoriteLabel
+                            );
                         } else {
-                            itemsBox.getChildren().add(checkBox);
+                            itemLayout.getChildren().addAll(
+                                    checkBox,
+                                    spacer,
+                                    favoriteLabel
+                            );
                         }
+
+                        itemsBox.getChildren().add(itemLayout);
                     });
 
             contentBox.getChildren().addAll(categoryLabel, itemsBox);

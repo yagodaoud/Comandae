@@ -90,3 +90,8 @@ CREATE TABLE IF NOT EXISTS bitcoin (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL
 );
+
+ALTER TABLE menu_item
+ADD COLUMN favorite BOOLEAN DEFAULT FALSE AFTER description;
+
+

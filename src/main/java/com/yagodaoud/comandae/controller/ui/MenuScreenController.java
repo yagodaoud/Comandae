@@ -484,7 +484,11 @@
                         if (selectedItems.isEmpty()) {
                             return;
                         }
+
                         showGeneratedMenuModal(getFormattedMenu(selectedItems), selectedItems);
+                    },
+                    (menuItem) -> {
+                        menuItemService.updateMenuItemFavoriteStatus(menuItem.getId(), menuItem.isFavorite());
                     }
             );
 

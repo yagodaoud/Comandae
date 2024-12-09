@@ -73,4 +73,12 @@ public class MenuItemService implements ServiceInterface<MenuItem, MenuItemDTO> 
     public void delete(Long id) {
         menuItemRepository.deleteById(id);
     }
+
+    public void updateMenuItemFavoriteStatus(Long id, Boolean isFavorite) {
+        MenuItem menuItem = getById(id);
+
+        menuItem.setFavorite(isFavorite);
+
+        menuItemRepository.save(menuItem);
+    }
 }

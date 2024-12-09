@@ -8,6 +8,7 @@ public class MenuItemDTO {
     private String emoji;
     private BigDecimal price;
     private String description;
+    private Boolean favorite;
     private Long categoryId;
 
     public Long getId() {
@@ -48,6 +49,14 @@ public class MenuItemDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
     }
 
     public Long getCategoryId() {
