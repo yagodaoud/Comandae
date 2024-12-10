@@ -12,10 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -99,7 +96,7 @@ public class MenuGenerationModal extends VBox {
     }
 
     public List<MenuItem> getSelectedItems() {
-        return new ArrayList<>(selectedItemsOrder);
+        return new ArrayList<>(new HashSet<>(selectedItemsOrder));
     }
 
     private void populateCategories(List<Map.Entry<MenuCategory, List<MenuItem>>> sortedCategories, VBox contentBox) {

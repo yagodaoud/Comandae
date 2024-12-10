@@ -34,7 +34,7 @@ public class MenuItem {
     private String description;
 
     @Column(name = "favorite")
-    private Boolean favorite;
+    private Boolean favorite = false;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", nullable = false)
