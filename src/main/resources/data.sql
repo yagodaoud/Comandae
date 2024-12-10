@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS menu_item (
     emoji VARCHAR(10) CHARACTER SET utf8mb4,
     price DECIMAL(10, 2) DEFAULT 0,
     description TEXT,
+    favorite BOOLEAN DEFAULT FALSE;
     category_id BIGINT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
@@ -90,8 +91,3 @@ CREATE TABLE IF NOT EXISTS bitcoin (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL
 );
-
-ALTER TABLE menu_item
-ADD COLUMN favorite BOOLEAN DEFAULT FALSE AFTER description;
-
-
