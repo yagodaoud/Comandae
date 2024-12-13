@@ -522,3 +522,12 @@
     -fx-font-size: 18px;
     -fx-cursor: hand;
 }
+
+.trash-icon {
+    -fx-font-family: 'Material Icons';
+    -fx-text-fill: #ff0000;
+}
+
+.trash-icon:hover {
+    -fx-opacity: 0.7;
+}

@@ -3,9 +3,11 @@ package com.yagodaoud.comandae.service.menu;
 import com.yagodaoud.comandae.dto.menu.MenuCategoryDTO;
 import com.yagodaoud.comandae.model.menu.MenuCategory;
 import com.yagodaoud.comandae.repository.menu.MenuCategoryRepository;
+import com.yagodaoud.comandae.repository.menu.MenuItemRepository;
 import com.yagodaoud.comandae.service.ServiceInterface;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,13 @@ public class MenuCategoryService implements ServiceInterface<MenuCategory, MenuC
     private MenuCategoryRepository menuCategoryRepository;
 
     @Autowired
+    private MenuItemRepository menuItemRepository;
+
+    @Autowired
     private EntityManager entityManager;
 
     @Override
+    @Transactional
     public List<MenuCategory> getAll(boolean isDeleted) {
         Session session = entityManager.unwrap(Session.class);
         Filter filter = session.enableFilter("deletedMenuCategoryFilter");
@@ -58,5 +64,7 @@ public class MenuCategoryService implements ServiceInterface<MenuCategory, MenuC
     @Override
     public void delete(Long id) {
         menuCategoryRepository.deleteById(id);
+
+        menuItemRepository.softDeleteByCategoryId(id);
     }
 }

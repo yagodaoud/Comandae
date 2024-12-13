@@ -25,6 +25,7 @@ public class DraggableCategoryItem extends HBox {
     private double mouseY;
     private final Label categoryLabel;
     private final Label dragIcon;
+    private final Label trashIcon;
     private boolean isDragging = false;
     private final DropShadow dragShadow;
     private double startY;
@@ -42,6 +43,10 @@ public class DraggableCategoryItem extends HBox {
         dragIcon.getStyleClass().add("drag-icon");
         dragIcon.setCursor(Cursor.MOVE);
 
+        trashIcon = new Label("\uE872");
+        trashIcon.getStyleClass().add("trash-icon");
+        trashIcon.setCursor(Cursor.HAND);
+
         categoryLabel = new Label(categoryName);
         categoryLabel.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(categoryLabel, javafx.scene.layout.Priority.ALWAYS);
@@ -52,8 +57,9 @@ public class DraggableCategoryItem extends HBox {
         dragShadow.setOffsetY(5);
         dragShadow.setSpread(0.2);
 
-        getChildren().addAll(dragIcon, categoryLabel);
+        getChildren().addAll(dragIcon, categoryLabel, trashIcon);
         setupDragHandlers();
+        setupTrashIconHandler();
     }
 
     private void setupDragHandlers() {
@@ -77,6 +83,27 @@ public class DraggableCategoryItem extends HBox {
                 scaleTransition.setToY(1.0);
                 scaleTransition.play();
             }
+        });
+    }
+
+    private void setupTrashIconHandler() {
+        trashIcon.setOnMouseClicked(event -> {
+            fireEvent(new CategoryDeleteEvent(CategoryDeleteEvent.CATEGORY_DELETED, this));
+            event.consume();
+        });
+
+        trashIcon.setOnMouseEntered(e -> {
+            ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), trashIcon);
+            scaleTransition.setToX(1.2);
+            scaleTransition.setToY(1.2);
+            scaleTransition.play();
+        });
+
+        trashIcon.setOnMouseExited(e -> {
+            ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), trashIcon);
+            scaleTransition.setToX(1.0);
+            scaleTransition.setToY(1.0);
+            scaleTransition.play();
         });
     }
 
@@ -214,6 +241,15 @@ public class DraggableCategoryItem extends HBox {
                 new javafx.event.EventType<>(javafx.event.Event.ANY, "CATEGORY_REORDERED");
 
         public CategoryReorderEvent(javafx.event.EventType<? extends Event> eventType, DraggableCategoryItem source) {
+            super(eventType);
+        }
+    }
+
+    public static class CategoryDeleteEvent extends javafx.event.Event {
+        public static final javafx.event.EventType<CategoryDeleteEvent> CATEGORY_DELETED =
+                new javafx.event.EventType<>(javafx.event.Event.ANY, "CATEGORY_DELETED");
+
+        public CategoryDeleteEvent(javafx.event.EventType<? extends Event> eventType, DraggableCategoryItem source) {
             super(eventType);
         }
     }

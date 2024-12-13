@@ -140,6 +140,8 @@
             modalContainer.toFront();
 
             categoriesList.addEventHandler(DraggableCategoryItem.CategoryReorderEvent.CATEGORY_REORDERED, this::updateCategoryDisplayOrder);
+
+            categoriesList.addEventHandler(DraggableCategoryItem.CategoryDeleteEvent.CATEGORY_DELETED, this::deleteCategory);
         }
 
         private void loadCategories() {
@@ -196,6 +198,26 @@
                         menuCategoryService.update(category.getId(), convertToDTO(category));
                     }
                 }
+            }
+        }
+
+        private void deleteCategory(DraggableCategoryItem.CategoryDeleteEvent event) {
+            DraggableCategoryItem categoryItemToDelete = (DraggableCategoryItem) event.getTarget();
+            String categoryName = categoryItemToDelete.getCategoryLabel().getText();
+
+            MenuCategory categoryToDelete = categories.stream()
+                    .filter(c -> c.getName().equals(categoryName))
+                    .findFirst()
+                    .orElse(null);
+
+            if (categoryToDelete != null) {
+                categoriesList.getChildren().remove(categoryItemToDelete);
+
+                menuCategoryService.delete(categoryToDelete.getId());
+
+                categories.remove(categoryToDelete);
+
+                updateCategoryDisplayOrder(null);
             }
         }
 
