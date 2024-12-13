@@ -96,7 +96,7 @@ public class MenuGenerationModal extends VBox {
     }
 
     public List<MenuItem> getSelectedItems() {
-        return new ArrayList<>(new HashSet<>(selectedItemsOrder));
+        return new ArrayList<>(selectedItemsOrder);
     }
 
     private void populateCategories(List<Map.Entry<MenuCategory, List<MenuItem>>> sortedCategories, VBox contentBox) {
@@ -207,10 +207,12 @@ public class MenuGenerationModal extends VBox {
 
         String lowerCaseSearchText = searchText.toLowerCase().trim();
 
+        Set<MenuItem> currentlySelectedItems = new HashSet<>(selectedItemsOrder);
+
         Map<MenuCategory, List<MenuItem>> filteredItemsByCategory = menuItems.stream()
                 .filter(menuItem ->
                         menuItem.getName().toLowerCase().contains(lowerCaseSearchText) ||
-                                menuItem.getDescription().toLowerCase().contains(lowerCaseSearchText) ||
+                                (menuItem.getDescription() != null && menuItem.getDescription().toLowerCase().contains(lowerCaseSearchText)) ||
                                 menuItem.getCategory().getName().toLowerCase().contains(lowerCaseSearchText)
                 )
                 .collect(Collectors.groupingBy(MenuItem::getCategory));
@@ -223,6 +225,9 @@ public class MenuGenerationModal extends VBox {
                     return orderA.compareTo(orderB);
                 })
                 .collect(Collectors.toList());
+
+        selectedItemsOrder.clear();
+        selectedItemsOrder.addAll(currentlySelectedItems);
 
         VBox contentBox = (VBox) ((ScrollPane) getChildren().get(2)).getContent();
         populateCategories(sortedFilteredCategories, contentBox);

@@ -55,7 +55,7 @@ public class MenuPDFGenerator {
         if (items == null || items.isEmpty()) return y;
 
         try (PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
-            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12.0f);
+            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 14.0f);
 
             y -= 14;
 
@@ -104,7 +104,7 @@ public class MenuPDFGenerator {
                 .toList();
 
         try (PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
-            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12.0f);
+            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 14.0f);
 
             y -= 14;
 
@@ -150,7 +150,7 @@ public class MenuPDFGenerator {
     private static List<List<MenuItem>> findOptimalSaladCombinations(List<MenuItem> items) {
         List<List<MenuItem>> optimalCombinations = new ArrayList<>();
 
-        float maxWidth = QUADRANT_WIDTH - (2 * MARGIN);
+        float maxWidth = QUADRANT_WIDTH - (2 * MARGIN) - 10;
 
         try {
             PDDocument tempDoc = new PDDocument();
@@ -158,7 +158,7 @@ public class MenuPDFGenerator {
             tempDoc.addPage(tempPage);
 
             PDPageContentStream contentStream = new PDPageContentStream(tempDoc, tempPage);
-            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12.0f);
+            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 14.0f);
 
             List<MenuItem> currentLine = new ArrayList<>();
             float currentLineWidth = 0;
@@ -203,9 +203,9 @@ public class MenuPDFGenerator {
             contentStream.lineTo(QUADRANT_WIDTH, PAGE_HEIGHT - MARGIN);
             contentStream.stroke();
 
-            contentStream.moveTo(MARGIN, PAGE_HEIGHT - QUADRANT_HEIGHT);
-            contentStream.lineTo(PAGE_WIDTH - MARGIN, PAGE_HEIGHT - QUADRANT_HEIGHT);
-            contentStream.stroke();
+//            contentStream.moveTo(MARGIN, PAGE_HEIGHT - QUADRANT_HEIGHT);
+//            contentStream.lineTo(PAGE_WIDTH - MARGIN, PAGE_HEIGHT - QUADRANT_HEIGHT);
+//            contentStream.stroke();
         } catch (IOException e) {
             e.printStackTrace();
         }
