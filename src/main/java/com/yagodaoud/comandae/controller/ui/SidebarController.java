@@ -64,26 +64,26 @@ public class SidebarController {
     @FXML
     private void handleDashboardButton() {
         if (currentScreen != NavigationScreen.DASHBOARD) {
-            stageManager.switchScene("view/MainScreen.fxml", "Main Screen");
+            stageManager.switchScene("view/MainScreen.fxml", "Main Screen", false);
         }
     }
 
     @FXML
     private void handleSignOutButton() {
-        stageManager.switchScene("view/EntryScreen.fxml", "Entry Screen");
+        stageManager.switchScene("view/EntryScreen.fxml", "Entry Screen", false);
     }
 
     @FXML
     private void handleMenuButton() {
         if (currentScreen != NavigationScreen.MENU) {
-            stageManager.switchScene("view/MenuScreen.fxml", "Menu Screen");
+            stageManager.switchScene("view/MenuScreen.fxml", "Menu Screen", false);
         }
     }
 
     @FXML
     private void handleFinancialButton() {
         if (currentScreen != NavigationScreen.FINANCIAL) {
-            stageManager.switchScene("view/FinancialScreen.fxml", "Financial Screen");
+            stageManager.switchScene("view/FinancialScreen.fxml", "Financial Screen", false);
         }
     }
 }

@@ -29,7 +29,7 @@ public class Comandae extends Application {
 
         stageManager.setPrimaryStage(primaryStage);
 
-        stageManager.switchScene("view/EntryScreen.fxml", "Comandaê");
+        stageManager.switchScene("view/EntryScreen.fxml", "Comandaê", true);
 
         primaryStage.setMaximized(true);
 

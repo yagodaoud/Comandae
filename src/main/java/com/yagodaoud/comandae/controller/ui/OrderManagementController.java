@@ -77,7 +77,7 @@ public class OrderManagementController {
 
     @FXML
     public void goToEntryScreen() {
-        stageManager.switchScene("view/MainScreen.fxml", "Comandaê");
+        stageManager.switchScene("view/MainScreen.fxml", "Comandaê", false);
     }
 
     private void showAlert(String title, String message) {

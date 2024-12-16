@@ -63,6 +63,6 @@ public class EntryScreenController {
 
     @FXML
     public void handleJoinButton() {
-        stageManager.switchScene("view/MainScreen.fxml", "Main Screen");
+        stageManager.switchScene("view/MainScreen.fxml", "Main Screen", true);
     }
 }

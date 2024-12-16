@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class StageManager {
         this.primaryStage = primaryStage;
     }
 
-    public void switchScene(String fxmlPath, String title) {
+    public void switchScene(String fxmlPath, String title, boolean fade) {
         try {
             Font.loadFont(getClass().getResourceAsStream("/fonts/MaterialIcons-Regular.ttf"), 16);
 
@@ -36,15 +37,26 @@ public class StageManager {
             loader.setControllerFactory(context::getBean);
             Parent root = loader.load();
 
-            root.setOpacity(0);
             FadeTransition fadeIn = new FadeTransition(Duration.millis(500), root);
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
 
+            Scene scene = new Scene(root);
             primaryStage.setTitle(title);
-            primaryStage.setScene(new Scene(root));
+            primaryStage.setScene(scene);
 
-            fadeIn.play();
+            //Visual correction for Windows 10
+            var visualBounds = Screen.getPrimary().getVisualBounds();
+            primaryStage.setX(visualBounds.getMinX());
+            primaryStage.setY(visualBounds.getMinY());
+            primaryStage.setWidth(visualBounds.getWidth());
+            primaryStage.setHeight(visualBounds.getHeight());
+
+            if (fade) {
+                root.setOpacity(0);
+                fadeIn.play();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
             showError("Could not load view: " + title);

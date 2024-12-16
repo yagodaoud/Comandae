@@ -9,9 +9,9 @@
 <?import javafx.scene.text.*?>
 <AnchorPane stylesheets="@/css/mainScreen.css" xmlns:fx="http://javafx.com/fxml" fx:controller="com.yagodaoud.comandae.controller.ui.MainScreenController">
 
-    <fx:include source="Header.fxml" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
-
     <fx:include source="Sidebar.fxml" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" />
+
+    <fx:include source="Header.fxml" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
 
     <VBox AnchorPane.rightAnchor="20" AnchorPane.topAnchor="70" AnchorPane.leftAnchor="220" AnchorPane.bottomAnchor="10">
         <VBox styleClass="analytics-container">
