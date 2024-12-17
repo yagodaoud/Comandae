@@ -301,8 +301,8 @@
 
             Label emojiLabel = new Label(menuItem.getEmoji());
             emojiLabel.getStyleClass().add("emoji");
-            emojiLabel.setLayoutX(50);
-            emojiLabel.setLayoutY(90);
+            emojiLabel.setLayoutX(30);
+            emojiLabel.setLayoutY(80);
 
             Button editButton = new Button("\uF88D");
             editButton.getStyleClass().add("action-button");

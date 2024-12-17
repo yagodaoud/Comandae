@@ -69,7 +69,7 @@ public class MenuItemModalForm extends GridPane {
 
         emojiField = new TextField();
         emojiField.setPromptText("Item emoji");
-        emojiField.setStyle("-fx-font-family: 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji';");
+        emojiField.setStyle("-fx-font-family: 'Segoe UI Emoji', 'Segoe UI'");
         addFormRow("Emoji:", emojiField, 2);
 
         priceField = new TextField();
