@@ -24,11 +24,18 @@
             <Text text="Menu" />
         </HBox>
 
-        <HBox fx:id="ordersButton" alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button">
+        <HBox fx:id="orderManagementButton" alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button" onMouseClicked="#handleOrderManagementButton">
             <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
                 <Image url="@/icons/orders.png"/>
             </ImageView>
             <Text text="Orders" />
+        </HBox>
+
+        <HBox fx:id="productsButton" alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button" onMouseClicked="#handleProductsButton">
+            <ImageView fitHeight="20" fitWidth="20" styleClass="icon">
+                <Image url="@/icons/products.png"/>
+            </ImageView>
+            <Text text="Products" />
         </HBox>
 
         <HBox fx:id="financialButton" alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-button" onMouseClicked="#handleFinancialButton">

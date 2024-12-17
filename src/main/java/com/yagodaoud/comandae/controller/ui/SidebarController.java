@@ -21,7 +21,10 @@ public class SidebarController {
     private HBox menuButton;
 
     @FXML
-    private HBox ordersButton;
+    private HBox orderManagementButton;
+
+    @FXML
+    public HBox productsButton;
 
     @FXML
     private HBox financialButton;
@@ -42,7 +45,8 @@ public class SidebarController {
         switch (screen) {
             case DASHBOARD -> dashboardButton.getStyleClass().add("selected");
             case MENU -> menuButton.getStyleClass().add("selected");
-            case ORDERS -> ordersButton.getStyleClass().add("selected");
+            case ORDER_MANAGEMENT -> orderManagementButton.getStyleClass().add("selected");
+            case PRODUCT -> productsButton.getStyleClass().add("selected");
             case FINANCIAL -> financialButton.getStyleClass().add("selected");
             case SETTINGS -> settingsButton.getStyleClass().add("selected");
         }
@@ -51,7 +55,7 @@ public class SidebarController {
     private void clearSelection() {
         dashboardButton.getStyleClass().remove("selected");
         menuButton.getStyleClass().remove("selected");
-        ordersButton.getStyleClass().remove("selected");
+        orderManagementButton.getStyleClass().remove("selected");
         financialButton.getStyleClass().remove("selected");
         settingsButton.getStyleClass().remove("selected");
     }
@@ -64,26 +68,42 @@ public class SidebarController {
     @FXML
     private void handleDashboardButton() {
         if (currentScreen != NavigationScreen.DASHBOARD) {
-            stageManager.switchScene("view/MainScreen.fxml", "Main Screen", false);
+            stageManager.switchScene("view/MainScreen.fxml", "Main", false);
         }
     }
 
     @FXML
     private void handleSignOutButton() {
-        stageManager.switchScene("view/EntryScreen.fxml", "Entry Screen", false);
+        stageManager.switchScene("view/EntryScreen.fxml", "Entry", false);
     }
 
     @FXML
     private void handleMenuButton() {
         if (currentScreen != NavigationScreen.MENU) {
-            stageManager.switchScene("view/MenuScreen.fxml", "Menu Screen", false);
+            stageManager.switchScene("view/MenuScreen.fxml", "Menu", false);
         }
     }
 
     @FXML
     private void handleFinancialButton() {
         if (currentScreen != NavigationScreen.FINANCIAL) {
-            stageManager.switchScene("view/FinancialScreen.fxml", "Financial Screen", false);
+            stageManager.switchScene("view/FinancialScreen.fxml", "Financial", false);
         }
     }
+
+    @FXML
+    private void handleOrderManagementButton() {
+        if (currentScreen != NavigationScreen.ORDER_MANAGEMENT) {
+            stageManager.switchScene("view/OrderManagementScreen.fxml", "Order Management", false);
+        }
+    }
+
+    @FXML
+    private void handleProductsButton() {
+        if (currentScreen != NavigationScreen.PRODUCT) {
+            stageManager.switchScene("view/Products.fxml", "Products", false);
+        }
+    }
+
+
 }
