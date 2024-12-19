@@ -44,6 +44,6 @@ public class ProductController implements ControllerInterface<Product, ProductDT
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id) {
         productService.delete(id);
-       return  ResponseEntity.noContent().build();
+       return ResponseEntity.noContent().build();
     }
 }

@@ -1,11 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<AnchorPane stylesheets="@/css/productsScreen.css" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.yagodaoud.comandae.controller.ui.ProductsScreenController">
 
-<AnchorPane stylesheets="@/css/productsScreen.css" xmlns:fx="http://javafx.com/fxml" fx:controller="com.yagodaoud.comandae.controller.ui.ProductsScreenController">
-
-    <fx:include source="Sidebar.fxml" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" />
+    <fx:include source="Sidebar.fxml" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0"/>
 
     <fx:include source="Header.fxml" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+
+
+    <children>
+        <HBox spacing="10">
+            <children>
+                <TextField fx:id="searchField"
+                           promptText="Search"
+                           styleClass="search-field" />
+                <Button fx:id="addProductButton"
+                        text="Add Product"
+                        styleClass="add-button" />
+            </children>
+        </HBox>
+
+        <Label text="Categories"
+               styleClass="section-title" />
+        <ScrollPane fx:id="categoryScrollPane"
+                    fitToWidth="true"
+                    hbarPolicy="NEVER"
+                    vbarPolicy="ALWAYS"
+                    styleClass="category-scroll-pane">
+            <content>
+                <FlowPane fx:id="categoryFlowPane"
+                          hgap="20" vgap="20"
+                          styleClass="category-flow-pane" />
+            </content>
+        </ScrollPane>
+
+        <Label text="Products"
+               styleClass="section-title" />
+        <ScrollPane fx:id="productScrollPane"
+                    fitToWidth="true"
+                    hbarPolicy="NEVER"
+                    vbarPolicy="ALWAYS"
+                    styleClass="product-scroll-pane">
+            <content>
+                <FlowPane fx:id="productFlowPane"
+                          hgap="20" vgap="20"
+                          styleClass="product-flow-pane" />
+            </content>
+        </ScrollPane>
+
+        <Button fx:id="addCategoryButton"
+                text="Add Category"
+                styleClass="add-button" />
+    </children>
 
 </AnchorPane>

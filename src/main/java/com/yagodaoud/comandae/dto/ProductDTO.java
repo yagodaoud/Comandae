@@ -1,11 +1,13 @@
 package com.yagodaoud.comandae.dto;
 
+import com.yagodaoud.comandae.model.Category;
+
 import java.math.BigDecimal;
 
 public class ProductDTO {
     Long id;
     String name;
-    String category;
+    Category category;
     BigDecimal price;
     Integer quantity;
 
@@ -33,11 +35,11 @@ public class ProductDTO {
         this.name = name;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

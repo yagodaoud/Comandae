@@ -5,6 +5,7 @@ import com.yagodaoud.comandae.model.Product;
 import com.yagodaoud.comandae.repository.ProductRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class ProductService implements ServiceInterface<Product, ProductDTO> {
     private EntityManager entityManager;
 
     @Override
+    @Transactional
     public List<Product> getAll(boolean isDeleted) {
         Session session = entityManager.unwrap(Session.class);
         Filter filter = session.enableFilter("deletedProductFilter");
@@ -31,7 +33,7 @@ public class ProductService implements ServiceInterface<Product, ProductDTO> {
 
     @Override
     public Product getById(Long id) {
-                return productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Produto não encontrado,"));
+                return productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
     }
 
     @Override
