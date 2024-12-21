@@ -5,8 +5,7 @@ import com.yagodaoud.comandae.model.Category;
 import com.yagodaoud.comandae.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,26 +17,31 @@ public class CategoryController implements ControllerInterface<Category, Categor
     private CategoryService categoryService;
 
     @Override
+    @GetMapping
     public List<Category> getAll(Boolean isDeleted) {
         return categoryService.getAll(isDeleted);
     }
 
     @Override
+    @GetMapping("/{id}")
     public ResponseEntity<Category> getById(Long id) {
         return ResponseEntity.ok(categoryService.getById(id));
     }
 
     @Override
+    @PostMapping
     public ResponseEntity<Category> create(CategoryDTO entity) {
         return ResponseEntity.ok(categoryService.create(entity));
     }
 
     @Override
+    @PutMapping("/{id}")
     public ResponseEntity<Category> update(Long id, CategoryDTO entity) {
         return ResponseEntity.ok(categoryService.update(id, entity));
     }
 
     @Override
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(Long id) {
         categoryService.delete(id);
         return ResponseEntity.noContent().build();
