@@ -38,6 +38,9 @@ public class ProductsScreenController {
     @FXML
     public Button addCategoryButton;
 
+    @FXML
+    public TextField searchField;
+
     private ObservableList<Category> categories;
     @FXML
     private VBox categoriesList;
@@ -56,6 +59,9 @@ public class ProductsScreenController {
     @FXML
     private StackPane modalContainer;
     private ModalContainer modal;
+
+    private ObservableList<Product> allProducts;
+    private ObservableList<Category> allCategories;
 
     @FXML
     @Autowired
@@ -84,14 +90,17 @@ public class ProductsScreenController {
 
         modalContainer.setPickOnBounds(false);
         modalContainer.toFront();
+
+        setupSearch();
     }
 
     private void loadCategories() {
         List<Category> categoryList = categoryService.getAll(false);
-
         categoryList.sort(Comparator.comparingLong(Category::getId));
 
+        allCategories = FXCollections.observableArrayList(categoryList);
         categories = FXCollections.observableArrayList(categoryList);
+
         populateCategories();
     }
 
@@ -105,18 +114,18 @@ public class ProductsScreenController {
     }
 
     private void refreshCategories(Category category) {
-
-        ProductCategoryCard categoryCard = new ProductCategoryCard(category, this::showEditCategoryDialog);
-
-        categoriesList.getChildren().add(categoryCard);
-
+        String currentSearch = searchField.getText().toLowerCase().trim();
+        if (category.getName().toLowerCase().contains(currentSearch)) {
+            ProductCategoryCard categoryCard = new ProductCategoryCard(category, this::showEditCategoryDialog);
+            categoriesList.getChildren().add(categoryCard);
+        }
     }
 
     private void loadProducts() {
         List<Product> productList = productService.getAll(false);
-
         productList.sort(Comparator.comparingLong(Product::getId));
 
+        allProducts = FXCollections.observableArrayList(productList);
         products = FXCollections.observableArrayList(productList);
         populateProducts();
     }
@@ -131,16 +140,20 @@ public class ProductsScreenController {
     }
 
     private void refreshProducts(Product product) {
-        ProductCard existingProductCard = findProductCard(product);
+        String currentSearch = searchField.getText().toLowerCase().trim();
+        if (product.getName().toLowerCase().contains(currentSearch) ||
+                (product.getCategory() != null &&
+                    product.getCategory().getName().toLowerCase().contains(currentSearch))) {
 
-        if (existingProductCard != null) {
-            existingProductCard.updateProduct(product);
-            return;
+            ProductCard existingProductCard = findProductCard(product);
+            if (existingProductCard != null) {
+                existingProductCard.updateProduct(product);
+                return;
+            }
+
+            ProductCard productCard = new ProductCard(product, this::showEditProductDialog);
+            productsList.getChildren().add(productCard);
         }
-
-        ProductCard productCard = new ProductCard(product, this::showEditProductDialog);
-
-        productsList.getChildren().add(productCard);
     }
 
 
@@ -223,6 +236,39 @@ public class ProductsScreenController {
             }
         }
         return null;
+    }
+
+    private void setupSearch() {
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String searchTerm = newValue.toLowerCase().trim();
+            filterItems(searchTerm);
+        });
+    }
+
+    private void filterItems(String searchTerm) {
+        categoriesList.getChildren().clear();
+        productsList.getChildren().clear();
+
+        if (allCategories != null) {
+            allCategories.stream()
+                    .filter(category -> category.getName().toLowerCase().contains(searchTerm))
+                    .forEach(category -> {
+                        ProductCategoryCard categoryCard = new ProductCategoryCard(category, this::showEditCategoryDialog);
+                        categoriesList.getChildren().add(categoryCard);
+                    });
+        }
+
+        if (allProducts != null) {
+            allProducts.stream()
+                    .filter(product ->
+                            product.getName().toLowerCase().contains(searchTerm) ||
+                                    (product.getCategory() != null &&
+                                            product.getCategory().getName().toLowerCase().contains(searchTerm)))
+                    .forEach(product -> {
+                        ProductCard productCard = new ProductCard(product, this::showEditProductDialog);
+                        productsList.getChildren().add(productCard);
+                    });
+        }
     }
 
 }
