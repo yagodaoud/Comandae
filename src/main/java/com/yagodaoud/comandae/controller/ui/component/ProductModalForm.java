@@ -32,7 +32,7 @@ public class ProductModalForm extends GridPane {
     private String base64Image;
     private Long editingId;
 
-    private static final String DEFAULT_IMAGE_PATH = "/images/default-image.png";
+    public static final String DEFAULT_IMAGE_PATH = "/images/default-image.png";
 
     public ProductModalForm(java.util.List<Category> categories,
                             Runnable onCancel,

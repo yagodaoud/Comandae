@@ -17,8 +17,8 @@ import java.util.function.Consumer;
 
 public class ProductCategoryCard extends HBox {
 
-//    private final Label categoryLabel;
-//    private final Label categoryItemQuantity;
+    private final Label nameLabel;
+    private final Label itemCountLabel;
     private final Button editButton;
 
     public ProductCategoryCard(Category category, Consumer<Category> onEdit) {
@@ -28,10 +28,10 @@ public class ProductCategoryCard extends HBox {
         setFocusTraversable(false);
 
         VBox contentBox = new VBox(5);
-        Label nameLabel = new Label(category.getName());
-//        Label itemCountLabel = new Label(category.getProducts().size() + " items");
-//        itemCountLabel.getStyleClass().add("item-count");
-        contentBox.getChildren().addAll(nameLabel); //itemCountLabel
+        nameLabel = new Label(category.getName());
+        itemCountLabel = new Label(category.getProductCount() + " items");
+        itemCountLabel.getStyleClass().add("item-count");
+        contentBox.getChildren().addAll(nameLabel, itemCountLabel);
 
         editButton = new Button("\uF88D");
         editButton.getStyleClass().add("edit-button");

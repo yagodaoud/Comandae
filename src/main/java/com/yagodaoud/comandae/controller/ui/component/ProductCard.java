@@ -16,6 +16,8 @@ import java.io.ByteArrayInputStream;
 import java.util.Base64;
 import java.util.function.Consumer;
 
+import static com.yagodaoud.comandae.controller.ui.component.ProductModalForm.DEFAULT_IMAGE_PATH;
+
 public class ProductCard extends HBox {
 
     private final Label productNameLabel;
@@ -79,7 +81,8 @@ public class ProductCard extends HBox {
             this.productEntity.setCategory(updatedProduct.getCategory());
         }
 
-        // Update image if changed
+        productImage.setImage(new Image(DEFAULT_IMAGE_PATH));
+
         if (updatedProduct.getImage() != null && !updatedProduct.getImage().isEmpty()) {
             try {
                 byte[] imageData = Base64.getDecoder().decode(updatedProduct.getImage());

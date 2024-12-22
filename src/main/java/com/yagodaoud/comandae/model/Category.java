@@ -1,10 +1,8 @@
 package com.yagodaoud.comandae.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
-import org.hibernate.annotations.ParamDef;
-import org.hibernate.annotations.SQLDelete;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.*;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +29,9 @@ public class Category {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    @Formula("(SELECT COUNT(*) FROM product p WHERE p.category_id = id AND p.deleted_at IS NULL)")
+    private Long productCount;
 
     public Category() {
         this.createdAt = LocalDateTime.now();
@@ -70,5 +71,9 @@ public class Category {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public Long getProductCount() {
+        return productCount;
     }
 }
