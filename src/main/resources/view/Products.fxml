@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<?import javafx.geometry.Insets?>
 <AnchorPane stylesheets="@/css/productsScreen.css" xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.yagodaoud.comandae.controller.ui.ProductsScreenController">
 

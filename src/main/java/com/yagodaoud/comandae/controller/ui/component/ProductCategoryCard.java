@@ -1,17 +1,14 @@
 package com.yagodaoud.comandae.controller.ui.component;
 
 import com.yagodaoud.comandae.model.Category;
-import com.yagodaoud.comandae.model.Product;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 import java.util.function.Consumer;
 

@@ -1,29 +1,26 @@
 package com.yagodaoud.comandae.controller.ui;
 
 import com.yagodaoud.comandae.controller.ui.component.*;
-import com.yagodaoud.comandae.dto.CategoryDTO;
-import com.yagodaoud.comandae.dto.ProductDTO;
 import com.yagodaoud.comandae.model.Category;
 import com.yagodaoud.comandae.model.NavigationScreen;
 import com.yagodaoud.comandae.model.Product;
-import com.yagodaoud.comandae.model.menu.MenuCategory;
-import com.yagodaoud.comandae.model.menu.MenuItem;
 import com.yagodaoud.comandae.service.CategoryService;
 import com.yagodaoud.comandae.service.ProductService;
 import com.yagodaoud.comandae.utils.StageManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import javafx.event.ActionEvent;
 import java.util.Comparator;
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.yagodaoud.comandae.service;
 
 import com.yagodaoud.comandae.dto.PixDTO;
-import com.yagodaoud.comandae.model.BitcoinNetwork;
 import com.yagodaoud.comandae.model.Pix;
 import com.yagodaoud.comandae.model.PixType;
 import com.yagodaoud.comandae.repository.PixRepository;

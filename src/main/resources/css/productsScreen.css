@@ -171,3 +171,27 @@
 .combo-box-popup .list-cell:hover {
     -fx-background-color: #f8f8f8;
 }
+
+.scroll-bar {
+    -fx-padding: 0;
+    -fx-shape: null;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    visibility: hidden;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #e85b27;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-padding: 2;
+    -fx-background-radius: 10;
+}

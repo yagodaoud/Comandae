@@ -1,7 +1,7 @@
 package com.yagodaoud.comandae.model;
 
-import jakarta.persistence.*;
 import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.annotations.*;
 
 import java.time.LocalDateTime;
