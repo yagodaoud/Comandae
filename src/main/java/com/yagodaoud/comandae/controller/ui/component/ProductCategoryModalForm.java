@@ -53,7 +53,7 @@ public class ProductCategoryModalForm extends GridPane {
         }
 
         saveButton = new Button(existingCategory == null ? "Save" : "Update");
-        saveButton.getStyleClass().addAll("button", "primary-button");
+        saveButton.getStyleClass().addAll("button", "add-button");
         saveButton.setOnAction(e -> {
             CategoryDTO category = new CategoryDTO();
             category.setName(nameField.getText());
@@ -65,7 +65,7 @@ public class ProductCategoryModalForm extends GridPane {
         });
 
         cancelButton = new Button("Cancel");
-        cancelButton.getStyleClass().addAll("button", "secondary-button");
+        cancelButton.getStyleClass().addAll("button", "cancel-button");
         cancelButton.setOnAction(e -> onCancel.run());
 
         HBox buttonBox = new HBox(10, saveButton, cancelButton);

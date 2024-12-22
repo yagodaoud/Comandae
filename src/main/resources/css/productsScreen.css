@@ -108,3 +108,25 @@
     -fx-fill: #333333;
     -fx-padding: 0 0 20 0;
 }
+
+.button.add-button {
+    -fx-background-color: #ff5722;
+    -fx-text-fill: white;
+    -fx-padding: 8 16;
+    -fx-background-radius: 4;
+}
+
+.button.add-button:hover {
+    -fx-background-color: #f4511e;
+}
+
+.button.cancel-button {
+    -fx-background-color: #f5f5f5;
+    -fx-text-fill: #333333;
+    -fx-padding: 8 16;
+    -fx-background-radius: 4;
+}
+
+.button.cancel-button:hover {
+    -fx-background-color: #eeeeee;
+}

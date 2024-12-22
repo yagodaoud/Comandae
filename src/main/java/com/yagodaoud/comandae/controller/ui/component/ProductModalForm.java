@@ -64,7 +64,7 @@ public class ProductModalForm extends GridPane {
         }
 
         saveButton = new Button(existingProduct == null ? "Save" : "Update");
-        saveButton.getStyleClass().addAll("button", "primary-button");
+        saveButton.getStyleClass().addAll("button", "add-button");
         saveButton.setOnAction(e -> {
             try {
                 ProductDTO product = new ProductDTO();
@@ -80,7 +80,7 @@ public class ProductModalForm extends GridPane {
         });
 
         cancelButton = new Button("Cancel");
-        cancelButton.getStyleClass().addAll("button", "secondary-button");
+        cancelButton.getStyleClass().addAll("button", "cancel-button");
         cancelButton.setOnAction(e -> onCancel.run());
 
         HBox buttonBox = new HBox(10, saveButton, cancelButton);
