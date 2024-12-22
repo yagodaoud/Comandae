@@ -31,6 +31,9 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @Column(name = "image", nullable = true)
+    private String image;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private final LocalDateTime createdAt;
 
@@ -71,6 +74,14 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public LocalDateTime getCreatedAt() {

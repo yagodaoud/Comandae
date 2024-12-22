@@ -10,6 +10,7 @@ public class ProductDTO {
     Category category;
     BigDecimal price;
     Integer quantity;
+    String image;
 
     public Long getId() {
         return id;
@@ -49,5 +50,13 @@ public class ProductDTO {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

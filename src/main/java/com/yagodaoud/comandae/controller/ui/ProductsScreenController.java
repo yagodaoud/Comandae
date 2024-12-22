@@ -14,6 +14,7 @@ import com.yagodaoud.comandae.utils.StageManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,6 +131,12 @@ public class ProductsScreenController {
     }
 
     private void refreshProducts(Product product) {
+        ProductCard existingProductCard = findProductCard(product);
+
+        if (existingProductCard != null) {
+            existingProductCard.updateProduct(product);
+            return;
+        }
 
         ProductCard productCard = new ProductCard(product, this::showEditProductDialog);
 
@@ -205,6 +212,17 @@ public class ProductsScreenController {
         );
 
         modal.show(form);
+    }
+
+    private ProductCard findProductCard(Product product) {
+        for (Node node : productsList.getChildren()) {
+            if (node instanceof ProductCard productCard) {
+                if (productCard.getProduct().getId().equals(product.getId())) {
+                    return productCard;
+                }
+            }
+        }
+        return null;
     }
 
 }

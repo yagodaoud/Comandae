@@ -130,3 +130,9 @@
 .button.cancel-button:hover {
     -fx-background-color: #eeeeee;
 }
+
+.product-image {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 0);
+    -fx-background-radius: 4;
+}
