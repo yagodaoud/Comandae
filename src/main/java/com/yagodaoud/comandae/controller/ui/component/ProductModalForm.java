@@ -55,9 +55,11 @@ public class ProductModalForm extends GridPane {
         imagePreview.setPreserveRatio(true);
 
         uploadButton = new Button("Upload Image");
+        uploadButton.getStyleClass().add("add-button");
         uploadButton.setOnAction(e -> handleImageUpload());
 
         removeButton = new Button("Remove Image");
+        removeButton.getStyleClass().add("cancel-button");
         removeButton.setOnAction(e -> handleImageRemove());
 
         imageSection.getChildren().addAll(imagePreview, uploadButton, removeButton);
@@ -82,7 +84,10 @@ public class ProductModalForm extends GridPane {
             }
         });
         categoryComboBox.setButtonCell(categoryComboBox.getCellFactory().call(null));
+        categoryComboBox.getStyleClass().add("combo-box");
         addFormRow("Category:", categoryComboBox, 4);
+
+        displayDefaultImage();
 
         if (existingProduct != null) {
             editingId = existingProduct.getId();
@@ -97,11 +102,7 @@ public class ProductModalForm extends GridPane {
             if (existingProduct.getImage() != null) {
                 base64Image = existingProduct.getImage();
                 displayBase64Image(base64Image);
-            } else {
-                displayDefaultImage();
             }
-        } else {
-            displayDefaultImage();
         }
 
         saveButton = new Button(existingProduct == null ? "Save" : "Update");

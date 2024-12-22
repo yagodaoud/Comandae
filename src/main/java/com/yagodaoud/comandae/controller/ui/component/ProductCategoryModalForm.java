@@ -42,10 +42,6 @@ public class ProductCategoryModalForm extends GridPane {
         browseButton.getStyleClass().addAll("button", "secondary-button");
         browseButton.setOnAction(e -> handleImageBrowse());
 
-        HBox imageBox = new HBox(10, imagePathField, browseButton);
-        HBox.setHgrow(imagePathField, Priority.ALWAYS);
-//        addFormRow("Image:", imageBox, 2);
-
         if (existingCategory != null) {
             editingId = existingCategory.getId();
             nameField.setText(existingCategory.getName());
