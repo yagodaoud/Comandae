@@ -19,7 +19,7 @@
         </HBox.margin>
     </Text>
 
-    <TextField fx:id="searchField" promptText="Buscar" styleClass="search-bar">
+    <TextField fx:id="searchField" promptText="Search" styleClass="search-bar">
         <HBox.margin>
             <Insets left="90"/>
         </HBox.margin>
