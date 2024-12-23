@@ -3,6 +3,13 @@
     src: url('../fonts/MaterialIcons-Regular.ttf');
 }
 
+.main-container {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+}
+
 .section-title {
     -fx-font-size: 30px;
 }
@@ -114,6 +121,7 @@
     -fx-text-fill: white;
     -fx-padding: 8 16;
     -fx-background-radius: 4;
+    -fx-cursor: hand;
 }
 
 .button.add-button:hover {
@@ -124,6 +132,7 @@
     -fx-background-color: #f5f5f5;
     -fx-text-fill: #333333;
     -fx-padding: 8 16;
+    -fx-cursor: hand;
     -fx-background-radius: 4;
 }
 
@@ -194,4 +203,43 @@
     -fx-background-color: transparent;
     -fx-padding: 2;
     -fx-background-radius: 10;
+}
+
+.custom-value-checkbox {
+    -fx-opacity: 0.9;
+    -fx-padding: 0 0 0 5px;
+}
+
+.custom-value-checkbox .box {
+    -fx-background-color: transparent;
+    -fx-border-color: #666666;
+    -fx-border-radius: 3px;
+    -fx-border-width: 2px;
+    -fx-padding: 2px;
+}
+
+.custom-value-checkbox:selected .box {
+    -fx-background-color: #2196F3;
+    -fx-border-color: #2196F3;
+}
+
+.custom-value-checkbox:selected .mark {
+    -fx-background-color: white;
+}
+
+.custom-value-checkbox .box:hover {
+    -fx-border-color: #2196F3;
+}
+
+.custom-value-checkbox:disabled {
+    -fx-opacity: 0.8;
+}
+
+.custom-value-checkbox:disabled .box {
+    -fx-border-color: #999999;
+}
+
+.custom-value-checkbox:disabled:selected .box {
+    -fx-background-color: #78909C;
+    -fx-border-color: #78909C;
 }

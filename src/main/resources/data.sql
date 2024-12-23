@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS product (
     price DECIMAL(10, 2) NOT NULL DEFAULT 0,
     category_id INT NOT NULL,
     image TEXT NULL DEFAULT 0,
+    has_custom_value BOOLEAN DEFAULT FALSE;
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE SET NULL

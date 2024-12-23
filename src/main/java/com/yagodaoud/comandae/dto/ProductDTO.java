@@ -11,6 +11,7 @@ public class ProductDTO {
     BigDecimal price;
     Integer quantity;
     String image;
+    Boolean hasCustomValue;
 
     public Long getId() {
         return id;
@@ -58,5 +59,13 @@ public class ProductDTO {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Boolean getHasCustomValue() {
+        return hasCustomValue;
+    }
+
+    public void setHasCustomValue(Boolean hasCustomValue) {
+        this.hasCustomValue = hasCustomValue;
     }
 }

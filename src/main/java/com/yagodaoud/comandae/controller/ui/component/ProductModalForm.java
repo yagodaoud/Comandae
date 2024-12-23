@@ -24,6 +24,7 @@ public class ProductModalForm extends GridPane {
     private final TextField nameField;
     private final TextField priceField;
     private final ComboBox<Category> categoryComboBox;
+    private final CheckBox hasCustomValueCheckBox;
     private final Button saveButton;
     private final Button cancelButton;
     private final ImageView imagePreview;
@@ -73,6 +74,10 @@ public class ProductModalForm extends GridPane {
         priceField.setPromptText("0.00");
         addFormRow("Price:", priceField, 3);
 
+        hasCustomValueCheckBox = new CheckBox("Allow Custom Value");
+        hasCustomValueCheckBox.getStyleClass().add("custom-value-checkbox");
+        addFormRow("", hasCustomValueCheckBox, 4);
+
         categoryComboBox = new ComboBox<>();
         categoryComboBox.setItems(javafx.collections.FXCollections.observableArrayList(categories));
         categoryComboBox.setPromptText("Select category");
@@ -85,7 +90,7 @@ public class ProductModalForm extends GridPane {
         });
         categoryComboBox.setButtonCell(categoryComboBox.getCellFactory().call(null));
         categoryComboBox.getStyleClass().add("combo-box");
-        addFormRow("Category:", categoryComboBox, 4);
+        addFormRow("Category:", categoryComboBox, 5);
 
         displayDefaultImage();
 
@@ -93,6 +98,7 @@ public class ProductModalForm extends GridPane {
             editingId = existingProduct.getId();
             nameField.setText(existingProduct.getName());
             priceField.setText(existingProduct.getPrice().toString());
+            hasCustomValueCheckBox.setSelected(existingProduct.getHasCustomValue());
             Category matchingCategory = categories.stream()
                     .filter(c -> c.getId().equals(existingProduct.getCategory().getId()))
                     .findFirst()
@@ -114,6 +120,7 @@ public class ProductModalForm extends GridPane {
                 product.setPrice(new BigDecimal(priceField.getText()));
                 product.setCategory(categoryComboBox.getValue());
                 product.setImage(base64Image);
+                product.setHasCustomValue(hasCustomValueCheckBox.isSelected());
 
                 if (editingId != null) {
                     product.setId(editingId);
@@ -129,7 +136,7 @@ public class ProductModalForm extends GridPane {
 
         HBox buttonBox = new HBox(10, saveButton, cancelButton);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
-        add(buttonBox, 0, 5, 2, 1);
+        add(buttonBox, 0, 6, 2, 1); // Moved down one row to accommodate checkbox
 
         setupValidation();
     }

@@ -34,6 +34,9 @@ public class Product {
     @Column(name = "image", nullable = true)
     private String image;
 
+    @Column(name = "has_custom_value", nullable = true)
+    private Boolean hasCustomValue = false;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private final LocalDateTime createdAt;
 
@@ -82,6 +85,14 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Boolean getHasCustomValue() {
+        return hasCustomValue;
+    }
+
+    public void setHasCustomValue(Boolean hasCustomValue) {
+        this.hasCustomValue = hasCustomValue;
     }
 
     public LocalDateTime getCreatedAt() {

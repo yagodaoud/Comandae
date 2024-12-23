@@ -44,6 +44,7 @@ public class ProductService implements ServiceInterface<Product, ProductDTO> {
         product.setCategory(productDTO.getCategory());
         product.setPrice(productDTO.getPrice());
         product.setImage(productDTO.getImage());
+        product.setHasCustomValue(productDTO.getHasCustomValue());
 
         return productRepository.save(product);
     }
@@ -56,6 +57,7 @@ public class ProductService implements ServiceInterface<Product, ProductDTO> {
         product.setPrice(productDTO.getPrice());
         product.setCategory(productDTO.getCategory());
         product.setImage(productDTO.getImage());
+        product.setHasCustomValue(productDTO.getHasCustomValue());
 
         return productRepository.save(product);
     }
