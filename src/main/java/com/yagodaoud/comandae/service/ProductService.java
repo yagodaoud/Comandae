@@ -33,7 +33,7 @@ public class ProductService implements ServiceInterface<Product, ProductDTO> {
 
     @Override
     public Product getById(Long id) {
-                return productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
+        return productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
     }
 
     @Override
@@ -69,5 +69,9 @@ public class ProductService implements ServiceInterface<Product, ProductDTO> {
     @Override
     public void delete(Long id) {
         productRepository.deleteById(id);
+    }
+
+    public List<Product> findLowStockProducts(int threshold) {
+        return productRepository.findLowStockProducts(threshold);
     }
 }

@@ -117,8 +117,6 @@ public class ProductModalForm extends GridPane {
             nameField.setText(existingProduct.getName());
             priceField.setText(existingProduct.getPrice().toString());
 
-            System.out.println(existingProduct.getName());
-
             hasCustomValueCheckBox.setSelected(existingProduct.getHasCustomValue());
             hasInfiniteStockCheckBox.setSelected(existingProduct.getHasInfiniteStock());
 

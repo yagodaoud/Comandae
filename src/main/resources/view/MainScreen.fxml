@@ -15,7 +15,6 @@
 
     <VBox AnchorPane.rightAnchor="20" AnchorPane.topAnchor="70" AnchorPane.leftAnchor="220" AnchorPane.bottomAnchor="10">
         <VBox styleClass="analytics-container">
-            <!-- Title Section -->
             <VBox spacing="10">
                 <padding>
                     <Insets bottom="40"/>
@@ -23,7 +22,6 @@
                 <Text text="Insights &amp; Analytics" styleClass="section-title"/>
             </VBox>
 
-            <!-- Summary Cards -->
             <HBox spacing="15" styleClass="summary-section">
                 <VBox styleClass="summary-box">
                     <Text text="Today's" styleClass="summary-label"/>
@@ -54,8 +52,6 @@
             </HBox>
         </VBox>
 
-
-        <!-- Charts Section with spacing -->
         <HBox spacing="10">
             <padding>
                 <Insets top="20"/>
@@ -79,7 +75,6 @@
                 </HBox>
 
                 <GridPane styleClass="dishes-grid">
-                    <!-- Add your dish items here -->
                 </GridPane>
             </VBox>
         </HBox>
@@ -89,39 +84,13 @@
                 <Insets top="20"/>
             </padding>
 
-            <!-- Inventory Status Container -->
-            <VBox styleClass="inventory-status">
+            <VBox styleClass="inventory-status" fx:id="inventoryStatus">
                 <HBox alignment="CENTER_LEFT">
                     <Text text="Inventory Status" styleClass="section-sub-title"/>
                     <Region HBox.hgrow="ALWAYS"/>
                 </HBox>
-
-                <!-- List of Inventory Items with Stock Status -->
-                <VBox spacing="10">
-                    <HBox>
-                        <Text text="Low Stock Item 1" styleClass="inventory-item-name"/>
-                        <Region HBox.hgrow="ALWAYS"/>
-                        <Text text="5" styleClass="inventory-item-quantity"/>
-                    </HBox>
-                    <HBox>
-                        <Text text="Low Stock Item 2" styleClass="inventory-item-name"/>
-                        <Region HBox.hgrow="ALWAYS"/>
-                        <Text text="3" styleClass="inventory-item-quantity"/>
-                    </HBox>
-                    <HBox>
-                        <Text text="Low Stock Item 3" styleClass="inventory-item-name"/>
-                        <Region HBox.hgrow="ALWAYS"/>
-                        <Text text="8" styleClass="inventory-item-quantity"/>
-                    </HBox>
-                    <HBox>
-                        <Text text="Low Stock Item 4" styleClass="inventory-item-name"/>
-                        <Region HBox.hgrow="ALWAYS"/>
-                        <Text text="2" styleClass="inventory-item-quantity"/>
-                    </HBox>
-                </VBox>
             </VBox>
 
-            <!-- Location Overview Container -->
             <VBox styleClass="locations-overview">
                 <HBox alignment="CENTER_LEFT">
                     <Text text="Locations Overview" styleClass="section-sub-title"/>
