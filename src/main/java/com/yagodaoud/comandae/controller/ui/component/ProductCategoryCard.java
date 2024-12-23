@@ -26,7 +26,7 @@ public class ProductCategoryCard extends HBox {
 
         VBox contentBox = new VBox(5);
         nameLabel = new Label(category.getName());
-        itemCountLabel = new Label(category.getProductCount() + " items");
+        itemCountLabel = new Label((category.getProductCount() == null ? 0 : category.getProductCount()) + " items");
         itemCountLabel.getStyleClass().add("item-count");
         contentBox.getChildren().addAll(nameLabel, itemCountLabel);
 

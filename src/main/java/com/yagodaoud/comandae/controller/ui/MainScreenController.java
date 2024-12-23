@@ -87,7 +87,7 @@ public class MainScreenController {
         HBox headerHBox = new HBox();
         headerHBox.setAlignment(Pos.CENTER_LEFT);
 
-        Text headerText = new Text("Inventory Status");
+        Text headerText = new Text("Low Stock Items");
         headerText.getStyleClass().add("section-sub-title");
 
         Region spacer = new Region();
@@ -95,6 +95,20 @@ public class MainScreenController {
 
         headerHBox.getChildren().addAll(headerText, spacer);
         inventoryStatus.getChildren().add(headerHBox);
+
+        if (lowStockProducts.isEmpty()) {
+            HBox itemHBox = new HBox();
+            itemHBox.setSpacing(10);
+            itemHBox.setAlignment(Pos.CENTER_LEFT);
+
+            Text nameText = new Text("No low stock items to show.");
+            nameText.getStyleClass().add("inventory-item-name");
+
+            itemHBox.getChildren().addAll(nameText);
+            inventoryStatus.getChildren().add(itemHBox);
+
+            return;
+        }
 
         for (Product product : lowStockProducts) {
             HBox itemHBox = new HBox();

@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MenuPDFGenerator {
-    private static final float PAGE_WIDTH = 595.0f; // A4 page width
-    private static final float PAGE_HEIGHT = 842.0f; // A4 page height
+    private static final float PAGE_WIDTH = 595.0f;
+    private static final float PAGE_HEIGHT = 842.0f;
     private static final float QUADRANT_WIDTH = PAGE_WIDTH / 2;
     private static final float QUADRANT_HEIGHT = PAGE_HEIGHT / 2;
     private static final float MARGIN = 30.0f;

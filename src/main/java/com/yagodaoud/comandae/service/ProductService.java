@@ -9,6 +9,8 @@ import jakarta.transaction.Transactional;
 import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -72,6 +74,7 @@ public class ProductService implements ServiceInterface<Product, ProductDTO> {
     }
 
     public List<Product> findLowStockProducts(int threshold) {
-        return productRepository.findLowStockProducts(threshold);
+        Pageable pageable = PageRequest.of(0, 5);
+        return productRepository.findLowStockProducts(threshold, pageable);
     }
 }

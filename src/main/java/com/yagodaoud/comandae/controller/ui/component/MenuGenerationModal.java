@@ -20,7 +20,7 @@ public class MenuGenerationModal extends VBox {
     private final List<MenuItem> menuItems;
     private final Runnable onClose;
     private final Runnable onGenerate;
-    private final Consumer<MenuItem> onFavorite; // New consumer for favorite action
+    private final Consumer<MenuItem> onFavorite;
     private final List<MenuItem> selectedItemsOrder = new ArrayList<>();
     private TextField searchField;
 

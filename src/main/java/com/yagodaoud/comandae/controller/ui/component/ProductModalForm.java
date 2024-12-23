@@ -3,6 +3,9 @@ package com.yagodaoud.comandae.controller.ui.component;
 import com.yagodaoud.comandae.dto.ProductDTO;
 import com.yagodaoud.comandae.model.Category;
 import com.yagodaoud.comandae.model.Product;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -19,10 +22,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.util.Base64;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class ProductModalForm extends GridPane {
     private final TextField nameField;
-    private final TextField priceField;
+    private TextField priceField = null;
     private final TextField stockQuantityField;
     private final ComboBox<Category> categoryComboBox;
     private final CheckBox hasCustomValueCheckBox;
@@ -37,9 +42,9 @@ public class ProductModalForm extends GridPane {
 
     public static final String DEFAULT_IMAGE_PATH = "/images/default-image.png";
 
-    public ProductModalForm(java.util.List<Category> categories,
+    public ProductModalForm(List<Category> categories,
                             Runnable onCancel,
-                            java.util.function.Consumer<ProductDTO> onSave,
+                            Consumer<ProductDTO> onSave,
                             Product existingProduct) {
         setHgap(10);
         setVgap(15);
@@ -72,12 +77,12 @@ public class ProductModalForm extends GridPane {
         nameField.setPromptText("Product name");
         addFormRow("Name:", nameField, 2);
 
-        priceField = new TextField();
+        priceField = new TextField("0.00");
         priceField.setPromptText("0.00");
         addFormRow("Price:", priceField, 3);
 
         categoryComboBox = new ComboBox<>();
-        categoryComboBox.setItems(javafx.collections.FXCollections.observableArrayList(categories));
+        categoryComboBox.setItems(FXCollections.observableArrayList(categories));
         categoryComboBox.setPromptText("Select category");
         categoryComboBox.setCellFactory(lv -> new ListCell<Category>() {
             @Override
@@ -108,6 +113,16 @@ public class ProductModalForm extends GridPane {
             if (newVal) {
                 stockQuantityField.setText("0");
             }
+        });
+
+        hasCustomValueCheckBox.selectedProperty().addListener((obs, oldVal, newVal) -> {
+            priceField.setDisable(newVal);
+            if (newVal) {
+                priceField.textProperty().removeListener(priceValidationListener);
+            } else {
+                priceField.textProperty().addListener(priceValidationListener);
+            }
+            updateSaveButtonState();
         });
 
         displayDefaultImage();
@@ -173,26 +188,30 @@ public class ProductModalForm extends GridPane {
         setupStockValidation();
     }
 
-    public ProductModalForm(java.util.List<Category> categories,
+    public ProductModalForm(List<Category> categories,
                             Runnable onCancel,
-                            java.util.function.Consumer<ProductDTO> onSave) {
+                            Consumer<ProductDTO> onSave) {
         this(categories, onCancel, onSave, null);
     }
 
     private void setupValidation() {
         saveButton.setDisable(true);
 
-        javafx.beans.binding.BooleanBinding isValid = nameField.textProperty().isEmpty()
-                .or(priceField.textProperty().isEmpty())
-                .or(categoryComboBox.valueProperty().isNull());
+        BooleanBinding isValid = nameField.textProperty().isEmpty()
+                .or(categoryComboBox.valueProperty().isNull())
+                .or(hasCustomValueCheckBox.selectedProperty().not().and(priceField.textProperty().isEmpty()));
 
         saveButton.disableProperty().bind(isValid);
 
-        priceField.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (!newVal.matches("\\d*(\\.\\d{0,2})?")) {
-                priceField.setText(oldVal);
-            }
-        });
+        priceField.textProperty().addListener(priceValidationListener);
+    }
+
+    private void updateSaveButtonState() {
+        BooleanBinding isValid = nameField.textProperty().isEmpty()
+                .or(categoryComboBox.valueProperty().isNull())
+                .or(hasCustomValueCheckBox.selectedProperty().not().and(priceField.textProperty().isEmpty()));
+
+        saveButton.disableProperty().bind(isValid);
     }
 
     private void addFormRow(String label, Control field, int row) {
@@ -260,7 +279,7 @@ public class ProductModalForm extends GridPane {
 
         saveButton.disableProperty().unbind();
 
-        javafx.beans.binding.BooleanBinding isValid = nameField.textProperty().isEmpty()
+        BooleanBinding isValid = nameField.textProperty().isEmpty()
                 .or(priceField.textProperty().isEmpty())
                 .or(categoryComboBox.valueProperty().isNull())
                 .or(
@@ -270,4 +289,10 @@ public class ProductModalForm extends GridPane {
 
         saveButton.disableProperty().bind(isValid);
     }
+
+    private ChangeListener<String> priceValidationListener = (obs, oldVal, newVal) -> {
+        if (!newVal.matches("\\d*(\\.\\d{0,2})?")) {
+            priceField.setText(oldVal);
+        }
+    };
 }

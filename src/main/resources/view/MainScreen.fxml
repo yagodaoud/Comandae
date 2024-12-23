@@ -85,10 +85,6 @@
             </padding>
 
             <VBox styleClass="inventory-status" fx:id="inventoryStatus">
-                <HBox alignment="CENTER_LEFT">
-                    <Text text="Inventory Status" styleClass="section-sub-title"/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                </HBox>
             </VBox>
 
             <VBox styleClass="locations-overview">
