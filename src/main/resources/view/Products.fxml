@@ -15,7 +15,7 @@
     <fx:include source="Header.fxml" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
 
     <VBox AnchorPane.rightAnchor="20" AnchorPane.topAnchor="70" AnchorPane.leftAnchor="220" AnchorPane.bottomAnchor="10" styleClass="main-container">
-        <VBox spacing="20">
+        <VBox spacing="17">
             <padding>
                 <Insets left="40" top="20" right="40"/>
             </padding>
@@ -33,7 +33,7 @@
 
             <Button fx:id="addCategoryButton"
                     text="Add Category"
-                    styleClass="add-button"
+                    styleClass="add-button-menu"
                     onAction="#addCategory"/>
 
             <Text text="Items" styleClass="section-sub-title"/>
@@ -45,7 +45,7 @@
 
             <Button fx:id="addProductButton"
                     text="Add Product"
-                    styleClass="add-button"
+                    styleClass="add-button-menu"
                     onAction="#addProduct"/>
 
         </VBox>
