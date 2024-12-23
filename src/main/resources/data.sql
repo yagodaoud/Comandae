@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS product (
     category_id INT NOT NULL,
     image TEXT NULL DEFAULT 0,
     has_custom_value BOOLEAN DEFAULT FALSE;
+    stock_quantity INT NULL DEFAULT 0,
+    infinite_stock BOOLEAN DEFAULT FALSE;
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE SET NULL

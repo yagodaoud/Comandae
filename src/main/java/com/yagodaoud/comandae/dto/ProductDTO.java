@@ -12,6 +12,8 @@ public class ProductDTO {
     Integer quantity;
     String image;
     Boolean hasCustomValue;
+    Integer stockQuantity;
+    Boolean hasInfiniteStock;
 
     public Long getId() {
         return id;
@@ -67,5 +69,21 @@ public class ProductDTO {
 
     public void setHasCustomValue(Boolean hasCustomValue) {
         this.hasCustomValue = hasCustomValue;
+    }
+
+    public Integer getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+
+    public Boolean getHasInfiniteStock() {
+        return hasInfiniteStock;
+    }
+
+    public void setHasInfiniteStock(Boolean hasInfiniteStock) {
+        this.hasInfiniteStock = hasInfiniteStock;
     }
 }

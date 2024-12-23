@@ -76,6 +76,9 @@ public class ProductCard extends HBox {
     public void updateProduct(Product updatedProduct) {
         this.productEntity.setName(updatedProduct.getName());
         this.productEntity.setPrice(updatedProduct.getPrice());
+        this.productEntity.setStockQuantity(updatedProduct.getStockQuantity());
+        this.productEntity.setHasCustomValue(updatedProduct.getHasCustomValue());
+        this.productEntity.setHasInfiniteStock(updatedProduct.getHasInfiniteStock());
 
         if (updatedProduct.getCategory() != null) {
             this.productEntity.setCategory(updatedProduct.getCategory());

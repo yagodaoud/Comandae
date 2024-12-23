@@ -37,6 +37,12 @@ public class Product {
     @Column(name = "has_custom_value", nullable = true)
     private Boolean hasCustomValue = false;
 
+    @Column(name = "stock_quantity", nullable = true)
+    private Integer stockQuantity = 0;
+
+    @Column(name = "infinite_stock", nullable = true)
+    private Boolean hasInfiniteStock = false;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private final LocalDateTime createdAt;
 
@@ -93,6 +99,22 @@ public class Product {
 
     public void setHasCustomValue(Boolean hasCustomValue) {
         this.hasCustomValue = hasCustomValue;
+    }
+
+    public Integer getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+
+    public Boolean getHasInfiniteStock() {
+        return hasInfiniteStock;
+    }
+
+    public void setHasInfiniteStock(Boolean infiniteStock) {
+        this.hasInfiniteStock = infiniteStock;
     }
 
     public LocalDateTime getCreatedAt() {

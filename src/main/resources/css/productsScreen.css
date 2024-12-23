@@ -205,12 +205,12 @@
     -fx-background-radius: 10;
 }
 
-.custom-value-checkbox {
+.checkbox {
     -fx-opacity: 0.9;
     -fx-padding: 0 0 0 5px;
 }
 
-.custom-value-checkbox .box {
+.checkbox .box {
     -fx-background-color: transparent;
     -fx-border-color: #666666;
     -fx-border-radius: 3px;
@@ -218,28 +218,28 @@
     -fx-padding: 2px;
 }
 
-.custom-value-checkbox:selected .box {
+.checkbox:selected .box {
     -fx-background-color: #2196F3;
     -fx-border-color: #2196F3;
 }
 
-.custom-value-checkbox:selected .mark {
+.checkbox:selected .mark {
     -fx-background-color: white;
 }
 
-.custom-value-checkbox .box:hover {
+.checkbox .box:hover {
     -fx-border-color: #2196F3;
 }
 
-.custom-value-checkbox:disabled {
+.checkbox:disabled {
     -fx-opacity: 0.8;
 }
 
-.custom-value-checkbox:disabled .box {
+.checkbox:disabled .box {
     -fx-border-color: #999999;
 }
 
-.custom-value-checkbox:disabled:selected .box {
+.checkbox:disabled:selected .box {
     -fx-background-color: #78909C;
     -fx-border-color: #78909C;
 }

@@ -23,8 +23,10 @@ import java.util.Base64;
 public class ProductModalForm extends GridPane {
     private final TextField nameField;
     private final TextField priceField;
+    private final TextField stockQuantityField;
     private final ComboBox<Category> categoryComboBox;
     private final CheckBox hasCustomValueCheckBox;
+    private final CheckBox hasInfiniteStockCheckBox;
     private final Button saveButton;
     private final Button cancelButton;
     private final ImageView imagePreview;
@@ -74,10 +76,6 @@ public class ProductModalForm extends GridPane {
         priceField.setPromptText("0.00");
         addFormRow("Price:", priceField, 3);
 
-        hasCustomValueCheckBox = new CheckBox("Allow Custom Value");
-        hasCustomValueCheckBox.getStyleClass().add("custom-value-checkbox");
-        addFormRow("", hasCustomValueCheckBox, 4);
-
         categoryComboBox = new ComboBox<>();
         categoryComboBox.setItems(javafx.collections.FXCollections.observableArrayList(categories));
         categoryComboBox.setPromptText("Select category");
@@ -88,9 +86,29 @@ public class ProductModalForm extends GridPane {
                 setText(empty ? "" : category.getName());
             }
         });
+        hasCustomValueCheckBox = new CheckBox("Allow Custom Value");
+        hasCustomValueCheckBox.getStyleClass().add("checkbox");
+        addFormRow("", hasCustomValueCheckBox, 4);
+
         categoryComboBox.setButtonCell(categoryComboBox.getCellFactory().call(null));
         categoryComboBox.getStyleClass().add("combo-box");
         addFormRow("Category:", categoryComboBox, 5);
+
+        stockQuantityField = new TextField();
+        stockQuantityField.setPromptText("0");
+        addFormRow("Quantity:", stockQuantityField, 6);
+
+
+        hasInfiniteStockCheckBox = new CheckBox("Infinite Stock");
+        hasInfiniteStockCheckBox.getStyleClass().add("checkbox");
+        addFormRow("", hasInfiniteStockCheckBox, 7);
+
+        hasInfiniteStockCheckBox.selectedProperty().addListener((obs, oldVal, newVal) -> {
+            stockQuantityField.setDisable(newVal);
+            if (newVal) {
+                stockQuantityField.setText("0");
+            }
+        });
 
         displayDefaultImage();
 
@@ -98,7 +116,15 @@ public class ProductModalForm extends GridPane {
             editingId = existingProduct.getId();
             nameField.setText(existingProduct.getName());
             priceField.setText(existingProduct.getPrice().toString());
+
+            System.out.println(existingProduct.getName());
+
             hasCustomValueCheckBox.setSelected(existingProduct.getHasCustomValue());
+            hasInfiniteStockCheckBox.setSelected(existingProduct.getHasInfiniteStock());
+
+            stockQuantityField.setText(String.valueOf(existingProduct.getStockQuantity()));
+            stockQuantityField.setDisable(existingProduct.getHasInfiniteStock());
+
             Category matchingCategory = categories.stream()
                     .filter(c -> c.getId().equals(existingProduct.getCategory().getId()))
                     .findFirst()
@@ -121,6 +147,13 @@ public class ProductModalForm extends GridPane {
                 product.setCategory(categoryComboBox.getValue());
                 product.setImage(base64Image);
                 product.setHasCustomValue(hasCustomValueCheckBox.isSelected());
+                product.setHasInfiniteStock(hasInfiniteStockCheckBox.isSelected());
+
+                if (hasInfiniteStockCheckBox.isSelected()) {
+                    product.setStockQuantity(0);
+                } else {
+                    product.setStockQuantity(Integer.parseInt(stockQuantityField.getText()));
+                }
 
                 if (editingId != null) {
                     product.setId(editingId);
@@ -136,9 +169,10 @@ public class ProductModalForm extends GridPane {
 
         HBox buttonBox = new HBox(10, saveButton, cancelButton);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
-        add(buttonBox, 0, 6, 2, 1); // Moved down one row to accommodate checkbox
+        add(buttonBox, 0, 8, 2, 1);
 
         setupValidation();
+        setupStockValidation();
     }
 
     public ProductModalForm(java.util.List<Category> categories,
@@ -217,5 +251,25 @@ public class ProductModalForm extends GridPane {
 
     private void handleImageRemove() {
         displayDefaultImage();
+    }
+
+    private void setupStockValidation() {
+        stockQuantityField.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.matches("\\d*")) {
+                stockQuantityField.setText(oldVal);
+            }
+        });
+
+        saveButton.disableProperty().unbind();
+
+        javafx.beans.binding.BooleanBinding isValid = nameField.textProperty().isEmpty()
+                .or(priceField.textProperty().isEmpty())
+                .or(categoryComboBox.valueProperty().isNull())
+                .or(
+                        hasInfiniteStockCheckBox.selectedProperty().not()
+                                .and(stockQuantityField.textProperty().isEmpty())
+                );
+
+        saveButton.disableProperty().bind(isValid);
     }
 }
