@@ -178,6 +178,14 @@ public class ProductsScreenController {
                     Product savedProduct = productService.create(productDTO);
                     products.add(savedProduct);
                     refreshProducts(savedProduct);
+
+                    if (productDTO.getCategory() != null) {
+                        ProductCategoryCard categoryCard = findCategoryCard(productDTO.getCategory());
+                        if (categoryCard != null) {
+                            categoryCard.incrementItemCount();
+                        }
+                    }
+
                     modal.hide();
                 }
         );
@@ -266,6 +274,17 @@ public class ProductsScreenController {
                         productsList.getChildren().add(productCard);
                     });
         }
+    }
+
+    private ProductCategoryCard findCategoryCard(Category category) {
+        for (Node node : categoriesList.getChildren()) {
+            if (node instanceof ProductCategoryCard categoryCard) {
+                if (categoryCard.getCategory().getId().equals(category.getId())) {
+                    return categoryCard;
+                }
+            }
+        }
+        return null;
     }
 
 }

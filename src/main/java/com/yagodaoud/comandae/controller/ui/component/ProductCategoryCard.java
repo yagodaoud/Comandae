@@ -17,9 +17,11 @@ public class ProductCategoryCard extends HBox {
     private final Label nameLabel;
     private final Label itemCountLabel;
     private final Button editButton;
+    private final Category category;
 
     public ProductCategoryCard(Category category, Consumer<Category> onEdit) {
         super(10);
+        this.category = category;
         getStyleClass().add("category-item");
         setAlignment(Pos.CENTER_LEFT);
         setFocusTraversable(false);
@@ -39,5 +41,19 @@ public class ProductCategoryCard extends HBox {
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         getChildren().addAll(contentBox, spacer, editButton);
+    }
+
+    public void updateItemCount(int newCount) {
+        category.setProductCount(newCount);
+        itemCountLabel.setText(newCount + " items");
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void incrementItemCount() {
+        int currentCount = category.getProductCount() == null ? 0 : category.getProductCount();
+        updateItemCount(currentCount + 1);
     }
 }

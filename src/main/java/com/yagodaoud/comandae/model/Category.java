@@ -31,7 +31,7 @@ public class Category {
     private LocalDateTime deletedAt;
 
     @Formula("(SELECT COUNT(*) FROM product p WHERE p.category_id = id AND p.deleted_at IS NULL)")
-    private Long productCount;
+    private Integer productCount;
 
     public Category() {
         this.createdAt = LocalDateTime.now();
@@ -73,7 +73,11 @@ public class Category {
         this.deletedAt = deletedAt;
     }
 
-    public Long getProductCount() {
+    public Integer getProductCount() {
         return productCount;
+    }
+
+    public void setProductCount(Integer productCount) {
+        this.productCount = productCount;
     }
 }
