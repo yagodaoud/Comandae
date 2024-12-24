@@ -95,4 +95,17 @@ public class Order {
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", orderSlipId=" + orderSlipId +
+                ", customer=" + customer +
+                ", total=" + total +
+                ", active=" + active +
+                ", createdAt=" + createdAt +
+                ", deletedAt=" + deletedAt +
+                '}';
+    }
 }

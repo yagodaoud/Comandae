@@ -46,7 +46,7 @@ public class OrderService implements ServiceInterface<Order, OrderDTO> {
 
     @Override
     public Order getById(Long id) {
-        return orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado,"));
+        return orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado."));
     }
 
     @Override
@@ -108,5 +108,9 @@ public class OrderService implements ServiceInterface<Order, OrderDTO> {
     @Override
     public void delete(Long id) {
         orderRepository.deleteById(id);
+    }
+
+    public Order findByOrderSlipId(int orderSlipId) {
+        return orderRepository.findByOrderSlipId(orderSlipId).orElseThrow(() -> new EntityNotFoundException("Comanda não encontrada."));
     }
 }

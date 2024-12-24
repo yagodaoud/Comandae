@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="modalOverlay" xmlns:fx="http://javafx.com/fxml"
+           stylesheets="@/css/orderSlipModal.css"
+           fx:controller="com.yagodaoud.comandae.controller.ui.OrderSlipModalController">
+
+    <VBox styleClass="modal-container" maxWidth="1000" maxHeight="800" spacing="10">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Text styleClass="modal-title" text="New Order"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="closeButton" styleClass="close-button" text="×" onAction="#hideModal"/>
+        </HBox>
+
+        <HBox spacing="20" VBox.vgrow="ALWAYS">
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                <HBox spacing="10">
+                    <TextField fx:id="searchField" promptText="Search products..." HBox.hgrow="ALWAYS"/>
+                    <ComboBox fx:id="categoryComboBox" promptText="Category"/>
+                </HBox>
+                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+
+                    <GridPane fx:id="productsGrid" hgap="10" vgap="10">
+
+                        <VBox styleClass="product-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <ImageView fx:id="productImage" fitWidth="150" fitHeight="150" preserveRatio="true"/>
+                            <Text fx:id="productName" text="Product Name" styleClass="product-name"/>
+                            <Text fx:id="productPrice" text="0.00" styleClass="product-price"/>
+                            <Button text="Add to Order" styleClass="add-button" onAction="#addToOrder"/>
+                        </VBox>
+
+                    </GridPane>
+
+                </ScrollPane>
+            </VBox>
+
+            <VBox spacing="10" minWidth="300" maxWidth="300" styleClass="order-slip">
+                <Text styleClass="section-title" text="Current Order"/>
+
+                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+
+                    <VBox fx:id="orderItemsContainer" spacing="5">
+
+                        <HBox styleClass="order-item" spacing="10">
+                            <ImageView fitWidth="50" fitHeight="50" preserveRatio="true"/>
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Text text="Item Name" styleClass="item-name"/>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <Spinner fx:id="quantitySpinner" prefWidth="80"/>
+                                    <Text text="0.00" styleClass="item-price"/>
+                                </HBox>
+                            </VBox>
+                            <Button styleClass="remove-button" text="×"/>
+                        </HBox>
+                    </VBox>
+                </ScrollPane>
+
+                <VBox spacing="5" styleClass="order-summary">
+                    <HBox>
+                        <Text text="Subtotal"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Text fx:id="subtotalText" text="0.00"/>
+                    </HBox>
+                    <HBox styleClass="total-row">
+                        <Text text="Total"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Text fx:id="totalText" text="0.00"/>
+                    </HBox>
+                </VBox>
+
+                <Button fx:id="checkoutButton" text="Proceed to Checkout"
+                        styleClass="checkout-button" onAction="#handleCheckout"
+                        maxWidth="Infinity"/>
+            </VBox>
+        </HBox>
+    </VBox>
+</StackPane>

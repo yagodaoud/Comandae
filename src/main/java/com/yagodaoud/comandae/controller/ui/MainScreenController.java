@@ -1,17 +1,16 @@
 package com.yagodaoud.comandae.controller.ui;
 
+import com.yagodaoud.comandae.controller.ui.component.GlobalBarcodeScanner;
 import com.yagodaoud.comandae.model.NavigationScreen;
 import com.yagodaoud.comandae.model.Product;
 import com.yagodaoud.comandae.service.ProductService;
 import com.yagodaoud.comandae.utils.StageManager;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -21,9 +20,19 @@ import java.util.List;
 
 @Component
 @Lazy
-public class MainScreenController {
+public class MainScreenController extends BarcodeAwareController
+        implements GlobalBarcodeScanner.BarcodeEventListener {
 
     private final StageManager stageManager;
+
+    @Autowired
+    private OrderSlipModalController orderSlipModalController;
+
+    @FXML
+    private StackPane orderSlipModal;
+
+    @FXML
+    private VBox mainContainer;
 
     @FXML
     public VBox inventoryStatus;
@@ -46,10 +55,37 @@ public class MainScreenController {
 
     @FXML
     public void initialize() {
+        super.initialize();
+
+        orderSlipModal.setVisible(false);
+
         setupSalesChart();
         sidebarController.setSelectedScreen(NavigationScreen.DASHBOARD);
 
         populateLowStockItems();
+
+        orderSlipModalController.setOnClose(this::closeOrderSlipModal);
+    }
+
+    @Override
+    protected Region getRoot() {
+        return mainContainer;
+    }
+
+    @Override
+    public void onBarcodeScanned(int barcode) {
+        Platform.runLater(() -> {
+            openOrderSlipModal(barcode);
+        });
+    }
+
+    private void openOrderSlipModal(int orderSlipId) {
+        orderSlipModalController.setOrderSlipId(orderSlipId);
+        orderSlipModalController.showModal();
+    }
+
+    private void closeOrderSlipModal() {
+        orderSlipModalController.hideModal();
     }
 
     private void setupSalesChart() {
