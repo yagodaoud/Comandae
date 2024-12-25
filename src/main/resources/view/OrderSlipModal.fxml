@@ -49,18 +49,6 @@
                 <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
 
                     <VBox fx:id="orderItemsContainer" spacing="5">
-
-                        <HBox styleClass="order-item" spacing="10">
-                            <ImageView fitWidth="50" fitHeight="50" preserveRatio="true"/>
-                            <VBox HBox.hgrow="ALWAYS">
-                                <Text text="Item Name" styleClass="item-name"/>
-                                <HBox spacing="10" alignment="CENTER_LEFT">
-                                    <Spinner fx:id="quantitySpinner" prefWidth="80"/>
-                                    <Text text="0.00" styleClass="item-price"/>
-                                </HBox>
-                            </VBox>
-                            <Button styleClass="remove-button" text="×"/>
-                        </HBox>
                     </VBox>
                 </ScrollPane>
 
