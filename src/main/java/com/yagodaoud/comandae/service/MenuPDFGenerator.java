@@ -78,6 +78,28 @@ public class MenuPDFGenerator {
                     contentStream.endText();
                     y -= 14;
                 }
+            } else if ("Meats".equals(categoryName)) {
+                for (int i = 0; i < items.size(); i++) {
+                    contentStream.beginText();
+                    contentStream.newLineAtOffset(x, y);
+
+                    MenuItem item1 = items.get(i);
+                    String rowText = item1.getName();
+
+                    if (i + 1 < items.size()) {
+                        MenuItem item2 = items.get(i + 1);
+                        String combinedText = item1.getName() + " | " + item2.getName();
+
+                        if (combinedText.length() <= 35) {
+                            rowText = combinedText;
+                            i++;
+                        }
+                    }
+
+                    contentStream.showText(rowText);
+                    contentStream.endText();
+                    y -= 14;
+                }
             } else {
                 for (MenuItem item : items) {
                     contentStream.beginText();
