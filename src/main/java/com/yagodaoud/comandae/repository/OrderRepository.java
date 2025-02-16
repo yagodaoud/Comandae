@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     boolean existsByOrderSlipIdAndActiveIsTrue(Integer orderSlipId);
 
-    Optional<Order> findByOrderSlipId(Integer orderSlipId);
+    Optional<Order> findByOrderSlipIdAndActiveTrue(Integer orderSlipId);
 }

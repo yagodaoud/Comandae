@@ -1,6 +1,7 @@
 package com.yagodaoud.comandae.model;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.ParamDef;
@@ -8,6 +9,8 @@ import org.hibernate.annotations.SQLDelete;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -33,6 +36,9 @@ public class Order {
 
     @Column(name = "active")
     private Boolean active = true;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<OrderProduct> orderProducts = new ArrayList<>();
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private final LocalDateTime createdAt;
@@ -94,6 +100,14 @@ public class Order {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public List<OrderProduct> getOrderProducts() {
+        return orderProducts;
+    }
+
+    public void setOrderProducts(List<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 
     @Override

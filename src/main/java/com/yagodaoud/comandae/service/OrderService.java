@@ -111,6 +111,10 @@ public class OrderService implements ServiceInterface<Order, OrderDTO> {
     }
 
     public Order findByOrderSlipId(int orderSlipId) {
-        return orderRepository.findByOrderSlipId(orderSlipId).orElseThrow(() -> new EntityNotFoundException("Comanda não encontrada."));
+        return orderRepository.findByOrderSlipIdAndActiveTrue(orderSlipId).orElseThrow(() -> new EntityNotFoundException("Comanda não encontrada."));
+    }
+
+    public void save(Order order) {
+        orderRepository.save(order);
     }
 }
