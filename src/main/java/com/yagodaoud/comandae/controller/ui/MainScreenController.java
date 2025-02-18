@@ -85,7 +85,7 @@ public class MainScreenController extends BarcodeAwareController
     }
 
     private void closeOrderSlipModal() {
-        orderSlipModalController.hideModal();
+        orderSlipModalController.closeModal();
     }
 
     private void setupSalesChart() {

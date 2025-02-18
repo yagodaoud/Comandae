@@ -1,6 +1,7 @@
 package com.yagodaoud.comandae.service;
 
 import com.yagodaoud.comandae.dto.PixDTO;
+import com.yagodaoud.comandae.model.Bitcoin;
 import com.yagodaoud.comandae.model.Pix;
 import com.yagodaoud.comandae.model.PixType;
 import com.yagodaoud.comandae.repository.PixRepository;
@@ -48,6 +49,8 @@ public class PixService implements ServiceInterface<Pix, PixDTO> {
         pix.setType(pixDTO.getType());
         pix.setKey(pixDTO.getKey());
         pix.setIsActive(pixDTO.getIsActive());
+        pix.setCity(pixDTO.getCity());
+        pix.setCompanyName(pixDTO.getCompanyName());
 
         return pixRepository.save(pix);
     }
@@ -59,6 +62,8 @@ public class PixService implements ServiceInterface<Pix, PixDTO> {
         pix.setType(pixDTO.getType());
         pix.setKey(pixDTO.getKey());
         pix.setIsActive(pixDTO.getIsActive());
+        pix.setCity(pixDTO.getCity());
+        pix.setCompanyName(pixDTO.getCompanyName());
 
         return pixRepository.save(pix);
     }
@@ -72,5 +77,14 @@ public class PixService implements ServiceInterface<Pix, PixDTO> {
 
     public List<PixType> getAvailableTypes() {
         return Arrays.asList(PixType.class.getEnumConstants());
+    }
+
+    public String getActivePixKey() {
+        Pix pix = pixRepository.findByIsActive(true);
+        return pix != null ? pix.getKey() : null;
+    }
+
+    public Pix getActivePix() {
+        return pixRepository.findByIsActive(true);
     }
 }

@@ -72,4 +72,9 @@ public class BitcoinService implements ServiceInterface<Bitcoin, BitcoinDTO> {
     public List<BitcoinNetwork> getAvailableNetworks() {
         return Arrays.asList(BitcoinNetwork.class.getEnumConstants());
     }
+
+    public String getActiveBitcoinAddress() {
+        Bitcoin bitcoin = bitcoinRepository.findByIsActive(true);
+        return bitcoin != null ? bitcoin.getAddress() : null;
+    }
 }

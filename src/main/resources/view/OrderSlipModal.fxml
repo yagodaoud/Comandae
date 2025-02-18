@@ -18,7 +18,7 @@
         <HBox alignment="CENTER_LEFT" spacing="10">
             <Text fx:id="orderTitle" styleClass="modal-title" text="New Order"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button fx:id="closeButton" styleClass="close-button" text="×" onAction="#hideModal"/>
+            <Button fx:id="closeButton" styleClass="close-button" text="×" onAction="#closeModal"/>
         </HBox>
 
         <HBox spacing="20" VBox.vgrow="ALWAYS">
@@ -28,18 +28,7 @@
                     <ComboBox fx:id="categoryComboBox" promptText="Category"/>
                 </HBox>
                 <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
-
-                    <GridPane fx:id="productsGrid" hgap="10" vgap="10">
-
-                        <VBox styleClass="product-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                            <ImageView fx:id="productImage" fitWidth="150" fitHeight="150" preserveRatio="true"/>
-                            <Text fx:id="productName" text="Product Name" styleClass="product-name"/>
-                            <Text fx:id="productPrice" text="0.00" styleClass="product-price"/>
-                            <Button text="Add to Order" styleClass="add-button" onAction="#addToOrder"/>
-                        </VBox>
-
-                    </GridPane>
-
+                    <FlowPane fx:id="productsFlowPane" hgap="10" vgap="10" />
                 </ScrollPane>
             </VBox>
 
@@ -47,9 +36,7 @@
                 <Text styleClass="section-title" text="Current Order"/>
 
                 <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
-
-                    <VBox fx:id="orderItemsContainer" spacing="5">
-                    </VBox>
+                    <VBox fx:id="orderItemsContainer" spacing="5" VBox.vgrow="ALWAYS" />
                 </ScrollPane>
 
                 <VBox spacing="5" styleClass="order-summary">
@@ -74,8 +61,11 @@
                             styleClass="checkout-button" onAction="#handleCheckout"
                             maxWidth="Infinity"/>
                 </HBox>
-
             </VBox>
         </HBox>
     </VBox>
+
+    <fx:include fx:id="paymentModal" source="PaymentModal.fxml"
+                AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+                AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" />
 </StackPane>

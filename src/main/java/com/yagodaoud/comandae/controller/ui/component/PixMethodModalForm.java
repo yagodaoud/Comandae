@@ -21,11 +21,13 @@ import java.util.function.Consumer;
 
 public class PixMethodModalForm extends VBox {
     private final TextField keyField;
+    private final TextField companyNameField;
     private final ComboBox<PixType> typeComboBox;
     private final Button saveButton;
     private final VBox pixRecordsBox;
     private final List<Pix> existingPixKeys;
     private final Consumer<Pix> onDeletePixKey;
+    private static final String DEFAULT_CITY = "Brasil";
 
     public PixMethodModalForm(
             List<PixType> pixTypes,
@@ -56,6 +58,11 @@ public class PixMethodModalForm extends VBox {
 
         headerBox.getChildren().addAll(title, spacer, closeButton);
 
+        Label companyLabel = new Label("Company Name:");
+        companyLabel.getStyleClass().add("form-label");
+        companyNameField = new TextField();
+        companyNameField.setPromptText("Enter Company Name");
+
         Label keyLabel = new Label("Key:");
         keyLabel.getStyleClass().add("form-label");
         keyField = new TextField();
@@ -72,12 +79,15 @@ public class PixMethodModalForm extends VBox {
         saveButton.getStyleClass().addAll("button", "primary-button");
         saveButton.setOnAction(e -> {
             String key = keyField.getText().trim();
+            String companyName = companyNameField.getText().trim();
             PixType type = typeComboBox.getValue();
 
-            if (!key.isEmpty() && type != null) {
+            if (!key.isEmpty() && !companyName.isEmpty() && type != null) {
                 PixDTO pixDTO = new PixDTO();
                 pixDTO.setKey(key);
                 pixDTO.setType(type);
+                pixDTO.setCompanyName(companyName);
+                pixDTO.setCity(DEFAULT_CITY);
                 pixDTO.setIsActive(true);
                 pixDTO.setCreatedAt(LocalDateTime.now());
 
@@ -86,7 +96,6 @@ public class PixMethodModalForm extends VBox {
                 Pix newPixKey = new Pix();
                 newPixKey.setKey(key);
                 newPixKey.setType(type);
-
                 existingPixKeys.add(newPixKey);
 
                 populatePixRecords(existingPixKeys);
@@ -95,6 +104,7 @@ public class PixMethodModalForm extends VBox {
         saveButton.setDisable(true);
 
         keyField.textProperty().addListener((obs, old, newValue) -> validateInput());
+        companyNameField.textProperty().addListener((obs, old, newValue) -> validateInput());
         typeComboBox.valueProperty().addListener((obs, old, newValue) -> validateInput());
 
         Text recordsTitle = new Text("Keys");
@@ -106,10 +116,9 @@ public class PixMethodModalForm extends VBox {
 
         getChildren().addAll(
                 headerBox,
-                keyLabel,
-                keyField,
-                typeLabel,
-                typeComboBox,
+                companyLabel, companyNameField,
+                keyLabel, keyField,
+                typeLabel, typeComboBox,
                 saveButton,
                 recordsTitle,
                 pixRecordsBox
@@ -118,6 +127,7 @@ public class PixMethodModalForm extends VBox {
 
     private void validateInput() {
         boolean isValid = !keyField.getText().trim().isEmpty()
+                && !companyNameField.getText().trim().isEmpty()
                 && typeComboBox.getValue() != null;
         saveButton.setDisable(!isValid);
     }
@@ -141,9 +151,7 @@ public class PixMethodModalForm extends VBox {
             deleteLabel.getStyleClass().add("delete-button");
             deleteLabel.setOnMouseClicked(e -> {
                 pixRecordsBox.getChildren().remove(pixRecord);
-
                 existingPixKeys.remove(pixKey);
-
                 onDeletePixKey.accept(pixKey);
             });
 
@@ -154,7 +162,6 @@ public class PixMethodModalForm extends VBox {
 
     private String formatPixKey(String pixKey) {
         if (pixKey.length() < 20) return pixKey;
-
         return pixKey.substring(0, 20) + "..." + pixKey.substring(pixKey.length() - 4);
     }
 }

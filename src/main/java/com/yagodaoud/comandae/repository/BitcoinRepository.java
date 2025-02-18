@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BitcoinRepository extends JpaRepository<Bitcoin, Long> {
+    Bitcoin findByIsActive(boolean isActive);
 }

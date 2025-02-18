@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PixRepository extends JpaRepository<Pix, Long> {
+    Pix findByIsActive(boolean isActive);
 }

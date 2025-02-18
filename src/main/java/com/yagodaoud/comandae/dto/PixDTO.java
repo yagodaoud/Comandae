@@ -8,6 +8,8 @@ public class PixDTO {
     private Long id;
     private PixType type;
     private String key;
+    private String companyName;
+    private String city;
     private Boolean isActive;
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
@@ -34,6 +36,22 @@ public class PixDTO {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public Boolean getIsActive() {

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "order_product")
-@SQLDelete(sql = "UPDATE orderProduct SET deleted_at = NOW() WHERE id=?")
+//@SQLDelete(sql = "UPDATE orderProduct SET deleted_at = NOW() WHERE id=?")
 @FilterDef(name = "deletedOrderProductFilter", parameters = @ParamDef(name = "isDeleted", type = Boolean.class))
 @Filter(name = "deletedOrderProductFilter", condition = "deleted_at IS NULL")
 public class OrderProduct {

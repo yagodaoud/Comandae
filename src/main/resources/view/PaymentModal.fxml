@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="paymentModalContainer" xmlns:fx="http://javafx.com/fxml"
+           stylesheets="@/css/paymentModal.css"
+           fx:controller="com.yagodaoud.comandae.controller.ui.PaymentModalController">
+
+    <VBox styleClass="payment-modal-container" maxWidth="1000" maxHeight="800" spacing="10">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <Text styleClass="modal-title" text="Payment"/>
+
+        <HBox spacing="20" alignment="CENTER_LEFT">
+            <!-- Left Side: Payment Type and QR Code -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                <VBox spacing="10">
+                    <Label text="Payment Type"/>
+                    <ComboBox fx:id="paymentTypeComboBox" promptText="Select Payment Type"/>
+                </VBox>
+
+                <!-- QR Code Container (only visible if QR code is displayed) -->
+                <StackPane fx:id="qrCodeContainer" visible="false">
+                    <ImageView fx:id="qrCodeImage" fitWidth="200" fitHeight="200" preserveRatio="true"/>
+                </StackPane>
+            </VBox>
+
+            <VBox spacing="10" styleClass="order-summary" minWidth="200">
+                <Text styleClass="summary-title" text="Order Summary"/>
+                <VBox fx:id="orderSummaryItems" spacing="5"/>
+                <Separator/>
+                <HBox>
+                    <Text text="Total"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Text fx:id="orderTotalText" styleClass="total-text" text="0.00"/>
+                </HBox>
+            </VBox>
+        </HBox>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="markAsPaidButton" text="Mark as Paid" styleClass="primary-button" onAction="#handleMarkAsPaid"/>
+            <Button fx:id="closeButton" text="Close" styleClass="secondary-button" onAction="#closeModal"/>
+        </HBox>
+    </VBox>
+</StackPane>
