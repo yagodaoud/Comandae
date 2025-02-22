@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<fx:root type="VBox" styleClass="menu-item-card" xmlns:fx="http://javafx.com/fxml">
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label fx:id="orderSlipLabel" styleClass="name" text="Order #"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="totalLabel" styleClass="price"/>
+        <Label fx:id="timeLabel" styleClass="category"/>
+    </HBox>
+
+    <VBox fx:id="productsContainer" spacing="5">
+    </VBox>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label fx:id="customerLabel" styleClass="category"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="paymentTypeLabel" styleClass="category"/>
+        <Button fx:id="actionButton" styleClass="action-button"/>
+    </HBox>
+</fx:root>

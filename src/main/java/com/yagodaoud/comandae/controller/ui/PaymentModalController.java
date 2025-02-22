@@ -115,6 +115,7 @@ public class PaymentModalController {
 
     @FXML
     private void handleMarkAsPaid() {
+        order.setPaymentType(paymentTypeComboBox.getValue());
         order.setActive(false);
         orderService.save(order);
 

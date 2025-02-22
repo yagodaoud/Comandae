@@ -30,7 +30,7 @@
         @Column(name = "city")
         private String city;
 
-        @Column(name = "company_name", nullable = false)
+        @Column(name = "company_name")
         private String companyName;
 
         @Column(name = "is_active", nullable = false)

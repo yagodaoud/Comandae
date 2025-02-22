@@ -118,4 +118,12 @@ public class OrderService implements ServiceInterface<Order, OrderDTO> {
     public void save(Order order) {
         orderRepository.save(order);
     }
+
+    public List<Order> findByActiveTrue() {
+        return orderRepository.findByActiveIsTrueOrderByCreatedAtDesc();
+    }
+
+    public List<Order> findByActiveFalse() {
+        return orderRepository.findByActiveIsFalseOrderByCreatedAtDesc();
+    }
 }
