@@ -94,6 +94,7 @@ public class OrderService implements ServiceInterface<Order, OrderDTO> {
             throw new OrderSlipInUseException(orderDTO.getOrderSlipId());
         }
 
+        order.setPaymentType(orderDTO.getPaymentType());
         order.setOrderSlipId(orderDTO.getOrderSlipId());
         order.setTotal(orderDTO.getTotal());
 

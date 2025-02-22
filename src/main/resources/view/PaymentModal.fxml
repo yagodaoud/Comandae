@@ -18,14 +18,12 @@
         <Text styleClass="modal-title" text="Payment"/>
 
         <HBox spacing="20" alignment="CENTER_LEFT">
-            <!-- Left Side: Payment Type and QR Code -->
             <VBox spacing="10" HBox.hgrow="ALWAYS">
                 <VBox spacing="10">
                     <Label text="Payment Type"/>
                     <ComboBox fx:id="paymentTypeComboBox" promptText="Select Payment Type"/>
                 </VBox>
 
-                <!-- QR Code Container (only visible if QR code is displayed) -->
                 <StackPane fx:id="qrCodeContainer" visible="false">
                     <ImageView fx:id="qrCodeImage" fitWidth="200" fitHeight="200" preserveRatio="true"/>
                 </StackPane>

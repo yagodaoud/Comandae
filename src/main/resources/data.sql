@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS orders (
     customer_id BIGINT,
     total DECIMAL(10, 2) DEFAULT 0,
     active BOOLEAN DEFAULT TRUE,
+    payment_type ENUM('CASH', 'CARD', 'PIX', 'BITCOIN') NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP,
     FOREIGN KEY (customer_id) REFERENCES customer(id) ON DELETE SET NULL

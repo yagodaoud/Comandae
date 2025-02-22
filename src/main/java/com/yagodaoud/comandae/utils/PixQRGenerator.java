@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.util.Locale;
 
-public class PixGenerator {
+public class PixQRGenerator {
 
     public static String generatePixCode(String cnpj, BigDecimal amount) {
         String pixDomain = "BR.GOV.BCB.PIX";

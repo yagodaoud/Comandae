@@ -77,4 +77,8 @@ public class BitcoinService implements ServiceInterface<Bitcoin, BitcoinDTO> {
         Bitcoin bitcoin = bitcoinRepository.findByIsActive(true);
         return bitcoin != null ? bitcoin.getAddress() : null;
     }
+
+    public Bitcoin getActiveWallet() {
+        return bitcoinRepository.findByIsActive(true);
+    }
 }

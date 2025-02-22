@@ -27,7 +27,7 @@
         @Column(name = "pix_key", nullable = false)
         private String key;
 
-        @Column(name = "city", nullable = false)
+        @Column(name = "city")
         private String city;
 
         @Column(name = "company_name", nullable = false)

@@ -2,6 +2,8 @@ package com.yagodaoud.comandae.model;
 
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.ParamDef;
@@ -17,6 +19,8 @@ import java.util.List;
 @SQLDelete(sql = "UPDATE orders SET deleted_at = NOW() WHERE id=?")
 @FilterDef(name = "deletedOrderFilter", parameters = @ParamDef(name = "isDeleted", type = Boolean.class))
 @Filter(name = "deletedOrderFilter", condition = "deleted_at IS NULL")
+@Getter
+@Setter
 public class Order {
 
     @Id
@@ -40,6 +44,10 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_type")
+    private PaymentType paymentType;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private final LocalDateTime createdAt;
 
@@ -48,66 +56,6 @@ public class Order {
 
     public Order() {
         this.createdAt = LocalDateTime.now();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getOrderSlipId() {
-        return orderSlipId;
-    }
-
-    public void setOrderSlipId(Integer orderSlipId) {
-        this.orderSlipId = orderSlipId;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public List<OrderProduct> getOrderProducts() {
-        return orderProducts;
-    }
-
-    public void setOrderProducts(List<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
     }
 
     @Override

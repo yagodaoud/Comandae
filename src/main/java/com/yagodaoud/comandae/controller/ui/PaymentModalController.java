@@ -1,12 +1,12 @@
 package com.yagodaoud.comandae.controller.ui;
 
-import com.yagodaoud.comandae.model.Order;
-import com.yagodaoud.comandae.model.OrderProduct;
-import com.yagodaoud.comandae.model.PaymentType;
-import com.yagodaoud.comandae.model.Pix;
+import com.yagodaoud.comandae.model.*;
+import com.yagodaoud.comandae.service.BitcoinApiService;
+import com.yagodaoud.comandae.service.BitcoinService;
 import com.yagodaoud.comandae.service.OrderService;
 import com.yagodaoud.comandae.service.PixService;
-import com.yagodaoud.comandae.utils.PixGenerator;
+import com.yagodaoud.comandae.utils.BitcoinQRGenerator;
+import com.yagodaoud.comandae.utils.PixQRGenerator;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -38,9 +38,12 @@ public class PaymentModalController {
     private OrderSlipModalController orderSlipModalController;
 
     private Pix pix;
+    private Bitcoin bitcoin;
 
     @Autowired private OrderService orderService;
     @Autowired private PixService pixService;
+    @Autowired private BitcoinService bitcoinService;
+    @Autowired private BitcoinApiService bitcoinApiService;
 
     @FXML
     private void initialize() {
@@ -48,9 +51,11 @@ public class PaymentModalController {
         setupButtonActions();
 
         pix = pixService.getActivePix();
+        bitcoin = bitcoinService.getActiveWallet();
     }
 
     private void setupPaymentTypeComboBox() {
+        paymentTypeComboBox.getItems().add(null);
         paymentTypeComboBox.getItems().addAll(PaymentType.values());
         paymentTypeComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
@@ -65,14 +70,14 @@ public class PaymentModalController {
         switch (paymentType) {
             case PIX:
                 try {
-                    String pixCode = PixGenerator.generatePixCode(
+                    String pixCode = PixQRGenerator.generatePixCode(
                             pix.getKey(),
                             order.getTotal()
                     );
                     System.out.println(pix.toString());
                     System.out.println(pixCode);
 
-                    Image qrImage = PixGenerator.generateQRCodeImage(pixCode, 250, 250);
+                    Image qrImage = PixQRGenerator.generateQRCodeImage(pixCode, 250, 250);
                     qrCodeImage.setImage(qrImage);
                     qrCodeContainer.setVisible(true);
                 } catch (Exception e) {
@@ -80,9 +85,22 @@ public class PaymentModalController {
                 }
                 break;
             case BITCOIN:
-                // Load Bitcoin QR code
-                qrCodeImage.setImage(new Image("/images/bitcoin-qr.png"));
-                qrCodeContainer.setVisible(true);
+                try {
+                    String pixCode = BitcoinQRGenerator.generateBitcoinQR(
+                            bitcoin.getAddress(),
+                            order.getTotal(),
+                            bitcoinApiService.getCurrentBitcoinPriceInBrl(),
+                            bitcoin.getNetwork()
+                    );
+                    System.out.println(pix.toString());
+                    System.out.println(pixCode);
+
+                    Image qrImage = PixQRGenerator.generateQRCodeImage(pixCode, 250, 250);
+                    qrCodeImage.setImage(qrImage);
+                    qrCodeContainer.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case CASH:
                 // No QR code for cash
