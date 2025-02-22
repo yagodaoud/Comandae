@@ -1,11 +1,14 @@
 package com.yagodaoud.comandae.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.ParamDef;
 import org.hibernate.annotations.SQLDelete;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,6 +16,8 @@ import java.time.LocalDateTime;
 //@SQLDelete(sql = "UPDATE orderProduct SET deleted_at = NOW() WHERE id=?")
 @FilterDef(name = "deletedOrderProductFilter", parameters = @ParamDef(name = "isDeleted", type = Boolean.class))
 @Filter(name = "deletedOrderProductFilter", condition = "deleted_at IS NULL")
+@Getter
+@Setter
 public class OrderProduct {
 
     @Id
@@ -23,6 +28,9 @@ public class OrderProduct {
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
+
+    @Column(name = "custom_value")
+    private BigDecimal customValue;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
@@ -39,49 +47,5 @@ public class OrderProduct {
 
     public OrderProduct() {
         this.createdAt = LocalDateTime.now();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
     }
 }

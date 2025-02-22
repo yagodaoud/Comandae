@@ -1,4 +1,8 @@
-/* General Styles */
+@font-face {
+    font-family: 'Material Icons';
+    src: url('../fonts/MaterialIcons-Regular.ttf');
+}
+
 .modal-container {
     -fx-background-color: white;
     -fx-background-radius: 5;
@@ -94,4 +98,28 @@
 
 .remove-button:hover {
     -fx-text-fill: #dc2626;
+}
+
+.edit-button {
+    -fx-pref-width: 24px;
+    -fx-pref-height: 24px;
+    -fx-font-size: 12px;
+}
+
+.custom-value {
+    -fx-fill: #666666;
+    -fx-font-style: italic;
+}
+
+.modal-form {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-spacing: 15;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
+}
+
+.modal-form .text-field {
+    -fx-pref-width: 250px;
+    -fx-padding: 8;
 }

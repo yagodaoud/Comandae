@@ -68,4 +68,18 @@
     <fx:include fx:id="paymentModal" source="PaymentModal.fxml"
                 AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
                 AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" />
+
+    <StackPane fx:id="customValueModal" visible="false">
+        <VBox styleClass="modal-form" maxWidth="300" maxHeight="200" spacing="15">
+            <Text fx:id="customValueTitle" styleClass="modal-title"/>
+            <VBox spacing="5">
+                <Label text="Enter value:" styleClass="form-label"/>
+                <TextField fx:id="customValueField"/>
+            </VBox>
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Cancel" onAction="#closeCustomValueModal" styleClass="secondary-button"/>
+                <Button text="Confirm" onAction="#confirmCustomValue" styleClass="primary-button"/>
+            </HBox>
+        </VBox>
+    </StackPane>
 </StackPane>

@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class OrderSlipModalController extends GridPane {
     @FXML private VBox orderItemsContainer;
     @FXML private Text subtotalText;
     @FXML private Text totalText;
+    @FXML private StackPane customValueModal;
+    @FXML private Text customValueTitle;
+    @FXML private TextField customValueField;
 
     @FXML private StackPane paymentModal;
 
@@ -45,6 +49,8 @@ public class OrderSlipModalController extends GridPane {
     private List<Product> products;
     private final int GRID_COLUMNS = 5;
     private Runnable onClose;
+
+    private Product currentCustomProduct;
 
     @Autowired private OrderService orderService;
     @Autowired private ProductService productService;
@@ -56,6 +62,13 @@ public class OrderSlipModalController extends GridPane {
         loadProducts();
         setupButtonCursors();
         paymentModal.setVisible(false);
+        customValueModal.setVisible(false);
+
+        customValueField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                confirmCustomValue();
+            }
+        });
     }
 
     private void setupButtonCursors() {
@@ -130,12 +143,49 @@ public class OrderSlipModalController extends GridPane {
     }
 
     private void handleAddToOrder(Product product) {
-        HBox orderItem = createOrderItemUI(product, 1);
+        if (product.getHasCustomValue()) {
+            showCustomValueModal(product);
+        } else {
+            addProductToOrder(product, null);
+        }
+    }
+
+
+    private void addProductToOrder(Product product, String customValue) {
+        HBox orderItem = createOrderItemUI(product, 1, customValue);
         orderItemsContainer.getChildren().add(orderItem);
         updateOrderTotal();
     }
 
-    private HBox createOrderItemUI(Product product, int quantity) {
+
+    private void showCustomValueModal(Product product) {
+        currentCustomProduct = product;
+        customValueTitle.setText("Custom value for " + product.getName());
+        customValueField.clear();
+        customValueModal.setVisible(true);
+        customValueModal.toFront();
+        customValueField.requestFocus();
+    }
+
+    @FXML
+    private void confirmCustomValue() {
+        if (currentCustomProduct != null && !customValueField.getText().trim().isEmpty()) {
+            String customValue = customValueField.getText().trim();
+            addProductToOrder(currentCustomProduct, customValue);
+            closeCustomValueModal();
+        }
+    }
+
+
+    @FXML
+    private void closeCustomValueModal() {
+        customValueModal.setVisible(false);
+        currentCustomProduct = null;
+        customValueField.clear();
+    }
+
+
+    private HBox createOrderItemUI(Product product, int quantity, String customValue) {
         HBox orderItem = new HBox(10);
         orderItem.getStyleClass().add("order-item");
         orderItem.setAlignment(Pos.CENTER_LEFT);
@@ -161,7 +211,7 @@ public class OrderSlipModalController extends GridPane {
             );
         }
 
-        Text itemPrice = new Text(formatPrice(product.getPrice()));
+        Text itemPrice = new Text(formatPrice(customValue != null ? new BigDecimal(customValue) : product.getPrice()));
         itemPrice.getStyleClass().add("item-price");
 
         quantityAndPrice.getChildren().addAll(quantitySpinner, itemPrice);
@@ -176,7 +226,6 @@ public class OrderSlipModalController extends GridPane {
         });
 
         orderItem.getChildren().addAll(itemImage, detailsBox, removeButton);
-
         quantitySpinner.valueProperty().addListener((obs, oldVal, newVal) -> updateOrderTotal());
 
         return orderItem;
@@ -257,6 +306,12 @@ public class OrderSlipModalController extends GridPane {
                 orderProduct.setQuantity(spinner.getValue());
                 orderProduct.setOrder(order);
 
+                if (product.getHasCustomValue() && detailsBox.getChildren().size() > 2) {
+                    Text customValueText = (Text) detailsBox.getChildren().get(2);
+                    String customValue = customValueText.getText().replace("Custom: ", "");
+                    orderProduct.setCustomValue(new BigDecimal(customValue));
+                }
+
                 BigDecimal price = new BigDecimal(priceText.getText().replace("$", "").replace(",", "."));
                 total = total.add(price.multiply(new BigDecimal(spinner.getValue())));
 
@@ -266,7 +321,7 @@ public class OrderSlipModalController extends GridPane {
 
         order.setOrderProducts(orderProducts);
         order.setTotal(total);
-        order.setActive(true);  // Order is active until checkout
+        order.setActive(true);
 
         orderService.save(order);
     }
@@ -304,7 +359,7 @@ public class OrderSlipModalController extends GridPane {
                     Product product = orderProduct.getProduct();
 
                     if (product != null) {
-                        HBox orderItemUI = createOrderItemUI(product, orderProduct.getQuantity());
+                        HBox orderItemUI = createOrderItemUI(product, orderProduct.getQuantity(), null);
                         orderItemsContainer.getChildren().add(orderItemUI);
                     }
                 }
